@@ -17,7 +17,7 @@ public class EnemyBase : MonoBehaviour
             if(ball != null)
             {
                 ContactPoint contactPoint = collision.GetContact(0);
-                CollisionSide colSide = CollisionSideDetect.GetCollisionSide(collision.collider.bounds.center, contactPoint.point);
+                CollisionSide colSide = CollisionSideDetect.GetCollisionSide(ball.LastFrameCenterPoint, contactPoint.point);
                 ball.SetOppositeVelocity(colSide);
             }
             associatedSpawner.TryToDestroy(this);

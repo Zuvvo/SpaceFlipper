@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class BallBase : MonoBehaviour
 {
+    public TrailRenderer Trail;
     public Rigidbody RigidBody;
     public Collider Collider;
     public Vector3 LastFrameCenterPoint { get; private set; }
@@ -13,6 +14,7 @@ public class BallBase : MonoBehaviour
     private float maxVel = 0.5f;
 
     private Vector3 lastFrameVelocity;
+    private Coroutine hitEffectRoutine;
 
     private void Start()
     {
@@ -48,5 +50,23 @@ public class BallBase : MonoBehaviour
                 break;
 
         }
+    }
+
+    public void SetDefaultEffect()
+    {
+        Trail.colorGradient = EffectsManager.Instance.TrailDefaultColorGradient;
+    }
+
+    public void SetHitEffect(Vector3 point)
+    {
+        EffectsManager.Instance.InitStrikerEffect(point);
+        hitEffectRoutine = StartCoroutine(HitEffectRoutine());
+    }
+
+    private IEnumerator HitEffectRoutine()
+    {
+        Trail.colorGradient = EffectsManager.Instance.TrailHitColorGradient;
+        yield return new WaitForSeconds(2);
+        SetDefaultEffect();
     }
 }

@@ -66,9 +66,11 @@
     <Compile Include="Assets\Scripts\CollisionSide.cs" />
     <Compile Include="Assets\Scripts\CollisionSideDetect.cs" />
     <Compile Include="Assets\Scripts\DebugController.cs" />
+    <Compile Include="Assets\Scripts\EffectsManager.cs" />
     <Compile Include="Assets\Scripts\EnemyBase.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
+    <Compile Include="Assets\Scripts\GameTags.cs" />
     <Compile Include="Assets\Scripts\LightController.cs" />
     <Compile Include="Assets\Scripts\ObjectsController.cs" />
     <Compile Include="Assets\Scripts\Ship.cs" />

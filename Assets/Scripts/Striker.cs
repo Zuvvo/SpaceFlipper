@@ -33,6 +33,19 @@ public class Striker : MonoBehaviour
         HingeJoint.spring = spring;
         HingeJoint.useSpring = true;
     }
+   
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag(GameTags.Ball))
+        {
+            BallBase ball = collision.collider.GetComponent<BallBase>();
+            if (ball != null)
+            {
+                ball.SetHitEffect(collision.contacts[0].point);
+            }
+        }
+    }
+
 
     public void MoveBlade()
     {
@@ -43,4 +56,5 @@ public class Striker : MonoBehaviour
     {
         _moving = false;
     }
+
 }

@@ -6,12 +6,11 @@ using UnityEngine;
 public class EnemyBase : MonoBehaviour
 {
     private EnemySpawner associatedSpawner;
-    private readonly string ballTag = "Ball";
 
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag(ballTag))
+        if (collision.collider.CompareTag(GameTags.Ball))
         {
             BallBase ball = collision.collider.GetComponent<BallBase>();
             if(ball != null)

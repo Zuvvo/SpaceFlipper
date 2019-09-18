@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class BallBase : MonoBehaviour
 {
-    public TrailRenderer Trail;
-    public Rigidbody RigidBody;
+    public TrailRenderer FastSpeedTrail;
+    public TrailRenderer SlowSpeedTrail;
+    public Rigidbody Rigidbody;
     public Collider Collider;
     public Vector3 LastFrameCenterPoint { get; private set; }
 
@@ -16,23 +17,33 @@ public class BallBase : MonoBehaviour
     private Vector3 lastFrameVelocity;
     private Coroutine hitEffectRoutine;
 
+    private bool isFastTrailOn;
+    private const float speedThreshold = 1.5f;
+
     private void Start()
     {
-        RigidBody.AddForce(new Vector3(-1, 0, 0), ForceMode.Impulse);
+        Rigidbody.AddForce(new Vector3(-1, 0, 0), ForceMode.Impulse);
     }
 
     public void Stop()
     {
-        RigidBody.velocity = Vector3.zero;
-        RigidBody.angularVelocity = Vector3.zero;
+        Rigidbody.velocity = Vector3.zero;
+        Rigidbody.angularVelocity = Vector3.zero;
     }
 
     private void Update()
     {
-        lastFrameVelocity = RigidBody.velocity;
+        lastFrameVelocity = Rigidbody.velocity;
         LastFrameCenterPoint = Collider.bounds.center;
+        SetTrailBasedOnSpeed();
     }
 
+    private void SetTrailBasedOnSpeed()
+    {
+        isFastTrailOn = Rigidbody.velocity.magnitude >= speedThreshold;
+        FastSpeedTrail.emitting = isFastTrailOn;
+        SlowSpeedTrail.emitting = !isFastTrailOn;
+    }
 
     public void SetOppositeVelocity(CollisionSide colliderSide)
     {
@@ -42,31 +53,13 @@ public class BallBase : MonoBehaviour
         {
             case CollisionSide.Bottom:
             case CollisionSide.Top:
-                RigidBody.velocity = new Vector3(-xVel, 0, zVel).normalized;
+                Rigidbody.velocity = new Vector3(-xVel, 0, zVel).normalized;
                 break;
             case CollisionSide.Left:
             case CollisionSide.Right:
-                RigidBody.velocity = new Vector3(xVel, 0, -zVel).normalized;
+                Rigidbody.velocity = new Vector3(xVel, 0, -zVel).normalized;
                 break;
 
         }
-    }
-
-    public void SetDefaultEffect()
-    {
-        Trail.colorGradient = EffectsManager.Instance.TrailDefaultColorGradient;
-    }
-
-    public void SetHitEffect(Vector3 point)
-    {
-        EffectsManager.Instance.InitStrikerEffect(point);
-        hitEffectRoutine = StartCoroutine(HitEffectRoutine());
-    }
-
-    private IEnumerator HitEffectRoutine()
-    {
-        Trail.colorGradient = EffectsManager.Instance.TrailHitColorGradient;
-        yield return new WaitForSeconds(2);
-        SetDefaultEffect();
     }
 }

@@ -41,7 +41,7 @@ public class Striker : MonoBehaviour
             BallBase ball = collision.collider.GetComponent<BallBase>();
             if (ball != null)
             {
-                ball.SetHitEffect(collision.contacts[0].point);
+
             }
         }
     }

@@ -20,7 +20,7 @@ public class DebugController : MonoBehaviour
         if (Input.GetKeyDown(SpawnBallAtRandomPoint))
         {
             Vector3 pos = new Vector3(BallTestSpawnPosition.position.x, BallTestSpawnPosition.position.y, BallTestSpawnPosition.position.z + Random.Range(0, 2f));
-            BallToSpawn = Instantiate(BallToSpawn, pos, Quaternion.identity, null);
+            Instantiate(BallToSpawn, pos, Quaternion.identity, null);
         }
     }
 }

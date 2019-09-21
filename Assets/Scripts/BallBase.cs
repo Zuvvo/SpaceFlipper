@@ -15,7 +15,6 @@ public class BallBase : MonoBehaviour
     private float maxVel = 0.5f;
 
     private Vector3 lastFrameVelocity;
-    private Coroutine hitEffectRoutine;
 
     private bool isFastTrailOn;
     private const float speedThreshold = 1.5f;
@@ -59,7 +58,11 @@ public class BallBase : MonoBehaviour
             case CollisionSide.Right:
                 Rigidbody.velocity = new Vector3(xVel, 0, -zVel).normalized;
                 break;
-
         }
+    }
+
+    public void AddForceOnStrikerHit(Vector3 leftStrikeForceVector)
+    {
+        Rigidbody.velocity = lastFrameVelocity + leftStrikeForceVector;
     }
 }

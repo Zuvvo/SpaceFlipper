@@ -360,8 +360,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HingeJoint: {fileID: 152185459}
   StrikerType: 0
-  _speed: 15000
-  _pressedPosition: 45
+  MeshRenderer: {fileID: 152185463}
+  ForceMaterial: {fileID: 2100000, guid: a994c3d9367ba7740a46763cba71e7b4, type: 2}
+  DefaultMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  speed: 15000
+  pressedPosition: 45
 --- !u!65 &152185462
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -542,6 +545,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RigidBody: {fileID: 396719872}
+  LeftStriker: {fileID: 0}
+  RightStriker: {fileID: 0}
 --- !u!54 &396719872
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -831,7 +836,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: -3.3694554e-34, z: 6.29e-43, w: -3.3694554e-34}
+  m_BoundingSphereOverride: {x: 8, y: 1.5e-44, z: 0, w: 1}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -922,7 +927,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: -4.3562363e-32, z: 6.29e-43, w: -4.3562363e-32}
+  m_BoundingSphereOverride: {x: 5.3e-43, y: 0, z: 1.39e-43, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1802,8 +1807,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HingeJoint: {fileID: 1534467986}
   StrikerType: 1
-  _speed: 15000
-  _pressedPosition: 45
+  MeshRenderer: {fileID: 1534467984}
+  ForceMaterial: {fileID: 2100000, guid: a994c3d9367ba7740a46763cba71e7b4, type: 2}
+  DefaultMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  speed: 15000
+  pressedPosition: 45
 --- !u!1001 &1535662082
 PrefabInstance:
   m_ObjectHideFlags: 0

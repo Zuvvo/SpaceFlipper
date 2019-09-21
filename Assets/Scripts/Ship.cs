@@ -1,15 +1,21 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Ship : MonoBehaviour
 {
     public Rigidbody RigidBody;
-    public Striker LeftStriker;
-    public Striker RightStriker;
 
-    private void Update()
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        if (collision.collider.CompareTag(GameTags.Ball))
+        {
+            BallBase ball = collision.collider.GetComponent<BallBase>();
+            if (ball != null)
+            {
+                ball.AddForceOnShipHit();
+            }
+        }
     }
 }

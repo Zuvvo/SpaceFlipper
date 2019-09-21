@@ -13,7 +13,7 @@ public class Striker : MonoBehaviour
     public Material DefaultMaterial;
 
 
-    private bool moving;
+    private bool isMovingOrMovedUp;
     private bool isForceModeOn;
 
     [SerializeField] private float speed = 15000f;
@@ -21,8 +21,14 @@ public class Striker : MonoBehaviour
     private float damper = 150f;
     private float restPosition = 0f;
 
-    private Vector3 leftStrikerForceVector = new Vector3(2.7f, 0, 1.35f);
-    private Vector3 rightStrikerForceVector = new Vector3(2.7f, 0, -1.35f);
+    private Vector3 leftStrikerPowerHitForce = new Vector3(2.7f, 0, 1.35f);
+    private Vector3 rightStrikerPowerHitForce = new Vector3(2.7f, 0, -1.35f);
+
+    private Vector3 leftStrikerIdleHitForce = new Vector3(1.8f, 0, 0.9f);
+    private Vector3 rightStrikerIdleHitForce = new Vector3(1.8f, 0, -0.9f);
+
+    private Vector3 leftStrikerMovedUpHitForce = new Vector3(1.8f, 0, -0.9f);
+    private Vector3 rightStrikerMovedUpHitForce = new Vector3(1.8f, 0, 0.9f);
 
     private Coroutine forceModeRoutine;
     private float forceModeDelay = 0.3f;
@@ -40,7 +46,7 @@ public class Striker : MonoBehaviour
 
 
         float pos = StrikerType == StrikerPivotType.Left ? pressedPosition : pressedPosition * -1;
-        spring.targetPosition = moving ? pos : restPosition;
+        spring.targetPosition = isMovingOrMovedUp ? pos : restPosition;
 
         HingeJoint.spring = spring;
         HingeJoint.useSpring = true;
@@ -60,13 +66,13 @@ public class Striker : MonoBehaviour
 
     public void MoveBlade()
     {
-        moving = true;
+        isMovingOrMovedUp = true;
         SetForceModeOn();
     }
 
     public void StopBlade()
     {
-        moving = false;
+        isMovingOrMovedUp = false;
     }
 
     private void SetForceModeOn()
@@ -96,6 +102,20 @@ public class Striker : MonoBehaviour
 
     private void AddForceBasedOnHitStrikerState(BallBase ball)
     {
-        ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftStrikerForceVector : rightStrikerForceVector);
+        if (isForceModeOn)
+        {
+            ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftStrikerPowerHitForce : rightStrikerPowerHitForce);
+        }
+        else
+        {
+            if (isMovingOrMovedUp)
+            {
+                ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftStrikerMovedUpHitForce : rightStrikerMovedUpHitForce);
+            }
+            else
+            {
+                ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftStrikerIdleHitForce : rightStrikerIdleHitForce);
+            }
+        }
     }
 }

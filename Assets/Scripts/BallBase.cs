@@ -16,6 +16,10 @@ public class BallBase : MonoBehaviour
 
     private Vector3 lastFrameVelocity;
 
+    public bool WasHittedRecently { get; private set; }
+    private readonly float allowToHitTimeReset = 0.2f;
+    private float allowToHitTimer = 0;
+
     private bool isFastTrailOn;
     private const float speedThreshold = 1.5f;
 
@@ -34,7 +38,24 @@ public class BallBase : MonoBehaviour
     {
         lastFrameVelocity = Rigidbody.velocity;
         LastFrameCenterPoint = Collider.bounds.center;
+        SetHittedState();
         SetTrailBasedOnSpeed();
+    }
+
+    private void SetHittedState()
+    {
+        if (WasHittedRecently)
+        {
+            allowToHitTimer += Time.deltaTime;
+            if(allowToHitTimer >= allowToHitTimeReset)
+            {
+                WasHittedRecently = false;
+            }
+        }
+        else
+        {
+            allowToHitTimer = 0;
+        }
     }
 
     private void SetTrailBasedOnSpeed()
@@ -63,6 +84,26 @@ public class BallBase : MonoBehaviour
 
     public void AddForceOnStrikerHit(Vector3 leftStrikeForceVector)
     {
-        Rigidbody.velocity = lastFrameVelocity + leftStrikeForceVector;
+        if (!WasHittedRecently)
+        {
+            Debug.LogWarningFormat("{0} + {1} = {2}", lastFrameVelocity, leftStrikeForceVector, lastFrameVelocity + leftStrikeForceVector);
+            Rigidbody.velocity = lastFrameVelocity.normalized + leftStrikeForceVector;
+            WasHittedRecently = true;
+        }
+        else
+        {
+            Debug.LogErrorFormat("BAD HIT!!! {0}", Rigidbody.velocity);
+        }
+    }
+
+    public void AddForceOnShipHit()
+    {
+        if (!WasHittedRecently)
+        {
+            float xVel = lastFrameVelocity.x;
+            float zVel = lastFrameVelocity.z;
+            Rigidbody.velocity = new Vector3(-xVel, 0, zVel).normalized;
+            WasHittedRecently = true;
+        }
     }
 }

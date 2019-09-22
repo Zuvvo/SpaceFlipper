@@ -16,23 +16,18 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        RaycastForObjectOnLastFramePosition();
+        RaycastForShipToLastFramePosition();
         lastFramePos = transform.position;
     }
 
-    private void RaycastForObjectOnLastFramePosition()
+    private void RaycastForShipToLastFramePosition()
     {
         RaycastHit ray;
         Debug.DrawLine(transform.position, lastFramePos, Color.red, 0.1f);
         if (Physics.Raycast(transform.position, transform.position - lastFramePos, out ray, (transform.position - lastFramePos).magnitude))
         {
             ShipCollider shipCollider = ray.collider.GetComponent<ShipCollider>();
-            if (shipCollider != null)
-            {
-                Debug.Log("hit");
-                Destroy(gameObject);
-                shipCollider.OnCollision();
-            }
+            OnCollisionWithShip(shipCollider);
         }
     }
 
@@ -41,11 +36,16 @@ public class Projectile : MonoBehaviour
         if (other.CompareTag(GameTags.Ship))
         {
             ShipCollider shipCollider = other.GetComponent<ShipCollider>();
-            if (shipCollider != null)
-            {
-                Destroy(gameObject);
-                shipCollider.OnCollision();
-            }
+            OnCollisionWithShip(shipCollider);
+        }
+    }
+
+    private void OnCollisionWithShip(ShipCollider shipCollider)
+    {
+        if (shipCollider != null)
+        {
+            Destroy(gameObject);
+            shipCollider.OnCollision();
         }
     }
 }

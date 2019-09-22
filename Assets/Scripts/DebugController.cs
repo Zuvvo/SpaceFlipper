@@ -16,21 +16,21 @@ public class DebugController : MonoBehaviour
     
     public void Update()
     {
-        if (Input.GetKeyDown(TeleportBallAtSpawnPoint))
-        {
-            ObjectsController.Instance.TestBallBase.Stop();
-            ObjectsController.Instance.TestBallBase.transform.position = BallTestSpawnPosition.position;
-        }
+        //if (Input.GetKeyDown(TeleportBallAtSpawnPoint))
+        //{
+        //    ObjectsController.Instance.TestBallBase.Stop();
+        //    ObjectsController.Instance.TestBallBase.transform.position = BallTestSpawnPosition.position;
+        //}
 
-        if (Input.GetKeyDown(SpawnBallAtRandomPoint))
-        {
-            SpawnBallOnRandomPoint();
-        }
+        //if (Input.GetKeyDown(SpawnBallAtRandomPoint))
+        //{
+        //    SpawnBallOnRandomPoint();
+        //}
     }
 
     private void Start()
     {
-        StartCoroutine(SpawnBallRoutine());
+       // StartCoroutine(SpawnBallRoutine());
     }
 
     private IEnumerator SpawnBallRoutine()

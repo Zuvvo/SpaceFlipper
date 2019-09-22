@@ -6,12 +6,13 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public EnemyBase EnemyPrefab;
-    public float SpawnDelay;
     public float ShotDelay;
 
     private List<EnemyBase> spawnedEnemies = new List<EnemyBase>();
     private List<EnemySpawner> enemySpawners = new List<EnemySpawner>();
 
+    private float spawnStartDelay = 2;
+    private float spawnInterval = 0.2f;
     private static EnemyController _instance;
     public static EnemyController Instance
     {
@@ -28,37 +29,21 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         StartCoroutine(EnemySpawnRoutine());
-        StartCoroutine(EnemyShotRoutine());
-    }
-
-    private IEnumerator EnemyShotRoutine()
-    {
-        while (true)
-        {
-            if(spawnedEnemies.Count > 0)
-            {
-                EnemyBase randomEnemy = spawnedEnemies[UnityEngine.Random.Range(0, spawnedEnemies.Count - 1)];
-                randomEnemy.Shoot();
-            }
-            yield return new WaitForSeconds(ShotDelay);
-        }
     }
 
     private IEnumerator EnemySpawnRoutine()
     {
-        while (true)
+        List<EnemySpawner> spawners = new List<EnemySpawner>(enemySpawners);
+        spawners.Shuffle();
+        yield return new WaitForSeconds(spawnStartDelay);
+        for (int i = 0; i < spawners.Count; i++)
         {
-            List<EnemySpawner> notOccupiedSpawners = new List<EnemySpawner>(enemySpawners.FindAll(x => !x.IsOccupied));
-            if (notOccupiedSpawners.Count > 0)
+            yield return new WaitForSeconds(spawnInterval);
+            EnemyBase enemy = spawners[i].TrySpawn(EnemyPrefab);
+            if (enemy != null)
             {
-                int randomIndex = UnityEngine.Random.Range(0, notOccupiedSpawners.Count - 1);
-                EnemyBase enemy = notOccupiedSpawners[randomIndex].TrySpawn(EnemyPrefab);
-                if(enemy != null)
-                {
-                    spawnedEnemies.Add(enemy);
-                }
+                spawnedEnemies.Add(enemy);
             }
-            yield return new WaitForSeconds(SpawnDelay);
         }
     }
 

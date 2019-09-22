@@ -106,6 +106,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c15c0b34fc9057428d996f66b039e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MeshRenderer: {fileID: 7736728456004529759}
+  OneDamageColor: {r: 0.46666667, g: 0.16084695, b: 1, a: 1}
+  TwoDamageColor: {r: 0.67058825, g: 0.16084695, b: 1, a: 1}
+  ThreeDamageColor: {r: 0.9372549, g: 0.16084695, b: 1, a: 1}
   Shooters:
   - {fileID: 2119902761365514094}
   - {fileID: 3605145195497595686}

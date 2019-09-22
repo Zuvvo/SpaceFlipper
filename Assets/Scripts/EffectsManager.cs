@@ -28,5 +28,4 @@ public class EffectsManager : MonoBehaviour
         Light light = Instantiate(StrikerEffectPrefab, position, Quaternion.identity);
         Destroy(light, 0.3f);
     }
-
 }

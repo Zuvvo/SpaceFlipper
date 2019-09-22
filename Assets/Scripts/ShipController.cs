@@ -11,6 +11,6 @@ public class ShipController : MonoBehaviour
     {
         float dirHorizontal = Input.GetAxisRaw("Horizontal");
         float dirVertical = Input.GetAxisRaw("Vertical");
-        Ship.RigidBody.velocity = new Vector3(dirVertical * (Speed / 2), 0, -dirHorizontal * Speed);
+        Ship.RigidBody.velocity = new Vector3(dirVertical * (Speed / 2.5f), 0, -dirHorizontal * Speed);
     }
 }

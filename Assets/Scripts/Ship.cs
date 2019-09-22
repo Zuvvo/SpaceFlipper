@@ -2,9 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Ship : MonoBehaviour
 {
+    public float Health = 3;
+
     public Rigidbody RigidBody;
 
     private void OnCollisionEnter(Collision collision)
@@ -16,6 +19,16 @@ public class Ship : MonoBehaviour
             {
                 ball.AddForceOnShipHit();
             }
+        }
+    }
+
+    public void OnCollisionWithProjectile()
+    {
+        Health--;
+        Debug.LogError("Health: " + Health);
+        if(Health == 0)
+        {
+            SceneManager.LoadScene("Game");
         }
     }
 }

@@ -7,6 +7,7 @@ public class EnemyController : MonoBehaviour
 {
     public EnemyBase EnemyPrefab;
     public float SpawnDelay;
+    public float ShotDelay;
 
     private List<EnemyBase> spawnedEnemies = new List<EnemyBase>();
     private List<EnemySpawner> enemySpawners = new List<EnemySpawner>();
@@ -27,6 +28,20 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         StartCoroutine(EnemySpawnRoutine());
+        StartCoroutine(EnemyShotRoutine());
+    }
+
+    private IEnumerator EnemyShotRoutine()
+    {
+        while (true)
+        {
+            if(spawnedEnemies.Count > 0)
+            {
+                EnemyBase randomEnemy = spawnedEnemies[UnityEngine.Random.Range(0, spawnedEnemies.Count - 1)];
+                randomEnemy.Shoot();
+            }
+            yield return new WaitForSeconds(ShotDelay);
+        }
     }
 
     private IEnumerator EnemySpawnRoutine()
@@ -37,14 +52,28 @@ public class EnemyController : MonoBehaviour
             if (notOccupiedSpawners.Count > 0)
             {
                 int randomIndex = UnityEngine.Random.Range(0, notOccupiedSpawners.Count - 1);
-                notOccupiedSpawners[randomIndex].TrySpawn(EnemyPrefab);
+                EnemyBase enemy = notOccupiedSpawners[randomIndex].TrySpawn(EnemyPrefab);
+                if(enemy != null)
+                {
+                    spawnedEnemies.Add(enemy);
+                }
             }
             yield return new WaitForSeconds(SpawnDelay);
         }
     }
 
+    public void UnregisterEnemy(EnemyBase enemy)
+    {
+        spawnedEnemies.Remove(enemy);
+    }
+
     public void RegisterSpawner(EnemySpawner spawner)
     {
         enemySpawners.Add(spawner);
+    }
+
+    private void OnLevelWasLoaded(int level)
+    {
+        _instance = null;
     }
 }

@@ -13,14 +13,16 @@ public class EnemySpawner : MonoBehaviour
         EnemyController.Instance.RegisterSpawner(this);
     }
 
-    public void TrySpawn(EnemyBase prefab)
+    public EnemyBase TrySpawn(EnemyBase prefab)
     {
         if (!IsOccupied)
         {
             enemy = Instantiate(prefab, transform.position, Quaternion.identity);
             enemy.Init(this);
             IsOccupied = true;
+            return enemy;
         }
+        return null;
     }
 
     public void TryToDestroy(EnemyBase enemyBase)

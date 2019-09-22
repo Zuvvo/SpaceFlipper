@@ -51,7 +51,7 @@ public class Striker : MonoBehaviour
         HingeJoint.spring = spring;
         HingeJoint.useSpring = true;
     }
-   
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag(GameTags.Ball))
@@ -60,6 +60,30 @@ public class Striker : MonoBehaviour
             if (ball != null)
             {
                 AddForceBasedOnHitStrikerState(ball);
+            }
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.CompareTag(GameTags.Ball))
+        {
+            BallBase ball = collision.collider.GetComponent<BallBase>();
+            if (ball != null)
+            {
+                ball.SetLastFrameVelocityOnCollisionStay();
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.CompareTag(GameTags.Ball))
+        {
+            BallBase ball = collision.collider.GetComponent<BallBase>();
+            if (ball != null)
+            {
+                ball.SetLastFrameVelocityOnCollisionExit();
             }
         }
     }
@@ -104,17 +128,17 @@ public class Striker : MonoBehaviour
     {
         if (isForceModeOn)
         {
-            ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftStrikerPowerHitForce : rightStrikerPowerHitForce);
+            ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftStrikerPowerHitForce : rightStrikerPowerHitForce, PhysicsConstants.BallSpeedAfterStrikerForceHit);
         }
         else
         {
             if (isMovingOrMovedUp)
             {
-                ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftStrikerMovedUpHitForce : rightStrikerMovedUpHitForce);
+                ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftStrikerMovedUpHitForce : rightStrikerMovedUpHitForce, PhysicsConstants.BallSpeedAfterStrikerIdleHit);
             }
             else
             {
-                ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftStrikerIdleHitForce : rightStrikerIdleHitForce);
+                ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftStrikerIdleHitForce : rightStrikerIdleHitForce, PhysicsConstants.BallSpeedAfterStrikerIdleHit);
             }
         }
     }

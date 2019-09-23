@@ -11,8 +11,9 @@ public class EnemyController : MonoBehaviour
     private List<EnemyBase> spawnedEnemies = new List<EnemyBase>();
     private List<EnemySpawner> enemySpawners = new List<EnemySpawner>();
 
-    private float spawnStartDelay = 2;
-    private float spawnInterval = 0.2f;
+    private bool enemySpawnInitialized;
+    private float spawnStartDelay = 0;
+    private float spawnInterval = 0.7f;
     private static EnemyController _instance;
     public static EnemyController Instance
     {
@@ -26,7 +27,12 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void Start()
+    private bool allEnemySpawned;
+
+    public int EnemyCount { get { return spawnedEnemies.Count; } }
+    public int KilledEnemyCounter { get; private set; }
+
+    public void TryInitEnemySpawning()
     {
         StartCoroutine(EnemySpawnRoutine());
     }
@@ -43,13 +49,21 @@ public class EnemyController : MonoBehaviour
             if (enemy != null)
             {
                 spawnedEnemies.Add(enemy);
+                GameController.Instance.CallOnGameStateChanged();
             }
         }
+        allEnemySpawned = true;
     }
 
     public void UnregisterEnemy(EnemyBase enemy)
     {
         spawnedEnemies.Remove(enemy);
+        KilledEnemyCounter++;
+        GameController.Instance.CallOnGameStateChanged();
+        if(allEnemySpawned && spawnedEnemies.Count == 0)
+        {
+            GameController.Instance.EndGameWin();
+        }
     }
 
     public void RegisterSpawner(EnemySpawner spawner)

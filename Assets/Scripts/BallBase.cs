@@ -48,6 +48,7 @@ public class BallBase : MonoBehaviour
     public void SetGravityState(bool state)
     {
         Rigidbody.constraints = (RigidbodyConstraints)(state ? notFrozenConstaints : frozenConstraints);
+        enabled = !state;
     }
 
     private void Update()

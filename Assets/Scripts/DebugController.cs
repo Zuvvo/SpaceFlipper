@@ -24,7 +24,8 @@ public class DebugController : MonoBehaviour
 
         //if (Input.GetKeyDown(SpawnBallAtRandomPoint))
         //{
-        //    SpawnBallOnRandomPoint();
+        //    BallBase ball = SpawnBallOnRandomPoint();
+        //    ball.Rigidbody.AddForce(new Vector3(-1, 0, 0), ForceMode.Impulse);
         //}
     }
 
@@ -42,11 +43,12 @@ public class DebugController : MonoBehaviour
         }
     }
 
-    private void SpawnBallOnRandomPoint()
+    private BallBase SpawnBallOnRandomPoint()
     {
         Vector3 pos = new Vector3(BallTestSpawnPosition.position.x, BallTestSpawnPosition.position.y, BallTestSpawnPosition.position.z + UnityEngine.Random.Range(0, 2f));
         BallBase ball = Instantiate(BallToSpawn, pos, Quaternion.identity, null);
         ball.gameObject.name = "Ball " + ballCounter;
         ballCounter++;
+        return ball;
     }
 }

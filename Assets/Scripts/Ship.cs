@@ -28,7 +28,7 @@ public class Ship : MonoBehaviour
         Debug.LogError("Health: " + Health);
         if(Health == 0)
         {
-            SceneManager.LoadScene("Game");
+            GameController.Instance.EndGameLose();
         }
     }
 }

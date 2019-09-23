@@ -12,6 +12,7 @@ public class Projectile : MonoBehaviour
     private void Start()
     {
         lastFramePos = transform.position;
+        Destroy(gameObject, 8);
     }
 
     private void Update()

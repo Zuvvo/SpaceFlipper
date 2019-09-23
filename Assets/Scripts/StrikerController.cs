@@ -18,11 +18,11 @@ public class StrikerController : MonoBehaviour
     {
         for (int i = 0; i < Strikers.Length; i++)
         {
-            if (Input.GetKeyDown(StrikerInputs[i]))
+            if (Input.GetKeyDown(StrikerInputs[i]) || Input.GetMouseButtonDown(i))
             {
                 Strikers[i].MoveBlade();
             }
-            else if(Input.GetKeyUp(StrikerInputs[i]))
+            else if(Input.GetKeyUp(StrikerInputs[i]) || Input.GetMouseButtonUp(i))
             {
                 Strikers[i].StopBlade();
             }

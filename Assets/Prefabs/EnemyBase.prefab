@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 7736728456004529759}
   - component: {fileID: 4407219958616604975}
   - component: {fileID: 2887005960246692692}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: EnemyBase
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,9 +107,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MeshRenderer: {fileID: 7736728456004529759}
-  OneDamageColor: {r: 0.46666667, g: 0.16084695, b: 1, a: 1}
-  TwoDamageColor: {r: 0.67058825, g: 0.16084695, b: 1, a: 1}
-  ThreeDamageColor: {r: 0.9372549, g: 0.16084695, b: 1, a: 1}
+  OneDamageColor: {r: 0.6156863, g: 0.4586154, b: 0.06581525, a: 1}
+  TwoDamageColor: {r: 0.4117647, g: 0.4586154, b: 0.06581525, a: 1}
+  ThreeDamageColor: {r: 0.15294118, g: 0.4586154, b: 0.06581525, a: 1}
   Shooters:
   - {fileID: 2119902761365514094}
   - {fileID: 3605145195497595686}
@@ -124,6 +124,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shooter
+      objectReference: {fileID: 0}
+    - target: {fileID: 3697875162752990346, guid: 9f3f226548eb82741a14147e2ce49966,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3697875162752990346, guid: 9f3f226548eb82741a14147e2ce49966,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7803051275139600675, guid: 9f3f226548eb82741a14147e2ce49966,
         type: 3}
@@ -180,6 +190,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3836572282299012452, guid: 9f3f226548eb82741a14147e2ce49966,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f3f226548eb82741a14147e2ce49966, type: 3}
 --- !u!4 &2471649104106074591 stripped
@@ -211,6 +226,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Shooter2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3697875162752990346, guid: 9f3f226548eb82741a14147e2ce49966,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 7803051275139600675, guid: 9f3f226548eb82741a14147e2ce49966,
         type: 3}
@@ -266,6 +286,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836572282299012452, guid: 9f3f226548eb82741a14147e2ce49966,
+        type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9f3f226548eb82741a14147e2ce49966, type: 3}

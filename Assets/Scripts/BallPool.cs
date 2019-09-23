@@ -5,7 +5,9 @@ using UnityEngine;
 
 public class BallPool : MonoBehaviour
 {
-    public Transform BallSpawnPlace;
+    public Transform BallSpawnPlaceMin;
+    public Transform BallSpawnPlaceMax;
+
     public BallBase BallPrefab;
 
     public int BallLimit = 4;
@@ -15,6 +17,8 @@ public class BallPool : MonoBehaviour
     private float ballSpawnIntervalMax = 1.5f;
     private int ballCounter = 0;
     private List<BallBase> ballsInPool = new List<BallBase>();
+
+    public int BallsCount { get { return ballsInPool.Count; } }
 
     private void Start()
     {
@@ -47,10 +51,12 @@ public class BallPool : MonoBehaviour
 
     private void AddBallToPool()
     {
-        BallBase ball = Instantiate(BallPrefab, BallSpawnPlace.position, Quaternion.identity);
+        Vector3 randomPos = PhysicsTools.GetRandomPositionBetweenVectors(BallSpawnPlaceMin.position, BallSpawnPlaceMax.position);
+        BallBase ball = Instantiate(BallPrefab, randomPos, Quaternion.identity);
         ball.SetGravityState(true);
         ballsInPool.Add(ball);
         ball.gameObject.name = "Ball " + ballCounter;
         ballCounter++;
+        GameController.Instance.CallOnGameStateChanged();
     }
 }

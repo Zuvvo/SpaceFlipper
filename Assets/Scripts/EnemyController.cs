@@ -57,12 +57,15 @@ public class EnemyController : MonoBehaviour
 
     public void UnregisterEnemy(EnemyBase enemy)
     {
-        spawnedEnemies.Remove(enemy);
-        KilledEnemyCounter++;
-        GameController.Instance.CallOnGameStateChanged();
-        if(allEnemySpawned && spawnedEnemies.Count == 0)
+        if (!GameController.GameEnded)
         {
-            GameController.Instance.EndGameWin();
+            spawnedEnemies.Remove(enemy);
+            KilledEnemyCounter++;
+            GameController.Instance.CallOnGameStateChanged();
+            if (allEnemySpawned && spawnedEnemies.Count == 0)
+            {
+                GameController.Instance.EndGameWin();
+            }
         }
     }
 

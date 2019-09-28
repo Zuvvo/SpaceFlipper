@@ -7,6 +7,7 @@ public class Striker : MonoBehaviour
 {
     public HingeJoint HingeJoint;
     public StrikerPivotType StrikerType;
+    public StrikerState StrikerState;
 
     public MeshRenderer MeshRenderer;
     public Material ForceMaterial;
@@ -18,6 +19,7 @@ public class Striker : MonoBehaviour
 
     [SerializeField] private float speed = 15000f;
     [SerializeField] private float pressedPosition = 45f;
+    [SerializeField] private float dodgePosition = -90f;
     private float damper = 150f;
     private float restPosition = 0f;
 
@@ -45,13 +47,20 @@ public class Striker : MonoBehaviour
         spring.damper = damper;
 
 
-        float pos = StrikerType == StrikerPivotType.Left ? pressedPosition : pressedPosition * -1;
-        spring.targetPosition = isMovingOrMovedUp ? pos : restPosition;
+        if (StrikerState == StrikerState.Default)
+        {
+            float pos = StrikerType == StrikerPivotType.Left ? pressedPosition : pressedPosition * -1;
+            spring.targetPosition = isMovingOrMovedUp ? pos : restPosition;
+        }
+        else if(StrikerState == StrikerState.Dodge)
+        {
+            spring.targetPosition = StrikerType == StrikerPivotType.Left ? dodgePosition : dodgePosition * -1;
+        }
 
         HingeJoint.spring = spring;
-        HingeJoint.useSpring = true;
     }
 
+    #region collisions
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.CompareTag(GameTags.Ball))
@@ -87,6 +96,7 @@ public class Striker : MonoBehaviour
             }
         }
     }
+    #endregion
 
     public void MoveBlade()
     {
@@ -142,4 +152,17 @@ public class Striker : MonoBehaviour
             }
         }
     }
+
+    #region special moves
+    public void SetStrikerDown()
+    {
+        StrikerState = StrikerState.Dodge;
+    }
+
+    public void SetStrikerToDefaultState()
+    {
+        StrikerState = StrikerState.Default;
+    }
+
+    #endregion
 }

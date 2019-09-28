@@ -18,6 +18,8 @@ public class GameController : MonoBehaviour
     public bool GameStarted { get; private set; }
     public float GameTime { get; private set; }
 
+    public static bool GameEnded;
+
     private static GameController _instance;
     public static GameController Instance
     {
@@ -29,6 +31,11 @@ public class GameController : MonoBehaviour
             }
             return _instance;
         }
+    }
+
+    private void Awake()
+    {
+        GameEnded = false;
     }
 
     private void Start()
@@ -67,12 +74,14 @@ public class GameController : MonoBehaviour
 
     public void EndGameWin()
     {
+        GameEnded = true;
         Time.timeScale = 0;
         UiFinishGameInfo.Init(true);
     }
 
     public void EndGameLose()
     {
+        GameEnded = true;
         Time.timeScale = 0;
         UiFinishGameInfo.Init(false);
     }

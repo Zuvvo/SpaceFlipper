@@ -39,6 +39,6 @@ public class UiFinishGameInfo : MonoBehaviour
         {
             HeaderText.text = loseInfo;
         }
-        ScoreText.text = string.Format("Time: {0}\nEnemies killed: {1}", Math.Floor(GameController.Instance.GameTime * 100) / 100, EnemyController.Instance.KilledEnemyCounter);
+        ScoreText.text = string.Format("Time: {0}s\nEnemies killed: {1}", Math.Floor(GameController.Instance.GameTime * 100) / 100, EnemyController.Instance.KilledEnemyCounter);
     }
 }

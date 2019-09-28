@@ -29,16 +29,19 @@ public class StrikerController : MonoBehaviour
         }
     }
 
-    private static BallBase _ballBase;
-    public static BallBase BallBase
+    public void OnDodge()
     {
-        get
+        for (int i = 0; i < Strikers.Length; i++)
         {
-            if(_ballBase == null)
-            {
-                _ballBase = FindObjectOfType<BallBase>();
-            }
-            return _ballBase;
+            Strikers[i].SetStrikerDown();
+        }
+    }
+    
+    public void SetStrikersToDefault()
+    {
+        for (int i = 0; i < Strikers.Length; i++)
+        {
+            Strikers[i].SetStrikerToDefaultState();
         }
     }
 }

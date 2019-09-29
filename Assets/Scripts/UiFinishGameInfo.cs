@@ -25,7 +25,7 @@ public class UiFinishGameInfo : MonoBehaviour
     public void TryAgainClick()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Menu");
     }
 
     public void Init(bool isGameWon)

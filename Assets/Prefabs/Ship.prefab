@@ -217,6 +217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 3
+  ShipController: {fileID: 555989075}
   RigidBody: {fileID: 3096357382058106661}
 --- !u!54 &3096357382058106661
 Rigidbody:
@@ -246,11 +247,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faea6967c85aa804f9067e84e0313776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShipController: {fileID: 555989075}
   StrikerKeyboardInputs: 7a00000078000000
   Strikers:
   - {fileID: 3096357381560074832}
   - {fileID: 3096357382941849521}
+  PlayerShip: {fileID: 3096357382058106586}
 --- !u!114 &555989075
 MonoBehaviour:
   m_ObjectHideFlags: 0

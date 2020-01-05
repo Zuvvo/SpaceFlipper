@@ -8,12 +8,12 @@ public class UiDebug : MonoBehaviour
     public Text DebugText;
 
     private BallPool ballPool;
-    private Ship ship;
+    private PlayerShip ship;
     private EnemyController enemyController;
 
     private GameController gameController;
     
-    public void Init(BallPool ballPool, Ship ship, EnemyController enemyController)
+    public void Init(BallPool ballPool, PlayerShip ship, EnemyController enemyController)
     {
         this.ballPool = ballPool;
         this.ship = ship;
@@ -25,7 +25,10 @@ public class UiDebug : MonoBehaviour
 
     private void OnDestroy()
     {
-        gameController.OnGameStateChanged -= RefreshUi;
+        if(gameController != null)
+        {
+            gameController.OnGameStateChanged -= RefreshUi;
+        }
     }
 
     private void RefreshUi()

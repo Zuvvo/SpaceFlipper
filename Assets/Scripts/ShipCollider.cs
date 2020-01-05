@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShipCollider : MonoBehaviour
 {
-    public Ship Ship;
+    public PlayerShip Ship;
 
     public void OnCollision()
     {

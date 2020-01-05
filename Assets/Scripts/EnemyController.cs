@@ -6,7 +6,6 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     public EnemyBase EnemyPrefab;
-    public float ShotDelay;
 
     private List<EnemyBase> spawnedEnemies = new List<EnemyBase>();
     private List<EnemySpawner> enemySpawners = new List<EnemySpawner>();

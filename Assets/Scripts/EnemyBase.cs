@@ -16,8 +16,8 @@ public class EnemyBase : MonoBehaviour
     private float maxHealth = 4;
 
     private EnemySpawner associatedSpawner;
-    private float shotDelayMin = 0.8f;
-    private float shotDelayMax = 1.1f;
+    private float shotDelayMin = 2f;
+    private float shotDelayMax = 3.5f;
 
     private float currentHealth;
 

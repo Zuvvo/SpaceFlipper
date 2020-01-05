@@ -4,11 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Ship : MonoBehaviour
+public class PlayerShip : MonoBehaviour
 {
     public float Health = 3;
+    public ShipController ShipController;
+    public PlayerInfo PlayerInfo { get; private set; }
 
     public Rigidbody RigidBody;
+
+    public void Init(PlayerInfo playerInfo)
+    {
+        PlayerInfo = playerInfo;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GamepadDetector : MonoBehaviour
 {
-    public static bool IsControllerConnected;
+    public static bool IsAnyControllerConnected;
     public static event Action<bool> OnControllerConnectedStatusChanged;
     private static bool initialized = false;
 
@@ -39,17 +39,17 @@ public class GamepadDetector : MonoBehaviour
             {
                 if (!string.IsNullOrEmpty(joyStickNames[i]))
                 {
-                    if (!IsControllerConnected)
+                    if (!IsAnyControllerConnected)
                     {
-                        IsControllerConnected = true;
+                        IsAnyControllerConnected = true;
                         CallOnControllerConnectedStatusChanged();
                     }
                 }
                 else
                 {
-                    if (IsControllerConnected)
+                    if (IsAnyControllerConnected)
                     {
-                        IsControllerConnected = false;
+                        IsAnyControllerConnected = false;
                         CallOnControllerConnectedStatusChanged();
                     }
                 }
@@ -60,6 +60,6 @@ public class GamepadDetector : MonoBehaviour
 
     private void CallOnControllerConnectedStatusChanged()
     {
-        OnControllerConnectedStatusChanged?.Invoke(IsControllerConnected);
+        OnControllerConnectedStatusChanged?.Invoke(IsAnyControllerConnected);
     }
 }

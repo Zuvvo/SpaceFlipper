@@ -371,8 +371,12 @@
     <Compile Include="Assets\Scripts\ObjectsController.cs" />
     <Compile Include="Assets\Scripts\PhysicsConstants.cs" />
     <Compile Include="Assets\Scripts\PhysicsTools.cs" />
+    <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\PlayerInfo.cs" />
+    <Compile Include="Assets\Scripts\PlayerShip.cs" />
+    <Compile Include="Assets\Scripts\PlayersManager.cs" />
+    <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
-    <Compile Include="Assets\Scripts\Ship.cs" />
     <Compile Include="Assets\Scripts\ShipCollider.cs" />
     <Compile Include="Assets\Scripts\ShipController.cs" />
     <Compile Include="Assets\Scripts\Striker.cs" />

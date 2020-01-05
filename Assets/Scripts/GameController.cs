@@ -9,10 +9,11 @@ public class GameController : MonoBehaviour
 {
     public BallPool BallPool;
     public Transform BallSpawnPosition;
-    
-    public ShipController ShipController;
+    public PlayerSpawner PlayerSpawner;
     public UiDebug UiDebug;
     public UiFinishGameInfo UiFinishGameInfo;
+
+    public List<PlayerShip> ActivePlayerShips = new List<PlayerShip>();
 
     public int BallCountInPlay = 0;
     public event Action OnGameStateChanged;
@@ -39,14 +40,9 @@ public class GameController : MonoBehaviour
         GameEnded = false;
     }
 
-    private void Start()
-    {
-        UiDebug.Init(BallPool, ShipController.Ship, EnemyController.Instance);
-    }
-
     private void Update()
     {
-        bool isKeyDown = GamepadDetector.IsControllerConnected ? GamePad.GetButtonDown(GamePad.Button.Y, GamePad.Index.Any) : Input.GetKeyDown(KeyCode.Space);
+        bool isKeyDown = GamepadDetector.IsAnyControllerConnected ? GamePad.GetButtonDown(GamePad.Button.Y, GamePad.Index.Any) : Input.GetKeyDown(KeyCode.Space);
         if (isKeyDown)
         {
             BallBase ball = BallPool.TryTakeBallToPlay();
@@ -69,6 +65,11 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void InitUiForPlayer(ShipController shipController)
+    {
+        UiDebug.Init(BallPool, shipController.Ship, EnemyController.Instance);
+    }
+
     public void CallOnGameStateChanged()
     {
         OnGameStateChanged?.Invoke();
@@ -81,6 +82,12 @@ public class GameController : MonoBehaviour
         UiFinishGameInfo.Init(true);
     }
 
+    public void CreatePlayer(PlayerInfo playerInfo)
+    {
+        PlayerShip ship = PlayerSpawner.SpawnPlayer(playerInfo);
+        ActivePlayerShips.Add(ship);
+    }
+
     public void EndGameLose()
     {
         GameEnded = true;
@@ -91,5 +98,18 @@ public class GameController : MonoBehaviour
     private void OnLevelWasLoaded(int level)
     {
         _instance = null;
+
+        CreateAllPlayersOnStart();
+    }
+
+    private void CreateAllPlayersOnStart()
+    {
+        List<PlayerInfo> activePlayers = PlayersManager.Instance.ActivePlayers;
+
+        for (int i = 0; i < activePlayers.Count; i++)
+        {
+            PlayerInfo player = activePlayers[i];
+            CreatePlayer(player);
+        }
     }
 }

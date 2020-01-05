@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &9026621497442397842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5242042466585022907}
+  - component: {fileID: 6612179756692363872}
+  m_Layer: 0
+  m_Name: PlayersManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5242042466585022907
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9026621497442397842}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.3427743, y: 0.55112696, z: -7.0325513}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6612179756692363872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9026621497442397842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89f7fcf1477c335488bea6169598d733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllPlayersData:
+  - Name: Player
+    IsKeyboardAndMouse: 1
+    GamepadIndex: 0
+  - Name: PlayerPad1
+    IsKeyboardAndMouse: 0
+    GamepadIndex: 1
+  - Name: PlayerPad2
+    IsKeyboardAndMouse: 0
+    GamepadIndex: 2
+  - Name: PlayerPad3
+    IsKeyboardAndMouse: 0
+    GamepadIndex: 3
+  - Name: PlayerPad4
+    IsKeyboardAndMouse: 0
+    GamepadIndex: 4
+  ActivePlayers: []

@@ -8,6 +8,7 @@ public class StrikerController : MonoBehaviour
 {
     public KeyCode[] StrikerKeyboardInputs;
     public Striker[] Strikers;
+    public PlayerShip PlayerShip;
 
 
     private float gamepadTriggerSensitivity = 0.5f;
@@ -22,7 +23,7 @@ public class StrikerController : MonoBehaviour
 
     private void GetInputs()
     {
-        if (!GamepadDetector.IsControllerConnected)
+        if (PlayerShip.PlayerInfo.IsKeyboardAndMouse)
         {
             TriggerKeyboardAndMouse();
         }
@@ -49,8 +50,8 @@ public class StrikerController : MonoBehaviour
 
     private void TriggerGamepad()
     {
-        float leftTrigger = GamePad.GetTrigger(GamePad.Trigger.LeftTrigger, GamePad.Index.Any);
-        float rightTrigger = GamePad.GetTrigger(GamePad.Trigger.RightTrigger, GamePad.Index.Any);
+        float leftTrigger = GamePad.GetTrigger(GamePad.Trigger.LeftTrigger, PlayerShip.PlayerInfo.GamepadIndex);
+        float rightTrigger = GamePad.GetTrigger(GamePad.Trigger.RightTrigger, PlayerShip.PlayerInfo.GamepadIndex);
 
         if (Strikers[0].StrikerState == StrikerState.Default)
         {
@@ -73,7 +74,7 @@ public class StrikerController : MonoBehaviour
 
     private void TryUseStriker(GamePad.Trigger trigger, Striker striker, ref bool triggerState)
     {
-        float axis = GamePad.GetTrigger(trigger, GamePad.Index.Any);
+        float axis = GamePad.GetTrigger(trigger, PlayerShip.PlayerInfo.GamepadIndex);
         if(!triggerState)
         {
             if(axis >= gamepadTriggerSensitivity)

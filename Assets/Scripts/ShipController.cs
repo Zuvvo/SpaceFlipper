@@ -10,7 +10,7 @@ public class ShipController : MonoBehaviour
     public GamePad.Button GemepadDodgeButton = GamePad.Button.B;
 
     public StrikerController StrikerController;
-    public Ship Ship;
+    public PlayerShip Ship;
     public float Speed = 20;
     public float DodgeSpeed = 100;
     public float DodgeTimeDelay = 2;
@@ -26,26 +26,36 @@ public class ShipController : MonoBehaviour
         float speed = IsDodgeMoving ? DodgeSpeed : Speed;
         Ship.RigidBody.velocity = new Vector3(vertical * (speed / 1.5f), 0, -horizontal * (speed));
 
-        bool dodgeKeyDown = GamepadDetector.IsControllerConnected ? GamePad.GetButtonDown(GemepadDodgeButton, GamePad.Index.Any) : Input.GetKeyDown(DodgeKey);
-
-        if (isDodgeReady && dodgeKeyDown && (horizontal != 0 || vertical != 0))
+        if (isDodgeReady && IsDodgeKeyDown() && (horizontal != 0 || vertical != 0))
         {
             TryDodge();
         }
     }
 
-    private void GetAxis(out float horizontal, out float vertical)
+    private bool IsDodgeKeyDown()
     {
-        if (GamepadDetector.IsControllerConnected)
+        if (Ship.PlayerInfo.IsKeyboardAndMouse)
         {
-            Vector2 axis = GamePad.GetAxis(GamePad.Axis.LeftStick, GamePad.Index.Any);
-            horizontal = axis.x;
-            vertical = axis.y;
+            return Input.GetKeyDown(DodgeKey);
         }
         else
         {
+            return GamePad.GetButtonDown(GemepadDodgeButton, Ship.PlayerInfo.GamepadIndex);
+        }
+    }
+
+    private void GetAxis(out float horizontal, out float vertical)
+    {
+        if (Ship.PlayerInfo.IsKeyboardAndMouse)
+        {
             horizontal = Input.GetAxisRaw("Horizontal");
             vertical = Input.GetAxisRaw("Vertical");
+        }
+        else
+        {
+            Vector2 axis = GamePad.GetAxis(GamePad.Axis.LeftStick, Ship.PlayerInfo.GamepadIndex);
+            horizontal = axis.x;
+            vertical = axis.y;
         }
     }
 

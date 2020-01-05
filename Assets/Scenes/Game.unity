@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.43844432, g: 0.48652148, b: 0.5667963, a: 1}
+  m_IndirectSpecularColor: {r: 0.43844447, g: 0.48652226, b: 0.56679744, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -94,8 +94,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
-    m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
+    m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -120,6 +120,75 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &48824267
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6131154569282328582, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_Name
+      value: GamepadDetector
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1bfd5920f7cf6af458ec6b41ad237439, type: 3}
 --- !u!1 &70830842
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +235,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 70830842}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -175,8 +244,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -190,7 +257,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Try again! (spacebar)
+  m_Text: Try again! (spacebar / X)
 --- !u!222 &70830845
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -270,6 +337,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -338,18 +406,6 @@ MonoBehaviour:
   TeleportBallAtSpawnPoint: 32
   SpawnBallAtRandomPoint: 306
   BallTestSpawnPosition: {fileID: 1489159749}
---- !u!114 &152185461 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3096357381560074832, guid: 027dd82c6e4af324a8f8297625b9d76a,
-    type: 3}
-  m_PrefabInstance: {fileID: 3096357381678704677}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 990612f5f59ae4d459c883bd41ed0aa5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &364634970
 GameObject:
   m_ObjectHideFlags: 0
@@ -421,6 +477,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -447,53 +504,24 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 3096357381678704677}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555989071}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e2a581c88a89b648b8fef26ae81ad61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &555989071 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3096357382058106587, guid: 027dd82c6e4af324a8f8297625b9d76a,
+--- !u!114 &555989075 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 555989075, guid: 027dd82c6e4af324a8f8297625b9d76a,
     type: 3}
   m_PrefabInstance: {fileID: 3096357381678704677}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &555989074
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555989071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faea6967c85aa804f9067e84e0313776, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StrikerInputs: 7a00000078000000
-  Strikers:
-  - {fileID: 152185461}
-  - {fileID: 1534467988}
---- !u!114 &555989075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555989071}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 241813309e2229747a4ee5076d470440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DodgeKey: 304
-  StrikerController: {fileID: 555989074}
-  Ship: {fileID: 396719871}
-  Speed: 1.6
-  DodgeSpeed: 15
-  DodgeTimeDelay: 2
-  DodgeMoveTime: 0.05
 --- !u!1 &581805723
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,7 +582,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 581805723}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -563,8 +591,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -688,6 +714,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -823,11 +850,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner (10)
-      objectReference: {fileID: 0}
     - target: {fileID: 4079668704016659834, guid: 4d14b6d2f99740547b30205194a5fb4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -883,6 +905,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner (10)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d14b6d2f99740547b30205194a5fb4d, type: 3}
 --- !u!1001 &860374661
@@ -892,11 +919,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner (8)
-      objectReference: {fileID: 0}
     - target: {fileID: 4079668704016659834, guid: 4d14b6d2f99740547b30205194a5fb4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -951,6 +973,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner (8)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d14b6d2f99740547b30205194a5fb4d, type: 3}
@@ -1044,11 +1071,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner (4)
-      objectReference: {fileID: 0}
     - target: {fileID: 4079668704016659834, guid: 4d14b6d2f99740547b30205194a5fb4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1104,6 +1126,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner (4)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d14b6d2f99740547b30205194a5fb4d, type: 3}
 --- !u!1 &1115220274
@@ -1152,7 +1179,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1115220274}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1161,8 +1188,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
@@ -1192,11 +1217,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner (6)
-      objectReference: {fileID: 0}
     - target: {fileID: 4079668704016659834, guid: 4d14b6d2f99740547b30205194a5fb4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1252,6 +1272,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner (6)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d14b6d2f99740547b30205194a5fb4d, type: 3}
 --- !u!1 &1206415801
@@ -1302,7 +1327,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1206415801}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -1347,8 +1372,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &1206415804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1358,7 +1381,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1206415801}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1367,8 +1390,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
@@ -1378,6 +1399,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1206415805
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1435,7 +1457,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1223358989}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1444,8 +1466,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
@@ -1455,6 +1475,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1223358992
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1490,7 +1511,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1294836217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalAxis: Horizontal
@@ -1509,7 +1530,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1294836217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 0}
@@ -1617,11 +1638,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner (7)
-      objectReference: {fileID: 0}
     - target: {fileID: 4079668704016659834, guid: 4d14b6d2f99740547b30205194a5fb4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1677,6 +1693,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner (7)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d14b6d2f99740547b30205194a5fb4d, type: 3}
 --- !u!1 &1359746215
@@ -1707,7 +1728,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1359746215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -1724,7 +1745,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1359746215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
@@ -1838,6 +1859,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1865,11 +1887,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner (11)
-      objectReference: {fileID: 0}
     - target: {fileID: 4079668704016659834, guid: 4d14b6d2f99740547b30205194a5fb4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1925,20 +1942,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner (11)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d14b6d2f99740547b30205194a5fb4d, type: 3}
---- !u!114 &1534467988 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3096357382941849521, guid: 027dd82c6e4af324a8f8297625b9d76a,
-    type: 3}
-  m_PrefabInstance: {fileID: 3096357381678704677}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 990612f5f59ae4d459c883bd41ed0aa5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1535662082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1946,11 +1956,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner (5)
-      objectReference: {fileID: 0}
     - target: {fileID: 4079668704016659834, guid: 4d14b6d2f99740547b30205194a5fb4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2006,6 +2011,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner (5)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d14b6d2f99740547b30205194a5fb4d, type: 3}
 --- !u!1001 &1597297724
@@ -2015,11 +2025,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 4079668704016659834, guid: 4d14b6d2f99740547b30205194a5fb4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2075,6 +2080,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner (3)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d14b6d2f99740547b30205194a5fb4d, type: 3}
 --- !u!1 &1600406330
@@ -2123,7 +2133,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1600406330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -2132,8 +2142,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 11
@@ -2227,6 +2235,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -2309,7 +2318,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1642882086}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -2318,8 +2327,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
@@ -2329,6 +2336,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1642882090
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2344,11 +2352,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner (2)
-      objectReference: {fileID: 0}
     - target: {fileID: 4079668704016659834, guid: 4d14b6d2f99740547b30205194a5fb4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2403,6 +2406,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d14b6d2f99740547b30205194a5fb4d, type: 3}
@@ -2501,7 +2509,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1839706872}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -2510,8 +2518,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 10
@@ -2561,7 +2567,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1878629043}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -2570,8 +2576,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
@@ -2620,11 +2624,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner (1)
-      objectReference: {fileID: 0}
     - target: {fileID: 4079668704016659834, guid: 4d14b6d2f99740547b30205194a5fb4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2680,6 +2679,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner (1)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d14b6d2f99740547b30205194a5fb4d, type: 3}
 --- !u!1001 &1986831921
@@ -2689,11 +2693,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner (9)
-      objectReference: {fileID: 0}
     - target: {fileID: 4079668704016659834, guid: 4d14b6d2f99740547b30205194a5fb4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2748,6 +2747,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner (9)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d14b6d2f99740547b30205194a5fb4d, type: 3}
@@ -2900,25 +2904,6 @@ MonoBehaviour:
   EnemyPrefab: {fileID: 2887005960246692692, guid: 1897fb687cc8e35468c2b1b812efcec7,
     type: 3}
   ShotDelay: 0.3
---- !u!1 &2077076863 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3096357382395233626, guid: 027dd82c6e4af324a8f8297625b9d76a,
-    type: 3}
-  m_PrefabInstance: {fileID: 3096357381678704677}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2077076864
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2077076863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cdbc4f8a003df1498afe55a74465768, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Ship: {fileID: 396719871}
 --- !u!1001 &2312361576175777255
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2926,11 +2911,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
-        type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner
-      objectReference: {fileID: 0}
     - target: {fileID: 4079668704016659834, guid: 4d14b6d2f99740547b30205194a5fb4d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2986,6 +2966,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7554515344921403154, guid: 4d14b6d2f99740547b30205194a5fb4d,
+        type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d14b6d2f99740547b30205194a5fb4d, type: 3}
 --- !u!1001 &3096357381678704677
@@ -2998,26 +2983,6 @@ PrefabInstance:
     - target: {fileID: 3096357382058106587, guid: 027dd82c6e4af324a8f8297625b9d76a,
         type: 3}
       propertyPath: m_Name
-      value: Ship
-      objectReference: {fileID: 0}
-    - target: {fileID: 3096357382058106587, guid: 027dd82c6e4af324a8f8297625b9d76a,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 3096357381560074832, guid: 027dd82c6e4af324a8f8297625b9d76a,
-        type: 3}
-      propertyPath: dodgePosition
-      value: -85
-      objectReference: {fileID: 0}
-    - target: {fileID: 3096357382941849521, guid: 027dd82c6e4af324a8f8297625b9d76a,
-        type: 3}
-      propertyPath: dodgePosition
-      value: -85
-      objectReference: {fileID: 0}
-    - target: {fileID: 3096357382395233626, guid: 027dd82c6e4af324a8f8297625b9d76a,
-        type: 3}
-      propertyPath: m_TagString
       value: Ship
       objectReference: {fileID: 0}
     - target: {fileID: 3096357382058106663, guid: 027dd82c6e4af324a8f8297625b9d76a,
@@ -3096,11 +3061,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3589124834262347929, guid: b5575410183910245810477c4e5ad75c,
-        type: 3}
-      propertyPath: m_Name
-      value: BallPool
-      objectReference: {fileID: 0}
     - target: {fileID: 1851394390341982212, guid: b5575410183910245810477c4e5ad75c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3155,6 +3115,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3589124834262347929, guid: b5575410183910245810477c4e5ad75c,
+        type: 3}
+      propertyPath: m_Name
+      value: BallPool
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5575410183910245810477c4e5ad75c, type: 3}

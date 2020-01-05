@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using GamepadInput;
 
 public class UiFinishGameInfo : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class UiFinishGameInfo : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || GamePad.GetButtonDown(GamePad.Button.X, GamePad.Index.Any))
         {
             TryAgainClick();
         }

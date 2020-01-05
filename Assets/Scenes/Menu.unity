@@ -94,8 +94,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
-    m_ShowResolutionOverlay: 1
     m_ExportTrainingData: 0
+    m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -127,11 +127,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1208638252}
     m_Modifications:
-    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_Name
-      value: UIMenuButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3731367549411573073, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -252,6 +247,11 @@ PrefabInstance:
       propertyPath: OnClick.OnTrigger.SoundData.SoundName
       value: Bubble Pop
       objectReference: {fileID: 0}
+    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_Name
+      value: UIMenuButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8143542820442940794, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: m_text
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 58200356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
@@ -362,11 +362,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 58200357}
     m_Modifications:
-    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_Name
-      value: Button - Options
-      objectReference: {fileID: 0}
     - target: {fileID: 3731367549411573073, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -472,6 +467,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6687933582050778937, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6983420456867564721, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: ButtonCategory
@@ -481,6 +481,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ButtonName
       value: Settings
+      objectReference: {fileID: 0}
+    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_Name
+      value: Button - Options
       objectReference: {fileID: 0}
     - target: {fileID: 8143542820442940794, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
@@ -513,11 +518,6 @@ PrefabInstance:
       value: 'Settings
 
 '
-      objectReference: {fileID: 0}
-    - target: {fileID: 6687933582050778937, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5982e25dacf8954ca6101b1e860030a, type: 3}
@@ -708,8 +708,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -730,8 +728,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -846,8 +842,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -868,8 +862,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -882,13 +874,9 @@ MonoBehaviour:
   OnInverseVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   OnVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   SelectedButton: {fileID: 0}
   ShowBehavior:
     Animation:
@@ -994,8 +982,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -1016,8 +1002,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -1055,7 +1039,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 138323714}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -1139,8 +1123,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Ship select - work in progress
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1296,8 +1278,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Controls - work in progress
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1405,11 +1385,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 722562087}
     m_Modifications:
-    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_Name
-      value: UIMenuButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3731367549411573073, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1530,6 +1505,11 @@ PrefabInstance:
       propertyPath: OnClick.OnTrigger.SoundData.SoundName
       value: Bubble Pop
       objectReference: {fileID: 0}
+    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_Name
+      value: UIMenuButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8143542820442940794, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: m_text
@@ -1613,8 +1593,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Game loading...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1943,8 +1921,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -1965,8 +1941,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -2081,8 +2055,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -2103,8 +2075,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -2117,13 +2087,9 @@ MonoBehaviour:
   OnInverseVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   OnVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   SelectedButton: {fileID: 0}
   ShowBehavior:
     Animation:
@@ -2229,8 +2195,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -2251,8 +2215,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -2290,7 +2252,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 722562086}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -2499,8 +2461,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -2521,8 +2481,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -2637,8 +2595,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -2659,8 +2615,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -2673,13 +2627,9 @@ MonoBehaviour:
   OnInverseVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   OnVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   SelectedButton: {fileID: 0}
   ShowBehavior:
     Animation:
@@ -2785,8 +2735,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -2807,8 +2755,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -2846,7 +2792,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 773363709}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -2930,8 +2876,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Settings - Work in progress
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3337,8 +3281,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -3359,8 +3301,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -3475,8 +3415,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -3497,8 +3435,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -3511,13 +3447,9 @@ MonoBehaviour:
   OnInverseVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   OnVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   SelectedButton: {fileID: 0}
   ShowBehavior:
     Animation:
@@ -3623,8 +3555,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -3645,8 +3575,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -3684,7 +3612,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1113922163}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -3720,11 +3648,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1544785473}
     m_Modifications:
-    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_Name
-      value: UIMenuButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3731367549411573073, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3845,6 +3768,11 @@ PrefabInstance:
       propertyPath: OnClick.OnTrigger.SoundData.SoundName
       value: Bubble Pop
       objectReference: {fileID: 0}
+    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_Name
+      value: UIMenuButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8143542820442940794, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: m_text
@@ -3880,10 +3808,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 58200357}
     m_Modifications:
-    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
+    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
-      propertyPath: m_Name
-      value: Button - Quit
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1020446337}
+    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3731367549411573073, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
@@ -3990,35 +3943,10 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
+    - target: {fileID: 6687933582050778937, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      propertyPath: m_Enabled
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1020446337}
-    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: QuitClick
-      objectReference: {fileID: 0}
-    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6983420456867564721, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
@@ -4029,6 +3957,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ButtonName
       value: Quit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_Name
+      value: Button - Quit
       objectReference: {fileID: 0}
     - target: {fileID: 8143542820442940794, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
@@ -4059,11 +3992,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Quit
-      objectReference: {fileID: 0}
-    - target: {fileID: 6687933582050778937, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5982e25dacf8954ca6101b1e860030a, type: 3}
@@ -4254,8 +4182,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -4276,8 +4202,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -4392,8 +4316,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -4414,8 +4336,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -4428,13 +4348,9 @@ MonoBehaviour:
   OnInverseVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   OnVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   SelectedButton: {fileID: 0}
   ShowBehavior:
     Animation:
@@ -4540,8 +4456,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -4562,8 +4476,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -4601,7 +4513,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1208638251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -4810,8 +4722,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -4832,8 +4742,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -4948,8 +4856,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -4970,8 +4876,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -4984,13 +4888,9 @@ MonoBehaviour:
   OnInverseVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   OnVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   SelectedButton: {fileID: 0}
   ShowBehavior:
     Animation:
@@ -5096,8 +4996,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -5118,8 +5016,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -5157,7 +5053,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1277298478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -5193,11 +5089,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 58200357}
     m_Modifications:
-    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_Name
-      value: Button - Controls
-      objectReference: {fileID: 0}
     - target: {fileID: 3731367549411573073, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5303,6 +5194,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6687933582050778937, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6983420456867564721, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: ButtonCategory
@@ -5312,6 +5208,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ButtonName
       value: Controls
+      objectReference: {fileID: 0}
+    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_Name
+      value: Button - Controls
       objectReference: {fileID: 0}
     - target: {fileID: 8143542820442940794, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
@@ -5344,11 +5245,6 @@ PrefabInstance:
       value: 'Controls
 
 '
-      objectReference: {fileID: 0}
-    - target: {fileID: 6687933582050778937, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5982e25dacf8954ca6101b1e860030a, type: 3}
@@ -5413,8 +5309,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Level select - work in progress
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5522,11 +5416,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 58200357}
     m_Modifications:
-    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_Name
-      value: Button - Level Select
-      objectReference: {fileID: 0}
     - target: {fileID: 3731367549411573073, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5632,6 +5521,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6687933582050778937, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6983420456867564721, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: ButtonCategory
@@ -5641,6 +5535,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ButtonName
       value: Level Select
+      objectReference: {fileID: 0}
+    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_Name
+      value: Button - Level Select
       objectReference: {fileID: 0}
     - target: {fileID: 8143542820442940794, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
@@ -5673,11 +5572,6 @@ PrefabInstance:
       value: 'Level select
 
 '
-      objectReference: {fileID: 0}
-    - target: {fileID: 6687933582050778937, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5982e25dacf8954ca6101b1e860030a, type: 3}
@@ -5868,8 +5762,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -5890,8 +5782,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -6006,8 +5896,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -6028,8 +5916,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -6042,13 +5928,9 @@ MonoBehaviour:
   OnInverseVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   OnVisibilityChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Doozy.Engine.Progress.ProgressEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   SelectedButton: {fileID: 0}
   ShowBehavior:
     Animation:
@@ -6154,8 +6036,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -6176,8 +6056,6 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
       GameEvents: []
       SoundData:
         SoundSource: 0
@@ -6215,7 +6093,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1544785472}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -6271,7 +6149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1557221947}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalAxis: Horizontal
@@ -6290,7 +6168,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1557221947}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 0}
@@ -6356,7 +6234,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1709277857}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -6365,8 +6243,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300000, guid: 3d319b7b87160184ab8371f60543edec, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -6376,6 +6252,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1709277860
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6433,7 +6310,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1791130718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreReversedGraphics: 1
@@ -6450,7 +6327,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1791130718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
@@ -6518,11 +6395,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 138323715}
     m_Modifications:
-    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_Name
-      value: UIMenuButton
-      objectReference: {fileID: 0}
     - target: {fileID: 3731367549411573073, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6628,6 +6500,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6687933582050778937, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6983420456867564721, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
       propertyPath: ButtonCategory
@@ -6642,6 +6519,11 @@ PrefabInstance:
         type: 3}
       propertyPath: OnClick.OnTrigger.SoundData.SoundName
       value: Bubble Pop
+      objectReference: {fileID: 0}
+    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_Name
+      value: UIMenuButton
       objectReference: {fileID: 0}
     - target: {fileID: 8143542820442940794, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
@@ -6672,11 +6554,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_text
       value: Back
-      objectReference: {fileID: 0}
-    - target: {fileID: 6687933582050778937, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5982e25dacf8954ca6101b1e860030a, type: 3}
@@ -6784,10 +6661,35 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 58200357}
     m_Modifications:
-    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
+    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
-      propertyPath: m_Name
-      value: Button - Quick Start
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1020446337}
+    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuickStartClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3731367549411573073, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
@@ -6894,35 +6796,10 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
+    - target: {fileID: 6687933582050778937, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      propertyPath: m_Enabled
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1020446337}
-    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: QuickStartClick
-      objectReference: {fileID: 0}
-    - target: {fileID: 1336467805197320948, guid: f5982e25dacf8954ca6101b1e860030a,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6983420456867564721, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
@@ -6939,10 +6816,10 @@ PrefabInstance:
       propertyPath: OnClick.Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6687933582050778937, guid: f5982e25dacf8954ca6101b1e860030a,
+    - target: {fileID: 7446224842523986657, guid: f5982e25dacf8954ca6101b1e860030a,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
+      propertyPath: m_Name
+      value: Button - Quick Start
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f5982e25dacf8954ca6101b1e860030a, type: 3}
@@ -6952,3 +6829,72 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 473356548702442567}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6842318474050234291
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2853663614595363261, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6131154569282328582, guid: 1bfd5920f7cf6af458ec6b41ad237439,
+        type: 3}
+      propertyPath: m_Name
+      value: GamepadDetector
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1bfd5920f7cf6af458ec6b41ad237439, type: 3}

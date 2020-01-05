@@ -25,6 +25,7 @@ public class Ship : MonoBehaviour
     public void OnCollisionWithProjectile()
     {
         Health--;
+        GameController.Instance.CallOnGameStateChanged();
         Debug.LogError("Health: " + Health);
         if(Health == 0)
         {

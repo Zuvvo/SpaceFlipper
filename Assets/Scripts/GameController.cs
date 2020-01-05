@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GamepadInput;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
@@ -45,7 +46,8 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        bool isKeyDown = GamepadDetector.IsControllerConnected ? GamePad.GetButtonDown(GamePad.Button.Y, GamePad.Index.Any) : Input.GetKeyDown(KeyCode.Space);
+        if (isKeyDown)
         {
             BallBase ball = BallPool.TryTakeBallToPlay();
             if(ball != null)

@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour
                 Vector3 pos = new Vector3(BallSpawnPosition.position.x, BallSpawnPosition.position.y, BallSpawnPosition.position.z + UnityEngine.Random.Range(0, 2f));
                 ball.SetGravityState(false);
                 ball.transform.position = pos;
-                ball.Rigidbody.AddForce(new Vector3(-1, 0, 0), ForceMode.Impulse);
+                ball.Rigidbody.AddForce(new Vector3(-1, 0, 0), ForceMode2D.Impulse);
                 BallCountInPlay++;
             }
             CallOnGameStateChanged();

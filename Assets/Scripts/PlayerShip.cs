@@ -10,7 +10,7 @@ public class PlayerShip : MonoBehaviour
     public ShipController ShipController;
     public PlayerInfo PlayerInfo { get; private set; }
 
-    public Rigidbody RigidBody;
+    public Rigidbody2D Rigidbody;
 
     public void Init(PlayerInfo playerInfo)
     {

@@ -7,9 +7,9 @@ public class BallBase : MonoBehaviour
 {
     public TrailRenderer FastSpeedTrail;
     public TrailRenderer SlowSpeedTrail;
-    public Rigidbody Rigidbody;
-    public Collider Collider;
-    public Vector3 LastFrameCenterPoint { get; private set; }
+    public Rigidbody2D Rigidbody;
+    public CircleCollider2D Collider;
+    public Vector2 LastFrameCenterPoint { get; private set; }
 
     private float minVel = 0.1f;
     private float maxVel = 0.5f;
@@ -41,13 +41,13 @@ public class BallBase : MonoBehaviour
 
     public void Stop()
     {
-        Rigidbody.velocity = Vector3.zero;
-        Rigidbody.angularVelocity = Vector3.zero;
+        Rigidbody.velocity = Vector2.zero;
+        Rigidbody.angularVelocity = 0;
     }
 
     public void SetGravityState(bool state)
     {
-        Rigidbody.constraints = (RigidbodyConstraints)(state ? notFrozenConstaints : frozenConstraints);
+        Rigidbody.constraints = (RigidbodyConstraints2D)(state ? notFrozenConstaints : frozenConstraints);
         enabled = !state;
     }
 
@@ -80,6 +80,7 @@ public class BallBase : MonoBehaviour
 
     private void SetTrailBasedOnSpeed()
     {
+        Debug.Log(Rigidbody.velocity.magnitude);
         isFastTrailOn = Rigidbody.velocity.magnitude >= PhysicsConstants.BallSpeedPowerShotThreshold;
         FastSpeedTrail.emitting = isFastTrailOn;
         SlowSpeedTrail.emitting = !isFastTrailOn;

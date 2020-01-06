@@ -5,23 +5,26 @@ using UnityEngine;
 
 public class Striker : MonoBehaviour
 {
-    public HingeJoint HingeJoint;
+    public HingeJoint2D HingeJoint;
     public StrikerPivotType StrikerType;
     public StrikerState StrikerState;
 
-    public MeshRenderer MeshRenderer;
-    public Material ForceMaterial;
-    public Material DefaultMaterial;
+    public SpriteRenderer SpriteRenderer;
+    public Color ForceColor;
+    public Color DefaultColor;
 
 
     private bool isMovingOrMovedUp;
     private bool isForceModeOn;
 
-    [SerializeField] private float speed = 15000f;
-    [SerializeField] private float pressedPosition = 45f;
-    [SerializeField] private float dodgePosition = -90f;
-    private float damper = 150f;
-    private float restPosition = 0f;
+    private JointAngleLimits2D angleLimitsLeftStriker = new JointAngleLimits2D() { min = -45, max = 45 };
+    private JointAngleLimits2D angleLimitsRightStriker = new JointAngleLimits2D() { min = 45, max = -45 };
+
+    private JointAngleLimits2D dodgeLimitsLeftStriker = new JointAngleLimits2D() { min = -115, max = -115 };
+    private JointAngleLimits2D dodgeLimitsRightStriker = new JointAngleLimits2D() { min = -245, max = -245 };
+
+    private JointMotor2D motorSpeedUp = new JointMotor2D() { maxMotorTorque = 10000, motorSpeed = 2000 };
+    private JointMotor2D motorSpeedDown = new JointMotor2D() { maxMotorTorque = 10000, motorSpeed = -2000 };
 
     private Vector3 leftStrikerPowerHitForce = new Vector3(2.7f, 0, 1.35f);
     private Vector3 rightStrikerPowerHitForce = new Vector3(2.7f, 0, -1.35f);
@@ -37,27 +40,7 @@ public class Striker : MonoBehaviour
 
     private void Start()
     {
-        HingeJoint.useSpring = true;
-    }
-
-    private void Update()
-    {
-        JointSpring spring = new JointSpring();
-        spring.spring = speed;
-        spring.damper = damper;
-
-
-        if (StrikerState == StrikerState.Default)
-        {
-            float pos = StrikerType == StrikerPivotType.Left ? pressedPosition : pressedPosition * -1;
-            spring.targetPosition = isMovingOrMovedUp ? pos : restPosition;
-        }
-        else if(StrikerState == StrikerState.Dodge)
-        {
-            spring.targetPosition = StrikerType == StrikerPivotType.Left ? dodgePosition : dodgePosition * -1;
-        }
-
-        HingeJoint.spring = spring;
+        SetStrikerToDefaultState();
     }
 
     #region collisions
@@ -100,12 +83,17 @@ public class Striker : MonoBehaviour
 
     public void MoveBlade()
     {
+        Debug.Log("MoveBlade");
         isMovingOrMovedUp = true;
+        HingeJoint.useMotor = true;
+        HingeJoint.motor = StrikerType == StrikerPivotType.Left ? motorSpeedUp : motorSpeedDown;
         SetForceModeOn();
     }
 
     public void StopBlade()
     {
+        // HingeJoint.motor = StrikerType == StrikerPivotType.Left ? motorSpeedDown : motorSpeedUp;
+        HingeJoint.useMotor = false;
         isMovingOrMovedUp = false;
     }
 
@@ -113,7 +101,7 @@ public class Striker : MonoBehaviour
     {
         SetForceModeOff();
         isForceModeOn = true;
-        MeshRenderer.material = ForceMaterial;
+        SpriteRenderer.color = ForceColor;
         forceModeRoutine = StartCoroutine(ForceModeDelayRoutine());
     }
 
@@ -124,7 +112,7 @@ public class Striker : MonoBehaviour
             StopCoroutine(forceModeRoutine);
             forceModeRoutine = null;
         }
-        MeshRenderer.material = DefaultMaterial;
+        SpriteRenderer.color = DefaultColor;
         isForceModeOn = false;
     }
 
@@ -157,11 +145,13 @@ public class Striker : MonoBehaviour
     public void SetStrikerDown()
     {
         StrikerState = StrikerState.Dodge;
+        HingeJoint.limits = StrikerType == StrikerPivotType.Left ? dodgeLimitsLeftStriker : dodgeLimitsRightStriker;
     }
 
     public void SetStrikerToDefaultState()
     {
         StrikerState = StrikerState.Default;
+        HingeJoint.limits = StrikerType == StrikerPivotType.Left ? angleLimitsLeftStriker : angleLimitsRightStriker;
     }
 
     #endregion

@@ -24,7 +24,7 @@ public class ShipController : MonoBehaviour
         GetAxis(out float horizontal, out float vertical);
 
         float speed = IsDodgeMoving ? DodgeSpeed : Speed;
-        Ship.RigidBody.velocity = new Vector3(vertical * (speed / 1.5f), 0, -horizontal * (speed));
+        Ship.Rigidbody.velocity = new Vector2(horizontal * (speed), vertical * (speed / 1.5f));
 
         if (isDodgeReady && IsDodgeKeyDown() && (horizontal != 0 || vertical != 0))
         {

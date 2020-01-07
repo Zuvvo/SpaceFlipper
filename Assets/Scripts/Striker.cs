@@ -26,14 +26,14 @@ public class Striker : MonoBehaviour
     private JointMotor2D motorSpeedUp = new JointMotor2D() { maxMotorTorque = 10000, motorSpeed = 2000 };
     private JointMotor2D motorSpeedDown = new JointMotor2D() { maxMotorTorque = 10000, motorSpeed = -2000 };
 
-    private Vector3 leftStrikerPowerHitForce = new Vector3(2.7f, 0, 1.35f);
-    private Vector3 rightStrikerPowerHitForce = new Vector3(2.7f, 0, -1.35f);
+    private Vector2 leftStrikerPowerHitForce = new Vector2(-1.35f, 2.7f);
+    private Vector2 rightStrikerPowerHitForce = new Vector2(1.35f, 2.7f);
 
-    private Vector3 leftStrikerIdleHitForce = new Vector3(1.8f, 0, 0.9f);
-    private Vector3 rightStrikerIdleHitForce = new Vector3(1.8f, 0, -0.9f);
+    private Vector2 leftStrikerIdleHitForce = new Vector2(-0.9f, 1.8f);
+    private Vector2 rightStrikerIdleHitForce = new Vector2(0.9f, 1.8f);
 
-    private Vector3 leftStrikerMovedUpHitForce = new Vector3(1.8f, 0, -0.9f);
-    private Vector3 rightStrikerMovedUpHitForce = new Vector3(1.8f, 0, 0.9f);
+    private Vector2 leftStrikerMovedUpHitForce = new Vector2(0.9f, 1.8f);
+    private Vector2 rightStrikerMovedUpHitForce = new Vector2(-0.9f, 1.8f);
 
     private Coroutine forceModeRoutine;
     private float forceModeDelay = 0.3f;
@@ -44,7 +44,8 @@ public class Striker : MonoBehaviour
     }
 
     #region collisions
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag(GameTags.Ball))
         {
@@ -56,7 +57,7 @@ public class Striker : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.collider.CompareTag(GameTags.Ball))
         {
@@ -68,7 +69,7 @@ public class Striker : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.collider.CompareTag(GameTags.Ball))
         {

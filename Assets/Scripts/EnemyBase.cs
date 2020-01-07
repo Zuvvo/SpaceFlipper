@@ -36,14 +36,14 @@ public class EnemyBase : MonoBehaviour
         StartCoroutine(EnemyShotRoutine());
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag(GameTags.Ball))
         {
             BallBase ball = collision.collider.GetComponent<BallBase>();
             if(ball != null)
             {
-                ContactPoint contactPoint = collision.GetContact(0);
+                ContactPoint2D contactPoint = collision.GetContact(0);
                 CollisionSide colSide = CollisionSideDetect.GetCollisionSide(ball.LastFrameCenterPoint, contactPoint.point);
                 ball.SetOppositeVelocity(colSide, PhysicsConstants.BallSpeedAfterEnemyHit);
                 if (ball.LastFrameVelocity.magnitude < PhysicsConstants.BallSpeedPowerShotThreshold)

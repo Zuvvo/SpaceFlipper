@@ -14,13 +14,10 @@ public class BallBase : MonoBehaviour
     private float minVel = 0.1f;
     private float maxVel = 0.5f;
 
-    public Vector3 LastFrameVelocity { get; private set; }
+    public Vector2 LastFrameVelocity { get; private set; }
 
     private readonly float allowToHitTimeReset = 0.2f;
     private float allowToHitTimer = 0;
-
-    private int frozenConstraints = 4;
-    private int notFrozenConstaints = 0;
 
     private bool isFastTrailOn;
     private bool wasHittedRecently
@@ -47,7 +44,7 @@ public class BallBase : MonoBehaviour
 
     public void SetGravityState(bool state)
     {
-        Rigidbody.constraints = (RigidbodyConstraints2D)(state ? notFrozenConstaints : frozenConstraints);
+        Rigidbody.gravityScale = state ? 1 : 0;
         enabled = !state;
     }
 
@@ -80,25 +77,42 @@ public class BallBase : MonoBehaviour
 
     private void SetTrailBasedOnSpeed()
     {
-        Debug.Log(Rigidbody.velocity.magnitude);
+       // Debug.Log(Rigidbody.velocity.magnitude);
         isFastTrailOn = Rigidbody.velocity.magnitude >= PhysicsConstants.BallSpeedPowerShotThreshold;
         FastSpeedTrail.emitting = isFastTrailOn;
         SlowSpeedTrail.emitting = !isFastTrailOn;
     }
 
-    public void SetOppositeVelocity(CollisionSide colliderSide, float endSpeed)
+    public void SetOppositeVelocity(CollisionSide colliderSide)
     {
         float xVel = LastFrameVelocity.x;
-        float zVel = LastFrameVelocity.z;
+        float yVel = LastFrameVelocity.y;
         switch (colliderSide)
         {
             case CollisionSide.Bottom:
             case CollisionSide.Top:
-                Rigidbody.velocity = new Vector3(-xVel, 0, zVel).normalized * endSpeed;
+                Rigidbody.velocity = new Vector2(-xVel, yVel);
                 break;
             case CollisionSide.Left:
             case CollisionSide.Right:
-                Rigidbody.velocity = new Vector3(xVel, 0, -zVel).normalized * endSpeed;
+                Rigidbody.velocity = new Vector2(xVel, -yVel);
+                break;
+        }
+    }
+
+    public void SetOppositeVelocity(CollisionSide colliderSide, float endSpeed)
+    {
+        float xVel = LastFrameVelocity.x;
+        float yVel = LastFrameVelocity.y;
+        switch (colliderSide)
+        {
+            case CollisionSide.Bottom:
+            case CollisionSide.Top:
+                Rigidbody.velocity = new Vector2(-xVel, yVel).normalized * endSpeed;
+                break;
+            case CollisionSide.Left:
+            case CollisionSide.Right:
+                Rigidbody.velocity = new Vector2(xVel, -yVel).normalized * endSpeed;
                 break;
         }
     }
@@ -111,10 +125,10 @@ public class BallBase : MonoBehaviour
 
     public void SetLastFrameVelocityOnCollisionStay()
     {
-       // Debug.Log(gameObject.name + " on collision stay before: " + Rigidbody.velocity);
+        //Debug.Log(gameObject.name + " on collision stay before: " + Rigidbody.velocity);
         Rigidbody.velocity = LastFrameVelocity;
         LastFrameVelocity = Rigidbody.velocity;
-       // Debug.Log(gameObject.name + " on collision stay after: " + Rigidbody.velocity);
+        //Debug.Log(gameObject.name + " on collision stay after: " + Rigidbody.velocity);
     }
 
     public void SetLastFrameVelocityOnCollisionExit()
@@ -125,13 +139,13 @@ public class BallBase : MonoBehaviour
        // Debug.Log(gameObject.name + " on collision EXIT after: " + Rigidbody.velocity);
     }
 
-    public void AddForceOnStrikerHit(Vector3 forceVector, float endSpeed)
+    public void AddForceOnStrikerHit(Vector2 forceVector, float endSpeed)
     {
         if (!wasHittedRecently)
         {
-            Vector3 finalVelocityVector = (LastFrameVelocity.normalized + forceVector).normalized * endSpeed;
+            Vector2 finalVelocityVector = (LastFrameVelocity.normalized + forceVector).normalized * endSpeed;
             Rigidbody.velocity = finalVelocityVector;
-           // Debug.LogWarningFormat("[{0}]{1} + {2} = {3} || speed: {4}", gameObject.name, lastFrameVelocity.normalized, forceVector, finalVelocityVector, Rigidbody.velocity.magnitude);
+            Debug.LogWarningFormat("[{0}]{1} + {2} = {3} || speed: {4}", gameObject.name, LastFrameVelocity.normalized, forceVector, finalVelocityVector, Rigidbody.velocity.magnitude);
             LastFrameVelocity = Rigidbody.velocity;
             wasHittedRecently = true;
         }
@@ -148,8 +162,8 @@ public class BallBase : MonoBehaviour
         if (!wasHittedRecently)
         {
             float xVel = LastFrameVelocity.x;
-            float zVel = LastFrameVelocity.z;
-            Rigidbody.velocity = new Vector3(-xVel, 0, zVel).normalized;
+            float yVel = LastFrameVelocity.y;
+            Rigidbody.velocity = new Vector3(-xVel, yVel).normalized;
             LastFrameVelocity = Rigidbody.velocity;
             wasHittedRecently = true;
         }
@@ -159,8 +173,8 @@ public class BallBase : MonoBehaviour
             wasHittedRecently = true;
         }
     }
-
-    private void OnCollisionExit(Collision collision)
+    
+    private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.collider.CompareTag(GameTags.Ball))
         {

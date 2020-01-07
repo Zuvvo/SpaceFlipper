@@ -363,6 +363,7 @@
     <Compile Include="Assets\Scripts\EnemyShooter.cs" />
     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
     <Compile Include="Assets\Scripts\ExtensionMethods.cs" />
+    <Compile Include="Assets\Scripts\FrameCollider.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GameTags.cs" />
     <Compile Include="Assets\Scripts\GamepadDetector.cs" />

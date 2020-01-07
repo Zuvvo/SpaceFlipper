@@ -8,7 +8,8 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public BallPool BallPool;
-    public Transform BallSpawnPosition;
+    public Transform BallSpawnPositionMin;
+    public Transform BallSpawnPositionMax;
     public PlayerSpawner PlayerSpawner;
     public UiDebug UiDebug;
     public UiFinishGameInfo UiFinishGameInfo;
@@ -48,10 +49,11 @@ public class GameController : MonoBehaviour
             BallBase ball = BallPool.TryTakeBallToPlay();
             if(ball != null)
             {
-                Vector3 pos = new Vector3(BallSpawnPosition.position.x, BallSpawnPosition.position.y, BallSpawnPosition.position.z + UnityEngine.Random.Range(0, 2f));
+                Vector2 pos = PhysicsTools.GetRandomPositionBetweenVectors(BallSpawnPositionMin.position, BallSpawnPositionMax.position);
                 ball.SetGravityState(false);
                 ball.transform.position = pos;
-                ball.Rigidbody.AddForce(new Vector3(-1, 0, 0), ForceMode2D.Impulse);
+                ball.Rigidbody.velocity = Vector2.zero;
+                ball.Rigidbody.AddForce(Vector2.down * PhysicsConstants.BallSpeedAtStart, ForceMode2D.Impulse);
                 BallCountInPlay++;
             }
             CallOnGameStateChanged();

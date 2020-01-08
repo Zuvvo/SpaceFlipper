@@ -380,6 +380,7 @@
     <Compile Include="Assets\Scripts\Projectile.cs" />
     <Compile Include="Assets\Scripts\ShipCollider.cs" />
     <Compile Include="Assets\Scripts\ShipController.cs" />
+    <Compile Include="Assets\Scripts\ShipTrigger.cs" />
     <Compile Include="Assets\Scripts\Striker.cs" />
     <Compile Include="Assets\Scripts\StrikerController.cs" />
     <Compile Include="Assets\Scripts\StrikerPivotType.cs" />

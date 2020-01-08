@@ -157,21 +157,20 @@ public class BallBase : MonoBehaviour
         }
     }
 
-    public void AddForceOnShipHit()
+    public void AddForceOnShipHit(CollisionSide colSide)
     {
         if (!wasHittedRecently)
         {
             float xVel = LastFrameVelocity.x;
             float yVel = LastFrameVelocity.y;
-            Rigidbody.velocity = new Vector3(-xVel, yVel).normalized;
+            Rigidbody.velocity = new Vector2(xVel, -yVel).normalized * PhysicsConstants.BallSpeedAfterShipHit;
             LastFrameVelocity = Rigidbody.velocity;
-            wasHittedRecently = true;
         }
         else
         {
             Rigidbody.velocity = LastFrameVelocity;
-            wasHittedRecently = true;
         }
+        wasHittedRecently = true;
     }
     
     private void OnCollisionExit2D(Collision2D collision)

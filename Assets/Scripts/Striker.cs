@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Striker : MonoBehaviour
 {
+    public Collider2D BottomCollider;
     public HingeJoint2D HingeJoint;
     public StrikerPivotType StrikerType;
     public StrikerState StrikerState;
@@ -13,6 +14,9 @@ public class Striker : MonoBehaviour
     public Color ForceColor;
     public Color DefaultColor;
 
+    public Transform LeftPoint;
+    public Transform RightPoint;
+    public Transform BottomPoint;
 
     private bool isMovingOrMovedUp;
     private bool isForceModeOn;
@@ -35,21 +39,44 @@ public class Striker : MonoBehaviour
     private Vector2 leftStrikerMovedUpHitForce = new Vector2(0.9f, 1.8f);
     private Vector2 rightStrikerMovedUpHitForce = new Vector2(-0.9f, 1.8f);
 
+    private Vector2 leftSideMovedUpHitForce = new Vector2(-1.35f, 1.35f);
+    private Vector2 rightSideMovedUpHitForce = new Vector2(1.35f, 1.35f);
+
+    private Vector2 leftSideIdleHitForce = new Vector2(-1.35f, -1.35f);
+    private Vector2 rightSideIdleHitForce = new Vector2(1.35f, -1.35f);
+
+    private Vector2 leftBottomIdleHitForce = new Vector2(0.9f, -1.35f);
+    private Vector2 leftBottomMovedUpHitForce = new Vector2(-0.9f, -1.35f);
+
+    private Vector2 rightBottomIdleHitForce = new Vector2(-0.9f, -1.35f);
+    private Vector2 rightBottomMovedUpHitForce = new Vector2(0.9f, -1.35f);
+
     private Coroutine forceModeRoutine;
     private float forceModeDelay = 0.3f;
+
+    public Vector2 LastFrameLeftPoint { get; private set; }
+    public Vector2 LastFrameRightPoint { get; private set; }
+    public Vector2 LastFrameBottomPoint { get; private set; }
 
     private void Start()
     {
         SetStrikerToDefaultState();
     }
 
-    #region collisions
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void Update()
     {
-        if (collision.collider.CompareTag(GameTags.Ball))
+        LastFrameLeftPoint = LeftPoint.position;
+        LastFrameRightPoint = RightPoint.position;
+        LastFrameBottomPoint = BottomPoint.position;
+    }
+
+    #region Collisions
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag(GameTags.Ball))
         {
-            BallBase ball = collision.collider.GetComponent<BallBase>();
+            BallBase ball = collision.gameObject.GetComponent<BallBase>();
             if (ball != null)
             {
                 AddForceBasedOnHitStrikerState(ball);
@@ -57,11 +84,11 @@ public class Striker : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.collider.CompareTag(GameTags.Ball))
+        if (collision.gameObject.CompareTag(GameTags.Ball))
         {
-            BallBase ball = collision.collider.GetComponent<BallBase>();
+            BallBase ball = collision.gameObject.GetComponent<BallBase>();
             if (ball != null)
             {
                 ball.SetLastFrameVelocityOnCollisionStay();
@@ -69,11 +96,11 @@ public class Striker : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.collider.CompareTag(GameTags.Ball))
+        if (collision.gameObject.CompareTag(GameTags.Ball))
         {
-            BallBase ball = collision.collider.GetComponent<BallBase>();
+            BallBase ball = collision.gameObject.GetComponent<BallBase>();
             if (ball != null)
             {
                 ball.SetLastFrameVelocityOnCollisionExit();
@@ -82,6 +109,7 @@ public class Striker : MonoBehaviour
     }
     #endregion
 
+    #region Blade move
     public void MoveBlade()
     {
         Debug.Log("MoveBlade");
@@ -122,8 +150,31 @@ public class Striker : MonoBehaviour
         yield return new WaitForSeconds(forceModeDelay);
         SetForceModeOff();
     }
+    #endregion
 
+    #region Add force to ball
     private void AddForceBasedOnHitStrikerState(BallBase ball)
+    {
+        CollisionSide colSide = CollisionSideDetect.GetCollisionSideBasedOnTriangleAndBottomPoint(LastFrameLeftPoint, LastFrameRightPoint, LastFrameBottomPoint, ball.LastFrameCenterPoint);
+
+        switch (colSide)
+        {
+            case CollisionSide.Top:
+                AddForceOnTopSide(ball);
+                break;
+            case CollisionSide.Bottom:
+                AddForceOnBottomSide(ball);
+                break;
+            case CollisionSide.Left:
+                ball.AddForceOnStrikerHit(isMovingOrMovedUp ? leftSideMovedUpHitForce : leftSideIdleHitForce, PhysicsConstants.BallSpeedAfterStrikerIdleHit);
+                break;
+            case CollisionSide.Right:
+                ball.AddForceOnStrikerHit(isMovingOrMovedUp ? rightSideMovedUpHitForce : rightSideIdleHitForce, PhysicsConstants.BallSpeedAfterStrikerIdleHit);
+                break;
+        }
+    }
+
+    private void AddForceOnTopSide(BallBase ball)
     {
         if (isForceModeOn)
         {
@@ -142,7 +193,20 @@ public class Striker : MonoBehaviour
         }
     }
 
-    #region special moves
+    private void AddForceOnBottomSide(BallBase ball)
+    {
+        if (isMovingOrMovedUp)
+        {
+            ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftBottomMovedUpHitForce : rightBottomMovedUpHitForce, PhysicsConstants.BallSpeedAfterStrikerIdleHit);
+        }
+        else
+        {
+            ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftBottomIdleHitForce : rightBottomIdleHitForce, PhysicsConstants.BallSpeedAfterStrikerIdleHit);
+        }
+    }
+    #endregion
+
+    #region Special moves
     public void SetStrikerDown()
     {
         StrikerState = StrikerState.Dodge;

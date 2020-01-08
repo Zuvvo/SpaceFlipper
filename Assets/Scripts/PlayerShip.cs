@@ -17,18 +17,6 @@ public class PlayerShip : MonoBehaviour
         PlayerInfo = playerInfo;
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.CompareTag(GameTags.Ball))
-        {
-            BallBase ball = collision.collider.GetComponent<BallBase>();
-            if (ball != null)
-            {
-                ball.AddForceOnShipHit();
-            }
-        }
-    }
-
     public void OnCollisionWithProjectile()
     {
         Health--;

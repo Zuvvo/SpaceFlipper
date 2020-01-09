@@ -22,6 +22,8 @@ public class ShipTrigger : MonoBehaviour
         }
     }
 
+
+
     private void Update()
     {
         LastFrameBottomPoint = BottomPoint.position;

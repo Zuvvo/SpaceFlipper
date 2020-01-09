@@ -17,6 +17,12 @@ public class ShipController : MonoBehaviour
     public float DodgeMoveTime = 0.1f;
 
     private bool isDodgeReady = true;
+
+    public bool MovingUpBlockedByCollisionDetector { get; set; }
+    public bool MovingDownBlockedByCollisionDetector { get; set; }
+    public bool MovingLeftBlockedByCollisionDetector { get; set; }
+    public bool MovingRightBlockedByCollisionDetector { get; set; }
+
     public bool IsDodgeMoving { get; private set; }
 
     private void Update()
@@ -24,7 +30,7 @@ public class ShipController : MonoBehaviour
         GetAxis(out float horizontal, out float vertical);
 
         float speed = IsDodgeMoving ? DodgeSpeed : Speed;
-        Ship.Rigidbody.velocity = new Vector2(horizontal * (speed), vertical * (speed / 1.5f));
+        Ship.Rigidbody.velocity = new Vector2(horizontal * (speed), vertical * (speed / 1.75f));
 
         if (isDodgeReady && IsDodgeKeyDown() && (horizontal != 0 || vertical != 0))
         {
@@ -56,6 +62,23 @@ public class ShipController : MonoBehaviour
             Vector2 axis = GamePad.GetAxis(GamePad.Axis.LeftStick, Ship.PlayerInfo.GamepadIndex);
             horizontal = axis.x;
             vertical = axis.y;
+        }
+
+        if(horizontal > 0 && MovingRightBlockedByCollisionDetector)
+        {
+            horizontal = 0;
+        }
+        if(horizontal < 0 && MovingLeftBlockedByCollisionDetector)
+        {
+            horizontal = 0;
+        }
+        if(vertical > 0 && MovingUpBlockedByCollisionDetector)
+        {
+            vertical = 0;
+        }
+        if(vertical < 0 && MovingDownBlockedByCollisionDetector)
+        {
+            vertical = 0;
         }
     }
 

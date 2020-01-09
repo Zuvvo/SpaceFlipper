@@ -91,11 +91,11 @@ public class BallBase : MonoBehaviour
         {
             case CollisionSide.Bottom:
             case CollisionSide.Top:
-                Rigidbody.velocity = new Vector2(-xVel, yVel);
+                Rigidbody.velocity = new Vector2(xVel, -yVel);
                 break;
             case CollisionSide.Left:
             case CollisionSide.Right:
-                Rigidbody.velocity = new Vector2(xVel, -yVel);
+                Rigidbody.velocity = new Vector2(-xVel, yVel);
                 break;
         }
     }

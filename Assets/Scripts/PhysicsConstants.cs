@@ -16,4 +16,7 @@ public static class PhysicsConstants
     public const float BallSpeedAfterStrikerForceHit = m * 2.2f;
     public const float BallSpeedAfterStrikerIdleMovingHit = m * 1.5f; //todo
     public const float BallSpeedPowerShotThreshold = m * 1.7f;
+
+
+    public const float MinDistanceToFrames = 1;
 }

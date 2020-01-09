@@ -33,6 +33,6 @@ public class UiDebug : MonoBehaviour
 
     private void RefreshUi()
     {
-        DebugText.text = string.Format(" Health: {0}\n Enemies: {1}\n Balls: {2}/{3}", ship.Health, enemyController.EnemyCount, GameController.Instance.BallCountInPlay, ballPool.BallsCount);
+        DebugText.text = string.Format(" Health: {0}\n Enemies: {1}\n Balls: {2}/{3}", ship.Health, enemyController.EnemyCount, GameController.Instance.BallsInPlay.Count, ballPool.BallsCount);
     }
 }

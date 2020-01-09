@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Striker : MonoBehaviour
 {
-    public Collider2D BottomCollider;
     public HingeJoint2D HingeJoint;
     public StrikerPivotType StrikerType;
     public StrikerState StrikerState;

@@ -29,7 +29,7 @@ public class BallPool : MonoBehaviour
     {
         while (true)
         {
-            if(ballsInPool.Count + GameController.Instance.BallCountInPlay < BallLimit)
+            if(ballsInPool.Count + GameController.Instance.BallsInPlay.Count < BallLimit)
             {
                 AddBallToPool();
             }

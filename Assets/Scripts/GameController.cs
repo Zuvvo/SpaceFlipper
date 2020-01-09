@@ -15,11 +15,11 @@ public class GameController : MonoBehaviour
     public UiFinishGameInfo UiFinishGameInfo;
 
     public List<PlayerShip> ActivePlayerShips = new List<PlayerShip>();
-
-    public int BallCountInPlay = 0;
+    
     public event Action OnGameStateChanged;
     public bool GameStarted { get; private set; }
     public float GameTime { get; private set; }
+    public List<BallBase> BallsInPlay { get; private set; } = new List<BallBase>();
 
     public static bool GameEnded;
 
@@ -43,7 +43,7 @@ public class GameController : MonoBehaviour
 
     private void Update()
     {
-        bool isKeyDown = GamepadDetector.IsAnyControllerConnected ? GamePad.GetButtonDown(GamePad.Button.Y, GamePad.Index.Any) : Input.GetKeyDown(KeyCode.Space);
+        bool isKeyDown = GamePad.GetButtonDown(GamePad.Button.Y, GamePad.Index.Any) || Input.GetKeyDown(KeyCode.Space);
         if (isKeyDown)
         {
             BallBase ball = BallPool.TryTakeBallToPlay();
@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour
                 ball.transform.position = pos;
                 ball.Rigidbody.velocity = Vector2.zero;
                 ball.Rigidbody.AddForce(Vector2.down * PhysicsConstants.BallSpeedAtStart, ForceMode2D.Impulse);
-                BallCountInPlay++;
+                BallsInPlay.Add(ball);
             }
             CallOnGameStateChanged();
             GameStarted = true;
@@ -65,6 +65,15 @@ public class GameController : MonoBehaviour
         {
             GameTime += Time.deltaTime;
         }
+    }
+
+    public void RemoveBallFromPlay(BallBase ball)
+    {
+        if (BallsInPlay.Contains(ball))
+        {
+            BallsInPlay.Remove(ball);
+        }
+        Destroy(ball.gameObject, 1f);
     }
 
     public void InitUiForPlayer(ShipController shipController)

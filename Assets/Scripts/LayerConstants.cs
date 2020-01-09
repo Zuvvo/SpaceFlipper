@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FrameCollider : MonoBehaviour
+public static class LayerConstants
 {
-
+    public const int Frame = 1 << 16;
 }

@@ -364,9 +364,11 @@
     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
     <Compile Include="Assets\Scripts\ExtensionMethods.cs" />
     <Compile Include="Assets\Scripts\FrameCollider.cs" />
+    <Compile Include="Assets\Scripts\FrameTrigger.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GameTags.cs" />
     <Compile Include="Assets\Scripts\GamepadDetector.cs" />
+    <Compile Include="Assets\Scripts\LayerConstants.cs" />
     <Compile Include="Assets\Scripts\LightController.cs" />
     <Compile Include="Assets\Scripts\MainMenuManager.cs" />
     <Compile Include="Assets\Scripts\ObjectsController.cs" />
@@ -379,6 +381,8 @@
     <Compile Include="Assets\Scripts\PlayersManager.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
     <Compile Include="Assets\Scripts\ShipCollider.cs" />
+    <Compile Include="Assets\Scripts\ShipCollisionDetector.cs" />
+    <Compile Include="Assets\Scripts\ShipCollisionRaycaster.cs" />
     <Compile Include="Assets\Scripts\ShipController.cs" />
     <Compile Include="Assets\Scripts\ShipTrigger.cs" />
     <Compile Include="Assets\Scripts\Striker.cs" />

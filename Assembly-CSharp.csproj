@@ -62,6 +62,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Awesome Movement\Demos\2D Demo\SampleMove2D.cs" />
+    <Compile Include="Assets\Awesome Movement\Demos\Pacman\Scripts\Dot.cs" />
+    <Compile Include="Assets\Awesome Movement\Demos\Pacman\Scripts\ModernPacmanInput.cs" />
+    <Compile Include="Assets\Awesome Movement\Demos\Pacman\Scripts\PacmanInput.cs" />
+    <Compile Include="Assets\Awesome Movement\Scripts\Movement.cs" />
+    <Compile Include="Assets\Awesome Movement\Scripts\Movement2D.cs" />
     <Compile Include="Assets\BitStrap\Examples\Animation\AnimationParameters\AnimationParametersExample.cs" />
     <Compile Include="Assets\BitStrap\Examples\Animation\AnimationParameters\IndirectAnimationParametersExample.cs" />
     <Compile Include="Assets\BitStrap\Examples\BlobSerializer\BlobSerializerExample.cs" />
@@ -407,6 +413,7 @@
     <None Include="Assets\Doozy\Examples\Fonts\Baloo_Chettan\OFL.txt" />
     <None Include="Assets\Doozy\Examples\Shaders\DRimLightSelective.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Awesome Movement\Readme.txt" />
     <None Include="Assets\Doozy\Examples\Shaders\DRimLightSolid.shader" />
     <None Include="Assets\Doozy\Examples\Fonts\Unica_One\OFL.txt" />
     <None Include="Assets\Doozy\Examples\Fonts\Monoton\OFL.txt" />

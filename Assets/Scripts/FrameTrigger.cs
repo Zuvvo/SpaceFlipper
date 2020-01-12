@@ -7,24 +7,24 @@ public class FrameTrigger : MonoBehaviour
     public CollisionSide CollisionSide;
     public bool DestroyBallAndProjectiles;
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag(GameTags.Ball))
-        {
-            Debug.Log("OnTriggerEnter2D");
-            BallBase ball = collision.gameObject.GetComponent<BallBase>();
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.CompareTag(GameTags.Ball))
+    //    {
+    //        BallBase ball = collision.gameObject.GetComponent<BallBase>();
             
-            if (ball != null)
-            {
-                if (DestroyBallAndProjectiles)
-                {
-                    GameController.Instance.RemoveBallFromPlay(ball);
-                }
-                else
-                {
-                    ball.SetOppositeVelocity(CollisionSide);
-                }
-            }
-        }
-    }
+    //        if (ball != null)
+    //        {
+    //            Debug.Log("OnTriggerEnter2D");
+    //            if (DestroyBallAndProjectiles)
+    //            {
+    //                GameController.Instance.RemoveBallFromPlay(ball);
+    //            }
+    //            else
+    //            {
+    //                ball.SetOppositeVelocity(CollisionSide);
+    //            }
+    //        }
+    //    }
+    //}
 }

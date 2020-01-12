@@ -326,6 +326,9 @@ MonoBehaviour:
   SlowSpeedTrail: {fileID: 8376524924200176190}
   Rigidbody: {fileID: 2033859867823890513}
   Collider: {fileID: 5490049205890029708}
+  ColliderLayerMask:
+    serializedVersion: 2
+    m_Bits: 65536
 --- !u!50 &2033859867823890513
 Rigidbody2D:
   serializedVersion: 4
@@ -345,7 +348,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!212 &7058138780028546339
 SpriteRenderer:

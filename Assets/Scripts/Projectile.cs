@@ -5,31 +5,45 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public Rigidbody Rigidbody;
+    public Rigidbody2D Rigidbody;
 
     private Vector3 lastFramePos;
+    private RaycastHit2D rayHit;
 
     private void Start()
     {
         lastFramePos = transform.position;
-        Destroy(gameObject, 8);
     }
 
     private void Update()
     {
-        RaycastForShipToLastFramePosition();
-        lastFramePos = transform.position;
+        if (!RaycastForShipToLastFramePosition())
+        {
+            RaycastForLevelFrame();
+            lastFramePos = transform.position;
+        }
     }
 
-    private void RaycastForShipToLastFramePosition()
+    private void RaycastForLevelFrame()
     {
-        RaycastHit ray;
-        Debug.DrawLine(transform.position, lastFramePos, Color.red, 0.1f);
-        if (Physics.Raycast(transform.position, transform.position - lastFramePos, out ray, (transform.position - lastFramePos).magnitude))
+        rayHit = Physics2D.Raycast(transform.position, transform.position - lastFramePos, (transform.position - lastFramePos).magnitude, LayerConstants.Frame);
+        if (rayHit.collider != null)
         {
-            ShipCollider shipCollider = ray.collider.GetComponent<ShipCollider>();
-            OnCollisionWithShip(shipCollider);
+            DestroyProjectile();
         }
+    }
+
+    private bool RaycastForShipToLastFramePosition()
+    {
+        Debug.DrawLine(transform.position, lastFramePos, Color.red, 0.1f);
+        rayHit = Physics2D.Raycast(transform.position, transform.position - lastFramePos, (transform.position - lastFramePos).magnitude, LayerConstants.Ship);
+        if (rayHit.collider != null)
+        {
+            ShipCollider shipCollider = rayHit.collider.GetComponent<ShipCollider>();
+            OnCollisionWithShip(shipCollider);
+            return true;
+        }
+        return false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -48,5 +62,10 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
             shipCollider.OnCollision();
         }
+    }
+
+    public void DestroyProjectile()
+    {
+        Destroy(gameObject);
     }
 }

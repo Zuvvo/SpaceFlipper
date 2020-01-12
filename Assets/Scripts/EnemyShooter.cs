@@ -9,15 +9,16 @@ public class EnemyShooter : MonoBehaviour
 
     private Projectile _lastProjectile;
 
-    private float minForce = -0.4f;
-    private float maxForce = -0.6f;
+    private float minForce = -2f;
+    private float maxForce = -3f;
 
-    private float minAngle = -0.05f;
-    private float maxAngle = 0.05f;
+    private float minAngle = -0.25f;
+    private float maxAngle = 0.25f;
 
     public void InitShot()
     {
         _lastProjectile = Instantiate(ProjectilePrefab, ProjectileSpawnPlace.position, Quaternion.identity);
-        _lastProjectile.Rigidbody.AddForce(new Vector3(UnityEngine.Random.Range(minForce, maxForce), 0, UnityEngine.Random.Range(minAngle, maxAngle)), ForceMode.Impulse);
+        Vector2 forceVector = new Vector2(Random.Range(minAngle, maxAngle), Random.Range(minForce, maxForce));
+        _lastProjectile.Rigidbody.AddForce(forceVector, ForceMode2D.Impulse);
     }
 }

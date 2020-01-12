@@ -24,7 +24,7 @@ public class Striker : MonoBehaviour
     private JointAngleLimits2D angleLimitsRightStriker = new JointAngleLimits2D() { min = 45, max = -45 };
 
     private JointAngleLimits2D dodgeLimitsLeftStriker = new JointAngleLimits2D() { min = -115, max = -115 };
-    private JointAngleLimits2D dodgeLimitsRightStriker = new JointAngleLimits2D() { min = -245, max = -245 };
+    private JointAngleLimits2D dodgeLimitsRightStriker = new JointAngleLimits2D() { min = 115, max = 115 };
 
     private JointMotor2D motorSpeedUp = new JointMotor2D() { maxMotorTorque = 10000, motorSpeed = 2000 };
     private JointMotor2D motorSpeedDown = new JointMotor2D() { maxMotorTorque = 10000, motorSpeed = -2000 };
@@ -51,7 +51,7 @@ public class Striker : MonoBehaviour
     private Vector2 rightBottomMovedUpHitForce = new Vector2(0.9f, -1.35f);
 
     private Coroutine forceModeRoutine;
-    private float forceModeDelay = 0.3f;
+    private float forceModeDelay = 0.25f;
 
     public Vector2 LastFrameLeftPoint { get; private set; }
     public Vector2 LastFrameRightPoint { get; private set; }

@@ -49,12 +49,16 @@ public class GameController : MonoBehaviour
             BallBase ball = BallPool.TryTakeBallToPlay();
             if(ball != null)
             {
+                ball.enabled = false;
                 Vector2 pos = PhysicsTools.GetRandomPositionBetweenVectors(BallSpawnPositionMin.position, BallSpawnPositionMax.position);
                 ball.SetGravityState(false);
                 ball.transform.position = pos;
                 ball.Rigidbody.velocity = Vector2.zero;
                 ball.Rigidbody.AddForce(Vector2.down * PhysicsConstants.BallSpeedAtStart, ForceMode2D.Impulse);
                 BallsInPlay.Add(ball);
+                ball.ResetLastFrameVelocityAndPosition();
+
+                ball.enabled = true;
             }
             CallOnGameStateChanged();
             GameStarted = true;

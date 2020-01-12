@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
-    public MeshRenderer MeshRenderer;
+    public SpriteRenderer SpriteRenderer;
 
     public Color OneDamageColor;
     public Color TwoDamageColor;
@@ -68,13 +68,13 @@ public class EnemyBase : MonoBehaviour
         switch (currentHealth)
         {
             case 3:
-                MeshRenderer.material.color = OneDamageColor;
+                SpriteRenderer.color = OneDamageColor;
                 break;
             case 2:
-                MeshRenderer.material.color = TwoDamageColor;
+                SpriteRenderer.color = TwoDamageColor;
                 break;
             case 1:
-                MeshRenderer.material.color = ThreeDamageColor;
+                SpriteRenderer.color = ThreeDamageColor;
                 break;
         }
     }

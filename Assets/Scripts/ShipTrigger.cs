@@ -12,7 +12,7 @@ public class ShipTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag(GameTags.Ball))
+        if (collision.CompareTag(GameTags.Ball))
         {
             BallBase ball = collision.gameObject.GetComponent<BallBase>();
             if (ball != null)

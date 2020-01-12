@@ -19,4 +19,5 @@ public static class PhysicsConstants
 
 
     public const float MinDistanceToFrames = 1;
+    public const float MinDistanceToObjects = 0.5f;
 }

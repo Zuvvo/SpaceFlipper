@@ -18,6 +18,30 @@ public static class ExtensionMethods
         }
     }
 
+    public static Vector2 GetOppositeNormalizedVector(this CollisionSide colSide, Vector2 vector)
+    {
+        vector = vector.normalized;
+        switch (colSide)
+        {
+            case CollisionSide.Bottom:
+            case CollisionSide.Top:
+                return new Vector2(vector.x, -vector.y);
+            case CollisionSide.Left:
+            case CollisionSide.Right:
+                return new Vector2(-vector.x, vector.y);
+            default:
+                return Vector2.zero;
+        }
+    }
+
+    public static void SortByLength(this RaycastHit2D[] rayHits)
+    {
+        if(rayHits.Length > 1)
+        {
+            Array.Sort(rayHits, (x, y) => x.distance.CompareTo(y.distance));
+        }
+    }
+
     public static Vector2 GetOppositeDirectionVector(this CollisionSide colSide)
     {
         switch (colSide)

@@ -10,11 +10,11 @@ public class CollisionSideDetect
         float yDiff = contactPoint.y - center.y;
         if(Mathf.Abs(xDiff) > Mathf.Abs(yDiff))
         {
-            return xDiff < 0 ? CollisionSide.Top : CollisionSide.Bottom;
+            return xDiff < 0 ? CollisionSide.Left : CollisionSide.Right;
         }
         else
         {
-            return yDiff < 0 ? CollisionSide.Left : CollisionSide.Right;
+            return yDiff < 0 ? CollisionSide.Bottom : CollisionSide.Top;
         }
     }
 

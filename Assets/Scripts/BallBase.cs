@@ -19,6 +19,8 @@ public class BallBase : MonoBehaviour
     private readonly float allowToHitTimeReset = 0.2f;
     private float allowToHitTimer = 0;
 
+    private RaycastHit2D[] rayHits;
+
     private bool isFastTrailOn;
     private bool wasHittedRecently
     {
@@ -30,11 +32,6 @@ public class BallBase : MonoBehaviour
         }
     }
     private bool hittedRecently_;
-
-    private void Start()
-    {
-        Debug.Log((int)Rigidbody.constraints);
-    }
 
     public void Stop()
     {
@@ -51,12 +48,10 @@ public class BallBase : MonoBehaviour
     private void Update()
     {
         currentCenterPoint = transform.position;
-        if (!RaycastForColliders())
-        {
-            LastFrameVelocity = Rigidbody.velocity;
-            LastFrameCenterPoint = transform.position;
-          //  Debug.LogFormat("set last frame pos: {0} -- {1}", LastFrameCenterPoint.x, LastFrameCenterPoint.y);
-        }
+        RaycastForColliders();
+        LastFrameVelocity = Rigidbody.velocity;
+        LastFrameCenterPoint = transform.position;
+        //  Debug.LogFormat("set last frame pos: {0} -- {1}", LastFrameCenterPoint.x, LastFrameCenterPoint.y);
         SetHittedState();
         SetTrailBasedOnSpeed();
     }
@@ -85,46 +80,16 @@ public class BallBase : MonoBehaviour
         SlowSpeedTrail.emitting = !isFastTrailOn;
     }
 
+    public void ResetTrailEmitter()
+    {
+        FastSpeedTrail.emitting = false;
+        SlowSpeedTrail.emitting = false;
+    }
+
     public void ResetLastFrameVelocityAndPosition()
     {
         LastFrameVelocity = Vector2.zero;
         LastFrameCenterPoint = transform.position;
-    }
-
-    public void SetOppositeVelocity(CollisionSide colliderSide, bool useLastFrameVelocity = false)
-    {
-        //Debug.Log(LastFrameCenterPoint);
-       // transform.position = LastFrameCenterPoint;
-        float xVel = useLastFrameVelocity ? LastFrameVelocity.x : Rigidbody.velocity.x;
-        float yVel = useLastFrameVelocity ? LastFrameVelocity.y : Rigidbody.velocity.y;
-        switch (colliderSide)
-        {
-            case CollisionSide.Bottom:
-            case CollisionSide.Top:
-                Rigidbody.velocity = new Vector2(xVel, -yVel);
-                break;
-            case CollisionSide.Left:
-            case CollisionSide.Right:
-                Rigidbody.velocity = new Vector2(-xVel, yVel);
-                break;
-        }
-    }
-
-    public void SetOppositeVelocity(CollisionSide colliderSide, float endSpeed)
-    {
-        float xVel = LastFrameVelocity.x;
-        float yVel = LastFrameVelocity.y;
-        switch (colliderSide)
-        {
-            case CollisionSide.Bottom:
-            case CollisionSide.Top:
-                Rigidbody.velocity = new Vector2(-xVel, yVel).normalized * endSpeed;
-                break;
-            case CollisionSide.Left:
-            case CollisionSide.Right:
-                Rigidbody.velocity = new Vector2(xVel, -yVel).normalized * endSpeed;
-                break;
-        }
     }
 
     public void SetSpeedOnBallCollisionExit()
@@ -166,22 +131,6 @@ public class BallBase : MonoBehaviour
             Debug.LogErrorFormat("[{0}]BAD HIT!!! {1}", gameObject.name, Rigidbody.velocity);
         }
     }
-
-    public void AddForceOnShipHit(CollisionSide colSide)
-    {
-        if (!wasHittedRecently)
-        {
-            float xVel = LastFrameVelocity.x;
-            float yVel = LastFrameVelocity.y;
-            Rigidbody.velocity = new Vector2(xVel, -yVel).normalized * PhysicsConstants.BallSpeedAfterShipHit;
-            LastFrameVelocity = Rigidbody.velocity;
-        }
-        else
-        {
-            Rigidbody.velocity = LastFrameVelocity;
-        }
-        wasHittedRecently = true;
-    }
     
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -196,25 +145,30 @@ public class BallBase : MonoBehaviour
         }
     }
 
-    private bool RaycastForColliders()
+    private void RaycastForColliders()
     {
-        if(LastFrameCenterPoint == currentCenterPoint)
-        {
-            return false;
-        }
-
         Vector2 direction = currentCenterPoint - LastFrameCenterPoint;
-        float distance = direction.magnitude;
+        float distanceForRay = direction.magnitude;
         float radius = Collider.radius / 2;
-        RaycastHit2D[] rayHits = Physics2D.CircleCastAll(LastFrameCenterPoint, radius, direction, distance, ColliderLayerMask);
-      //  Debug.DrawLine(transform.position, LastFrameCenterPoint, Color.green, 3);
 
-        for (int i = 0; i < rayHits.Length; i++)
+        rayHits = Physics2D.CircleCastAll(LastFrameCenterPoint, radius, direction, distanceForRay, ColliderLayerMask);
+
+        int safe = 0;
+
+        while (rayHits.Length > 0 && distanceForRay > 0)
         {
-            RaycastHit2D rayHit = rayHits[i];
+            rayHits.SortByLength();
+            if (rayHits.Length > 1)
+            {
+                for (int i = 0; i < rayHits.Length; i++)
+                {
+                    Debug.LogWarningFormat("[{0}] point: {1} centroid: {2} length: {3}", i, rayHits[i].point, rayHits[i].centroid, rayHits[i].distance);
+                }
+            }
+            RaycastHit2D rayHit = rayHits[0];
+            CollisionSide colSide = CollisionSide.Bottom;
             if (rayHit.collider.CompareTag(GameTags.Frame))
             {
-                Debug.DrawLine(currentCenterPoint, LastFrameCenterPoint, Color.green, 2);
                 FrameCollider frameCollider = rayHit.collider.GetComponent<FrameCollider>();
                 if (frameCollider.DestroyBallAndProjectiles)
                 {
@@ -222,18 +176,133 @@ public class BallBase : MonoBehaviour
                 }
                 else
                 {
-                   // Debug.LogFormat("Frame hit. last frame point: {0} -- {1} this frame point: {2} -- {3}", LastFrameCenterPoint.x, LastFrameCenterPoint.y, currentCenterPoint.x, currentCenterPoint.y);
-                    //transform.position = rayHit.point;
-                    Vector2 newPos = rayHit.point + frameCollider.CollisionSide.GetOppositeDirectionVector() * radius; ;
-                    transform.position = newPos;
-                   // Debug.LogFormat("new pos: {0} -- {1}", newPos.x, newPos.y);
-                    LastFrameCenterPoint = newPos;
-                    SetOppositeVelocity(frameCollider.CollisionSide);
-                    LastFrameVelocity = Rigidbody.velocity;
+                    colSide = frameCollider.CollisionSide;
+                    OnCollision(this, rayHit, colSide, CollisionType.Frame, LastFrameVelocity.magnitude, safe, out distanceForRay);
                 }
-                return true;
             }
+            else if (rayHit.collider.CompareTag(GameTags.Enemy))
+            {
+                // Debug.DrawLine(currentCenterPoint, LastFrameCenterPoint, Color.green, 2);
+                EnemyBase enemy = rayHit.collider.GetComponent<EnemyBase>();
+                colSide = CollisionSideDetect.GetCollisionSide(rayHit.centroid, rayHit.point);
+                OnCollision(this, rayHit, colSide, CollisionType.Enemy, PhysicsConstants.BallSpeedAfterEnemyHit, safe, out distanceForRay);
+                enemy.OnCollisionWithBall(this);
+            }
+            else if (rayHit.collider.CompareTag(GameTags.Ship))
+            {
+                ShipCollider ship = rayHit.collider.GetComponent<ShipCollider>();
+                colSide = ship.GetCollisionSideWithBall(this, LastFrameCenterPoint);
+                OnCollision(this, rayHit, colSide, CollisionType.Ship, PhysicsConstants.BallSpeedAfterShipHit, safe, out distanceForRay);
+            }
+
+            Debug.LogFormat("{0} collision with {1} on side {2}", safe, rayHit.collider.gameObject.name, colSide);
+
+            safe++;
         }
-        return false;
+    }
+
+    private void OnCollision(BallBase ball, RaycastHit2D rayHit, CollisionSide colSide, CollisionType colType, float endSpeed, int safe, out float distanceAfterHit)
+    {
+        Vector2 lastFramePos = ball.LastFrameCenterPoint;
+        Vector2 velocity = LastFrameVelocity;
+        Vector2 actualPos = currentCenterPoint;
+        Vector2 centroidPoint = rayHit.centroid;
+        Vector2 contactPoint = rayHit.point;
+
+        float distanceToCollision = (lastFramePos - centroidPoint).magnitude;
+        float totalDistance = (actualPos - lastFramePos).magnitude;
+        distanceAfterHit = totalDistance - distanceToCollision;
+
+        Debug.LogFormat("[{3}] distanceToCollision: {0}, total distance: {1} distanceAfterHit: {2}", distanceToCollision, totalDistance, distanceAfterHit, safe);
+
+        Debug.DrawLine(centroidPoint, contactPoint, Color.blue, 2);
+        Debug.DrawLine(actualPos, lastFramePos, safe == 0 ? Color.black : Color.yellow, 2);
+        Debug.DrawLine(actualPos, centroidPoint, Color.green, 2);
+
+        Vector2 newPos = GetNewPositionBasedOnCollisionType(colType, colSide, centroidPoint, velocity, distanceAfterHit);
+        ball.transform.position = newPos;
+        Debug.DrawLine(centroidPoint, newPos, safe == 0 ? Color.red : Color.grey, 2);
+        Vector2 endVel = SetVelocityBasedOnCollisionType(colType, colSide, endSpeed, LastFrameVelocity);
+        currentCenterPoint = newPos;
+        rayHits = Physics2D.CircleCastAll(centroidPoint, Collider.radius / 2, newPos - centroidPoint, distanceAfterHit, ColliderLayerMask);
+        
+
+        LastFrameVelocity = endVel;
+        LastFrameCenterPoint = rayHit.centroid;
+
+        Debug.LogFormat("col Y: {0}, end Y: {1}", centroidPoint.y, newPos.y);
+        Debug.LogFormat("start vel: {0} end vel: {1}", velocity.normalized, endVel.normalized);
+
+        if (safe > 0)
+        {
+            Debug.LogError("XX");
+        }
+    }
+
+    private Vector2 GetNewPositionBasedOnCollisionType(CollisionType colType, CollisionSide colSide, Vector2 centroidPoint, Vector2 velocity, float distanceAfterHit)
+    {
+        switch (colType)
+        {
+            case CollisionType.Frame:
+            case CollisionType.Enemy:
+            case CollisionType.Ship:
+                return GetOppositePosition(colSide, centroidPoint, velocity, distanceAfterHit);
+            case CollisionType.Striker:
+                return Vector2.zero;
+            default:
+                return Vector2.zero;
+        }
+    }
+
+    private Vector2 GetOppositePosition(CollisionSide colSide, Vector2 centroidPoint, Vector2 velocity, float distanceAfterHit)
+    {
+        return centroidPoint + colSide.GetOppositeNormalizedVector(velocity) * distanceAfterHit;
+    }
+
+    private Vector2 SetVelocityBasedOnCollisionType(CollisionType colType, CollisionSide colSide, float endSpeed, Vector2 actualVelocity)
+    {
+        switch (colType)
+        {
+            case CollisionType.Frame:
+            case CollisionType.Enemy:
+                return SetOppositeVelocity(colSide, endSpeed, LastFrameVelocity);
+            case CollisionType.Ship:
+                return SetUpOrDownVelocity(endSpeed, actualVelocity);
+            default:
+                return Vector2.zero;
+        }
+    }
+
+    public Vector2 SetOppositeVelocity(CollisionSide colliderSide, float endSpeed, Vector2 actualVelocity)
+    {
+        float xVel = actualVelocity.x;
+        float yVel = actualVelocity.y;
+        Vector2 endVel = new Vector2();
+        switch (colliderSide)
+        {
+            case CollisionSide.Bottom:
+            case CollisionSide.Top:
+                endVel = new Vector2(xVel, -yVel).normalized * endSpeed;
+                break;
+            case CollisionSide.Left:
+            case CollisionSide.Right:
+                endVel = new Vector2(-xVel, yVel).normalized * endSpeed;
+                break;
+        }
+
+        Rigidbody.velocity = endVel;
+
+        return endVel;
+    }
+
+    public Vector2 SetUpOrDownVelocity(float endSpeed, Vector2 actualVelocity)
+    {
+        float xVel = LastFrameVelocity.x;
+        float yVel = LastFrameVelocity.y;
+
+        Vector2 endVel = new Vector2(xVel, -yVel).normalized * endSpeed;
+        Rigidbody.velocity = endVel;
+
+        return endVel;
     }
 }

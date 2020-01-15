@@ -13,7 +13,7 @@ public class EnemyBase : MonoBehaviour
 
     public List<EnemyShooter> Shooters = new List<EnemyShooter>();
 
-    private float maxHealth = 4;
+    private float maxHealth = 4000;
 
     private EnemySpawner associatedSpawner;
     private float shotDelayMin = 2f;
@@ -36,30 +36,47 @@ public class EnemyBase : MonoBehaviour
         StartCoroutine(EnemyShotRoutine());
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.collider.CompareTag(GameTags.Ball))
+    //    {
+    //        BallBase ball = collision.collider.GetComponent<BallBase>();
+    //        if(ball != null)
+    //        {
+    //            ContactPoint2D contactPoint = collision.GetContact(0);
+    //            CollisionSide colSide = CollisionSideDetect.GetCollisionSide(ball.LastFrameCenterPoint, contactPoint.point);
+    //            ball.SetOppositeVelocity(colSide, PhysicsConstants.BallSpeedAfterEnemyHit);
+    //            if (ball.LastFrameVelocity.magnitude < PhysicsConstants.BallSpeedPowerShotThreshold)
+    //            {
+    //                currentHealth--;
+    //            }
+    //            else
+    //            {
+    //                currentHealth -= 3;
+    //            }
+    //            SetColor();
+    //        }
+    //        if(currentHealth <= 0)
+    //        {
+    //            associatedSpawner.TryToDestroy(this);
+    //        }
+    //    }
+    //}
+
+    public void OnCollisionWithBall(BallBase ball)
     {
-        if (collision.collider.CompareTag(GameTags.Ball))
+        if (ball.LastFrameVelocity.magnitude < PhysicsConstants.BallSpeedPowerShotThreshold)
         {
-            BallBase ball = collision.collider.GetComponent<BallBase>();
-            if(ball != null)
-            {
-                ContactPoint2D contactPoint = collision.GetContact(0);
-                CollisionSide colSide = CollisionSideDetect.GetCollisionSide(ball.LastFrameCenterPoint, contactPoint.point);
-                ball.SetOppositeVelocity(colSide, PhysicsConstants.BallSpeedAfterEnemyHit);
-                if (ball.LastFrameVelocity.magnitude < PhysicsConstants.BallSpeedPowerShotThreshold)
-                {
-                    currentHealth--;
-                }
-                else
-                {
-                    currentHealth -= 3;
-                }
-                SetColor();
-            }
-            if(currentHealth <= 0)
-            {
-                associatedSpawner.TryToDestroy(this);
-            }
+            currentHealth--;
+        }
+        else
+        {
+            currentHealth -= 3;
+        }
+
+        if (currentHealth <= 0)
+        {
+            associatedSpawner.TryToDestroy(this);
         }
     }
 

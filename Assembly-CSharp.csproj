@@ -360,8 +360,10 @@
     <Compile Include="Assets\GamePadInput\GamePad.cs" />
     <Compile Include="Assets\Scripts\BallBase.cs" />
     <Compile Include="Assets\Scripts\BallPool.cs" />
+    <Compile Include="Assets\Scripts\ColliderRaycaster.cs" />
     <Compile Include="Assets\Scripts\CollisionSide.cs" />
     <Compile Include="Assets\Scripts\CollisionSideDetect.cs" />
+    <Compile Include="Assets\Scripts\CollisionType.cs" />
     <Compile Include="Assets\Scripts\DebugController.cs" />
     <Compile Include="Assets\Scripts\EffectsManager.cs" />
     <Compile Include="Assets\Scripts\EnemyBase.cs" />
@@ -386,6 +388,7 @@
     <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
     <Compile Include="Assets\Scripts\PlayersManager.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
+    <Compile Include="Assets\Scripts\RayData.cs" />
     <Compile Include="Assets\Scripts\ShipCollider.cs" />
     <Compile Include="Assets\Scripts\ShipCollisionDetector.cs" />
     <Compile Include="Assets\Scripts\ShipCollisionRaycaster.cs" />

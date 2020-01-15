@@ -52,6 +52,7 @@ public class GameController : MonoBehaviour
                 ball.enabled = false;
                 Vector2 pos = PhysicsTools.GetRandomPositionBetweenVectors(BallSpawnPositionMin.position, BallSpawnPositionMax.position);
                 ball.SetGravityState(false);
+                ball.ResetTrailEmitter();
                 ball.transform.position = pos;
                 ball.Rigidbody.velocity = Vector2.zero;
                 ball.Rigidbody.AddForce(Vector2.down * PhysicsConstants.BallSpeedAtStart, ForceMode2D.Impulse);

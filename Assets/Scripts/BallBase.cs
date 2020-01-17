@@ -145,6 +145,8 @@ public class BallBase : MonoBehaviour
         }
     }
 
+    private Striker striker;
+
     private void RaycastForColliders()
     {
         Vector2 direction = currentCenterPoint - LastFrameCenterPoint;
@@ -193,6 +195,12 @@ public class BallBase : MonoBehaviour
                 ShipCollider ship = rayHit.collider.GetComponent<ShipCollider>();
                 colSide = ship.GetCollisionSideWithBall(this, LastFrameCenterPoint);
                 OnCollision(this, rayHit, colSide, CollisionType.Ship, PhysicsConstants.BallSpeedAfterShipHit, safe, out distanceForRay);
+            }
+            else if (rayHit.collider.CompareTag(GameTags.Striker))
+            {
+                striker = rayHit.collider.GetComponent<Striker>();
+                colSide = striker.GetCollisionSideWithBall(this, LastFrameCenterPoint);
+                OnCollision(this, rayHit, colSide, CollisionType.Striker, striker.GetForceOnBallHit(this, colSide).magnitude, safe, out distanceForRay);
             }
 
             Debug.LogFormat("{0} collision with {1} on side {2}", safe, rayHit.collider.gameObject.name, colSide);
@@ -248,7 +256,7 @@ public class BallBase : MonoBehaviour
             case CollisionType.Ship:
                 return GetOppositePosition(colSide, centroidPoint, velocity, distanceAfterHit);
             case CollisionType.Striker:
-                return Vector2.zero;
+                return GetPositionOnStrikerHit(colSide, centroidPoint, velocity, distanceAfterHit);
             default:
                 return Vector2.zero;
         }
@@ -257,6 +265,11 @@ public class BallBase : MonoBehaviour
     private Vector2 GetOppositePosition(CollisionSide colSide, Vector2 centroidPoint, Vector2 velocity, float distanceAfterHit)
     {
         return centroidPoint + colSide.GetOppositeNormalizedVector(velocity) * distanceAfterHit;
+    }
+
+    private Vector2 GetPositionOnStrikerHit(CollisionSide colSide, Vector2 centroidPoint, Vector2 velocity, float distanceAfterHit)
+    {
+        return centroidPoint + striker.GetForceOnBallHit(this, colSide).normalized * distanceAfterHit;
     }
 
     private Vector2 SetVelocityBasedOnCollisionType(CollisionType colType, CollisionSide colSide, float endSpeed, Vector2 actualVelocity)
@@ -268,6 +281,10 @@ public class BallBase : MonoBehaviour
                 return SetOppositeVelocity(colSide, endSpeed, LastFrameVelocity);
             case CollisionType.Ship:
                 return SetUpOrDownVelocity(endSpeed, actualVelocity);
+            case CollisionType.Striker:
+                Vector2 vel = striker.GetForceOnBallHit(this, colSide);
+                Rigidbody.velocity = vel;
+                return vel;
             default:
                 return Vector2.zero;
         }

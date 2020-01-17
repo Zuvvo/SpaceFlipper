@@ -69,45 +69,6 @@ public class Striker : MonoBehaviour
         LastFrameBottomPoint = BottomPoint.position;
     }
 
-    #region Collisions
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag(GameTags.Ball))
-        {
-            BallBase ball = collision.gameObject.GetComponent<BallBase>();
-            if (ball != null)
-            {
-                AddForceBasedOnHitStrikerState(ball);
-            }
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag(GameTags.Ball))
-        {
-            BallBase ball = collision.gameObject.GetComponent<BallBase>();
-            if (ball != null)
-            {
-                ball.SetLastFrameVelocityOnCollisionStay();
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag(GameTags.Ball))
-        {
-            BallBase ball = collision.gameObject.GetComponent<BallBase>();
-            if (ball != null)
-            {
-                ball.SetLastFrameVelocityOnCollisionExit();
-            }
-        }
-    }
-    #endregion
-
     #region Blade move
     public void MoveBlade()
     {
@@ -151,57 +112,87 @@ public class Striker : MonoBehaviour
     }
     #endregion
 
-    #region Add force to ball
-    private void AddForceBasedOnHitStrikerState(BallBase ball)
+    public CollisionSide GetCollisionSideWithBall(BallBase ball, Vector2 centroidPoint)
     {
-        CollisionSide colSide = CollisionSideDetect.GetCollisionSideBasedOnTriangleAndBottomPoint(LastFrameLeftPoint, LastFrameRightPoint, LastFrameBottomPoint, ball.LastFrameCenterPoint);
+        CollisionSide colSide = CollisionSideDetect.GetCollisionSideBasedOnTriangleAndBottomPoint(LastFrameLeftPoint, LastFrameRightPoint, LastFrameBottomPoint, centroidPoint);
+        Debug.Log("Striker col: " + colSide);
+        return colSide;
+    }
 
+    public Vector2 GetForceOnBallHit(BallBase ball, CollisionSide colSide)
+    {
         switch (colSide)
         {
             case CollisionSide.Top:
-                AddForceOnTopSide(ball);
-                break;
+                return GetForceOnTopSide(ball);
             case CollisionSide.Bottom:
-                AddForceOnBottomSide(ball);
-                break;
+                return GetForceOnBottomSide(ball);
             case CollisionSide.Left:
-                ball.AddForceOnStrikerHit(isMovingOrMovedUp ? leftSideMovedUpHitForce : leftSideIdleHitForce, PhysicsConstants.BallSpeedAfterStrikerIdleHit);
-                break;
             case CollisionSide.Right:
-                ball.AddForceOnStrikerHit(isMovingOrMovedUp ? rightSideMovedUpHitForce : rightSideIdleHitForce, PhysicsConstants.BallSpeedAfterStrikerIdleHit);
-                break;
+                return GetForceOnLeftOrRight(ball, colSide);
+            default:
+                return Vector2.one;
         }
     }
 
-    private void AddForceOnTopSide(BallBase ball)
+    #region Get force on ball hit
+
+    private Vector2 GetForceOnTopSide(BallBase ball)
     {
+        Vector2 forceVector = new Vector2();
+        float endSpeed = 0;
         if (isForceModeOn)
         {
-            ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftStrikerPowerHitForce : rightStrikerPowerHitForce, PhysicsConstants.BallSpeedAfterStrikerForceHit);
+            endSpeed = PhysicsConstants.BallSpeedAfterStrikerForceHit;
+            forceVector = StrikerType == StrikerPivotType.Left ? leftStrikerPowerHitForce : rightStrikerPowerHitForce;
         }
         else
         {
+            endSpeed = PhysicsConstants.BallSpeedAfterStrikerIdleHit;
             if (isMovingOrMovedUp)
             {
-                ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftStrikerMovedUpHitForce : rightStrikerMovedUpHitForce, PhysicsConstants.BallSpeedAfterStrikerIdleHit);
+                forceVector = StrikerType == StrikerPivotType.Left ? leftStrikerMovedUpHitForce : rightStrikerMovedUpHitForce;
             }
             else
             {
-                ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftStrikerIdleHitForce : rightStrikerIdleHitForce, PhysicsConstants.BallSpeedAfterStrikerIdleHit);
+                forceVector = StrikerType == StrikerPivotType.Left ? leftStrikerIdleHitForce : rightStrikerIdleHitForce;
             }
         }
+
+        return (ball.LastFrameVelocity.normalized + forceVector).normalized * endSpeed;
     }
 
-    private void AddForceOnBottomSide(BallBase ball)
+    private Vector2 GetForceOnBottomSide(BallBase ball)
     {
+        Vector2 forceVector = new Vector2();
+        float endSpeed = PhysicsConstants.BallSpeedAfterStrikerIdleHit;
         if (isMovingOrMovedUp)
         {
-            ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftBottomMovedUpHitForce : rightBottomMovedUpHitForce, PhysicsConstants.BallSpeedAfterStrikerIdleHit);
+            forceVector = StrikerType == StrikerPivotType.Left ? leftBottomMovedUpHitForce : rightBottomMovedUpHitForce;
         }
         else
         {
-            ball.AddForceOnStrikerHit(StrikerType == StrikerPivotType.Left ? leftBottomIdleHitForce : rightBottomIdleHitForce, PhysicsConstants.BallSpeedAfterStrikerIdleHit);
+            forceVector = StrikerType == StrikerPivotType.Left ? leftBottomIdleHitForce : rightBottomIdleHitForce;
         }
+
+        return (ball.LastFrameVelocity.normalized + forceVector).normalized * endSpeed;
+    }
+
+    private Vector2 GetForceOnLeftOrRight(BallBase ball, CollisionSide colSide)
+    {
+        Vector2 forceVector = new Vector2();
+        float endSpeed = PhysicsConstants.BallSpeedAfterStrikerIdleHit;
+
+        if (colSide == CollisionSide.Left)
+        {
+            forceVector = isMovingOrMovedUp ? leftSideMovedUpHitForce : leftSideIdleHitForce;
+        }
+        else if(colSide == CollisionSide.Right)
+        {
+            forceVector = isMovingOrMovedUp ? rightSideMovedUpHitForce : rightSideIdleHitForce;
+        }
+
+        return (ball.LastFrameVelocity.normalized + forceVector).normalized * endSpeed;
     }
     #endregion
 

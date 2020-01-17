@@ -5,4 +5,5 @@
     public const string Enemy = "Enemy";
     public const string Frame = "Frame";
     public const string EnemyProjectile = "EnemyProjectile";
+    public const string Striker = "Striker";
 }

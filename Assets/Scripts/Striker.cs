@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Striker : MonoBehaviour
+public class Striker : MonoBehaviour, IRayCollider
 {
     public HingeJoint2D HingeJoint;
     public StrikerPivotType StrikerType;
@@ -53,20 +53,15 @@ public class Striker : MonoBehaviour
     private Coroutine forceModeRoutine;
     private float forceModeDelay = 0.25f;
 
-    public Vector2 LastFrameLeftPoint { get; private set; }
-    public Vector2 LastFrameRightPoint { get; private set; }
-    public Vector2 LastFrameBottomPoint { get; private set; }
-
     private void Start()
     {
         SetStrikerToDefaultState();
+        RegisterObject();
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        LastFrameLeftPoint = LeftPoint.position;
-        LastFrameRightPoint = RightPoint.position;
-        LastFrameBottomPoint = BottomPoint.position;
+        Unregister();
     }
 
     #region Blade move
@@ -114,7 +109,7 @@ public class Striker : MonoBehaviour
 
     public CollisionSide GetCollisionSideWithBall(BallBase ball, Vector2 centroidPoint)
     {
-        CollisionSide colSide = CollisionSideDetect.GetCollisionSideBasedOnTriangleAndBottomPoint(LastFrameLeftPoint, LastFrameRightPoint, LastFrameBottomPoint, centroidPoint);
+        CollisionSide colSide = CollisionSideDetect.GetCollisionSideBasedOnTriangleAndBottomPoint(LeftPoint.position, RightPoint.position, BottomPoint.position, centroidPoint);
         Debug.Log("Striker col: " + colSide);
         return colSide;
     }
@@ -209,5 +204,37 @@ public class Striker : MonoBehaviour
         HingeJoint.limits = StrikerType == StrikerPivotType.Left ? angleLimitsLeftStriker : angleLimitsRightStriker;
     }
 
+    #endregion
+
+    #region IRayCollider
+    public void Raycast()
+    {
+
+    }
+
+    public void RegisterObject()
+    {
+        RayCollidersController.Instance.RegisterRayCollider(this);
+    }
+
+    public void Unregister()
+    {
+        RayCollidersController.Instance.UnregisterRayCollider(this);
+    }
+
+    public void OnUpdate()
+    {
+
+    }
+
+    public List<IRayCollider> RayCollision(List<IRayCollider> collidersToSkip)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void RegisterCollision(RaycastHit2D rayHit)
+    {
+
+    }
     #endregion
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallBase : MonoBehaviour
+public class BallBase : MonoBehaviour, IRayCollider
 {
     public TrailRenderer FastSpeedTrail;
     public TrailRenderer SlowSpeedTrail;
@@ -33,6 +33,16 @@ public class BallBase : MonoBehaviour
     }
     private bool hittedRecently_;
 
+    private void Start()
+    {
+        RegisterObject();
+    }
+
+    private void OnDestroy()
+    {
+        Unregister();
+    }
+
     public void Stop()
     {
         Rigidbody.velocity = Vector2.zero;
@@ -45,23 +55,12 @@ public class BallBase : MonoBehaviour
         enabled = !state;
     }
 
-    private void Update()
-    {
-        currentCenterPoint = transform.position;
-        RaycastForColliders();
-        LastFrameVelocity = Rigidbody.velocity;
-        LastFrameCenterPoint = transform.position;
-        //  Debug.LogFormat("set last frame pos: {0} -- {1}", LastFrameCenterPoint.x, LastFrameCenterPoint.y);
-        SetHittedState();
-        SetTrailBasedOnSpeed();
-    }
-
     private void SetHittedState()
     {
         if (wasHittedRecently)
         {
             allowToHitTimer += Time.deltaTime;
-            if(allowToHitTimer >= allowToHitTimeReset)
+            if (allowToHitTimer >= allowToHitTimeReset)
             {
                 wasHittedRecently = false;
             }
@@ -132,80 +131,21 @@ public class BallBase : MonoBehaviour
         }
     }
     
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag(GameTags.Ball))
-        {
-            BallBase ball = collision.collider.GetComponent<BallBase>();
-            if (ball != null)
-            {
-                ball.SetSpeedOnBallCollisionExit();
-                SetSpeedOnBallCollisionExit();
-            }
-        }
-    }
-
     private Striker striker;
 
     private void RaycastForColliders()
     {
+        currentCenterPoint = transform.position;
         Vector2 direction = currentCenterPoint - LastFrameCenterPoint;
         float distanceForRay = direction.magnitude;
         float radius = Collider.radius / 2;
 
         rayHits = Physics2D.CircleCastAll(LastFrameCenterPoint, radius, direction, distanceForRay, ColliderLayerMask);
 
-        int safe = 0;
-
-        while (rayHits.Length > 0 && distanceForRay > 0)
+        if(rayHits.Length > 0)
         {
             rayHits.SortByLength();
-            if (rayHits.Length > 1)
-            {
-                for (int i = 0; i < rayHits.Length; i++)
-                {
-                    Debug.LogWarningFormat("[{0}] point: {1} centroid: {2} length: {3}", i, rayHits[i].point, rayHits[i].centroid, rayHits[i].distance);
-                }
-            }
-            RaycastHit2D rayHit = rayHits[0];
-            CollisionSide colSide = CollisionSide.Bottom;
-            if (rayHit.collider.CompareTag(GameTags.Frame))
-            {
-                FrameCollider frameCollider = rayHit.collider.GetComponent<FrameCollider>();
-                if (frameCollider.DestroyBallAndProjectiles)
-                {
-                    GameController.Instance.RemoveBallFromPlay(this);
-                }
-                else
-                {
-                    colSide = frameCollider.CollisionSide;
-                    OnCollision(this, rayHit, colSide, CollisionType.Frame, LastFrameVelocity.magnitude, safe, out distanceForRay);
-                }
-            }
-            else if (rayHit.collider.CompareTag(GameTags.Enemy))
-            {
-                // Debug.DrawLine(currentCenterPoint, LastFrameCenterPoint, Color.green, 2);
-                EnemyBase enemy = rayHit.collider.GetComponent<EnemyBase>();
-                colSide = CollisionSideDetect.GetCollisionSide(rayHit.centroid, rayHit.point);
-                OnCollision(this, rayHit, colSide, CollisionType.Enemy, PhysicsConstants.BallSpeedAfterEnemyHit, safe, out distanceForRay);
-                enemy.OnCollisionWithBall(this);
-            }
-            else if (rayHit.collider.CompareTag(GameTags.Ship))
-            {
-                ShipCollider ship = rayHit.collider.GetComponent<ShipCollider>();
-                colSide = ship.GetCollisionSideWithBall(this, LastFrameCenterPoint);
-                OnCollision(this, rayHit, colSide, CollisionType.Ship, PhysicsConstants.BallSpeedAfterShipHit, safe, out distanceForRay);
-            }
-            else if (rayHit.collider.CompareTag(GameTags.Striker))
-            {
-                striker = rayHit.collider.GetComponent<Striker>();
-                colSide = striker.GetCollisionSideWithBall(this, LastFrameCenterPoint);
-                OnCollision(this, rayHit, colSide, CollisionType.Striker, striker.GetForceOnBallHit(this, colSide).magnitude, safe, out distanceForRay);
-            }
-
-            Debug.LogFormat("{0} collision with {1} on side {2}", safe, rayHit.collider.gameObject.name, colSide);
-
-            safe++;
+            RegisterCollision(rayHits[0]);
         }
     }
 
@@ -322,4 +262,136 @@ public class BallBase : MonoBehaviour
 
         return endVel;
     }
+
+    #region IRayCollider
+    public void Raycast()
+    {
+        RaycastForColliders();
+    }
+
+    public void RegisterObject()
+    {
+        RayCollidersController.Instance.RegisterRayCollider(this);
+    }
+
+    public void Unregister()
+    {
+        RayCollidersController.Instance.UnregisterRayCollider(this);
+    }
+
+    public void OnUpdate()
+    {
+        LastFrameVelocity = Rigidbody.velocity;
+        LastFrameCenterPoint = transform.position;
+        //  Debug.LogFormat("set last frame pos: {0} -- {1}", LastFrameCenterPoint.x, LastFrameCenterPoint.y);
+        SetHittedState();
+        SetTrailBasedOnSpeed();
+    }
+
+    public List<IRayCollider> RayCollision(List<IRayCollider> collidersToSkip)
+    {
+        List<IRayCollider> collidedWith = new List<IRayCollider>();
+
+        Vector2 direction = currentCenterPoint - LastFrameCenterPoint;
+        float distanceForRay = direction.magnitude;
+        float radius = Collider.radius / 2;
+
+        int safe = 0;
+
+        while (rayHits.Length > 0 && distanceForRay > 0)
+        {
+            rayHits.SortByLength();
+            if (rayHits.Length > 1)
+            {
+                for (int i = 0; i < rayHits.Length; i++)
+                {
+                    Debug.LogWarningFormat("[{0}] point: {1} centroid: {2} length: {3}", i, rayHits[i].point, rayHits[i].centroid, rayHits[i].distance);
+                }
+            }
+            RaycastHit2D rayHit = rayHits[0];
+            CollisionSide colSide = CollisionSide.Bottom;
+            if (rayHit.collider.CompareTag(GameTags.Frame))
+            {
+                FrameCollider frameCollider = rayHit.collider.GetComponent<FrameCollider>();
+                IRayCollider col = frameCollider as IRayCollider;
+                if (!collidersToSkip.Contains(col))
+                {
+                    if (frameCollider.DestroyBallAndProjectiles)
+                    {
+                        GameController.Instance.RemoveBallFromPlay(this);
+                    }
+                    else
+                    {
+                        colSide = frameCollider.CollisionSide;
+                        OnCollision(this, rayHit, colSide, CollisionType.Frame, LastFrameVelocity.magnitude, safe, out distanceForRay);
+                    }
+
+                    if (!collidedWith.Contains(col))
+                    {
+                        collidedWith.Add(col);
+                    }
+                }
+            }
+            else if (rayHit.collider.CompareTag(GameTags.Enemy))
+            {
+                // Debug.DrawLine(currentCenterPoint, LastFrameCenterPoint, Color.green, 2);
+                EnemyBase enemy = rayHit.collider.GetComponent<EnemyBase>();
+                IRayCollider col = enemy as IRayCollider;
+
+                if (!collidersToSkip.Contains(col))
+                {
+                    colSide = CollisionSideDetect.GetCollisionSide(rayHit.centroid, rayHit.point);
+                    OnCollision(this, rayHit, colSide, CollisionType.Enemy, PhysicsConstants.BallSpeedAfterEnemyHit, safe, out distanceForRay);
+                    enemy.OnCollisionWithBall(this);
+                    if (!collidedWith.Contains(col))
+                    {
+                        collidedWith.Add(col);
+                    }
+                }
+            }
+            else if (rayHit.collider.CompareTag(GameTags.Ship))
+            {
+                ShipCollider ship = rayHit.collider.GetComponent<ShipCollider>();
+                IRayCollider col = ship as IRayCollider;
+                if (!collidersToSkip.Contains(col))
+                {
+                    colSide = ship.GetCollisionSideWithBall(this, LastFrameCenterPoint);
+                    OnCollision(this, rayHit, colSide, CollisionType.Ship, PhysicsConstants.BallSpeedAfterShipHit, safe, out distanceForRay);
+                }
+
+                if (!collidedWith.Contains(col))
+                {
+                    collidedWith.Add(col);
+                }
+            }
+            else if (rayHit.collider.CompareTag(GameTags.Striker))
+            {
+                Debug.Log("col with striker");
+                striker = rayHit.collider.GetComponent<Striker>();
+                IRayCollider col = striker as IRayCollider;
+                if (!collidersToSkip.Contains(col))
+                {
+                    colSide = striker.GetCollisionSideWithBall(this, LastFrameCenterPoint);
+                    OnCollision(this, rayHit, colSide, CollisionType.Striker, striker.GetForceOnBallHit(this, colSide).magnitude, safe, out distanceForRay);
+                }
+
+                if (!collidedWith.Contains(col))
+                {
+                    collidedWith.Add(col);
+                }
+            }
+
+            Debug.LogFormat("{0} collision with {1} on side {2}", safe, rayHit.collider.gameObject.name, colSide);
+
+            safe++;
+        }
+
+        return collidedWith;
+    }
+
+    public void RegisterCollision(RaycastHit2D rayHit)
+    {
+        RayCollidersController.Instance.RegisterCollision(this, rayHit);
+    }
+    #endregion
 }

@@ -376,6 +376,7 @@
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\GameTags.cs" />
     <Compile Include="Assets\Scripts\GamepadDetector.cs" />
+    <Compile Include="Assets\Scripts\IRayCollider.cs" />
     <Compile Include="Assets\Scripts\LayerConstants.cs" />
     <Compile Include="Assets\Scripts\LightController.cs" />
     <Compile Include="Assets\Scripts\MainMenuManager.cs" />
@@ -388,6 +389,7 @@
     <Compile Include="Assets\Scripts\PlayerSpawner.cs" />
     <Compile Include="Assets\Scripts\PlayersManager.cs" />
     <Compile Include="Assets\Scripts\Projectile.cs" />
+    <Compile Include="Assets\Scripts\RayCollidersController.cs" />
     <Compile Include="Assets\Scripts\RayData.cs" />
     <Compile Include="Assets\Scripts\ShipCollider.cs" />
     <Compile Include="Assets\Scripts\ShipCollisionDetector.cs" />

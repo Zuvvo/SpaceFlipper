@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FrameCollider : MonoBehaviour
+public class FrameCollider : MonoBehaviour, ICollider
 {
     public CollisionSide CollisionSide;
     public bool DestroyBallAndProjectiles;

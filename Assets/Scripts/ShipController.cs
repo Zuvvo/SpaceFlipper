@@ -25,7 +25,7 @@ public class ShipController : MonoBehaviour
 
     public bool IsDodgeMoving { get; private set; }
 
-    private void Update()
+    public void OnUpdate()
     {
         GetAxis(out float horizontal, out float vertical);
 

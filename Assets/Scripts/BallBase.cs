@@ -161,7 +161,7 @@ public class BallBase : MonoBehaviour, IRayCollider
         float totalDistance = (actualPos - lastFramePos).magnitude;
         distanceAfterHit = totalDistance - distanceToCollision;
 
-        Debug.LogFormat("[{3}] distanceToCollision: {0}, total distance: {1} distanceAfterHit: {2}", distanceToCollision, totalDistance, distanceAfterHit, safe);
+       // Debug.LogFormat("[{3}] distanceToCollision: {0}, total distance: {1} distanceAfterHit: {2}", distanceToCollision, totalDistance, distanceAfterHit, safe);
 
         Debug.DrawLine(centroidPoint, contactPoint, Color.blue, 2);
         Debug.DrawLine(actualPos, lastFramePos, safe == 0 ? Color.black : Color.yellow, 2);
@@ -178,8 +178,8 @@ public class BallBase : MonoBehaviour, IRayCollider
         LastFrameVelocity = endVel;
         LastFrameCenterPoint = rayHit.centroid;
 
-        Debug.LogFormat("col Y: {0}, end Y: {1}", centroidPoint.y, newPos.y);
-        Debug.LogFormat("start vel: {0} end vel: {1}", velocity.normalized, endVel.normalized);
+       // Debug.LogFormat("col Y: {0}, end Y: {1}", centroidPoint.y, newPos.y);
+      //  Debug.LogFormat("start vel: {0} end vel: {1}", velocity.normalized, endVel.normalized);
 
         if (safe > 0)
         {
@@ -263,6 +263,13 @@ public class BallBase : MonoBehaviour, IRayCollider
         return endVel;
     }
 
+    public void AddToPosition(Vector2 vec)
+    {
+        LastFrameCenterPoint += vec;
+        transform.position += (Vector3)vec;
+        currentCenterPoint += vec;
+    }
+
     #region IRayCollider
     public void Raycast()
     {
@@ -276,7 +283,10 @@ public class BallBase : MonoBehaviour, IRayCollider
 
     public void Unregister()
     {
-        RayCollidersController.Instance.UnregisterRayCollider(this);
+        if(RayCollidersController.Instance != null)
+        {
+            RayCollidersController.Instance.UnregisterRayCollider(this);
+        }
     }
 
     public void OnUpdate()

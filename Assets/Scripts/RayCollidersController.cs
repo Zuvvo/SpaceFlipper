@@ -63,11 +63,18 @@ public class RayCollidersController : MonoBehaviour
         collisions.Add(rayCollider);
     }
 
-    public void RegisterRayCollider(IRayCollider rayCollider)
+    public void RegisterRayCollider(IRayCollider rayCollider, bool addAsFirst = false)
     {
         if (!rayColliders.Contains(rayCollider))
         {
-            rayColliders.Add(rayCollider);
+            if (addAsFirst)
+            {
+                rayColliders.Insert(0, rayCollider);
+            }
+            else
+            {
+                rayColliders.Add(rayCollider);
+            }
         }
     }
 

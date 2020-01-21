@@ -214,12 +214,15 @@ public class Striker : MonoBehaviour, IRayCollider
 
     public void RegisterObject()
     {
-        RayCollidersController.Instance.RegisterRayCollider(this);
+        RayCollidersController.Instance.RegisterRayCollider(this, addAsFirst: true);
     }
 
     public void Unregister()
     {
-        RayCollidersController.Instance.UnregisterRayCollider(this);
+        if(RayCollidersController.Instance != null)
+        {
+            RayCollidersController.Instance.UnregisterRayCollider(this);
+        }
     }
 
     public void OnUpdate()

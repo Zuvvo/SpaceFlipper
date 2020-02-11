@@ -225,12 +225,12 @@ public class Striker : MonoBehaviour, IRayCollider
         }
     }
 
-    public void OnUpdate()
+    public void OnFixedUpdateTick()
     {
 
     }
 
-    public List<IRayCollider> RayCollision(List<IRayCollider> collidersToSkip)
+    public List<IRayCollider> HandleCollision(List<IRayCollider> collidersToSkip)
     {
         throw new NotImplementedException();
     }

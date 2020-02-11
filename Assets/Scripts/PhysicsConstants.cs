@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class PhysicsConstants
 {
-    private const float m = 5; //global multiplier
+    private const float m = 200; //global multiplier
 
     
     public const float BallSpeedAtStart = m* 1;

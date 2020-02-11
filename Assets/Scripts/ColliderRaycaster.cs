@@ -50,32 +50,31 @@ public class ColliderRaycaster : MonoBehaviour
         p8 = p4 + realDistance;
 
 
-        if (rayHits.Length > 0)
-        {
-            Debug.LogError("RAY BOXCAST HIT");
-            RaycastHit2D rayHit = rayHits[0];
-            //Drawing the cast
+        //if (rayHits.Length > 0)
+        //{
+           // RaycastHit2D rayHit = rayHits[0];
+            // Drawing the cast
             float time = 3;
-            Color castColor = rayHit ? Color.red : Color.green;
-            Debug.DrawLine(p1, p2, castColor, time);
-            Debug.DrawLine(p2, p3, castColor, time);
-            Debug.DrawLine(p3, p4, castColor, time);
-            Debug.DrawLine(p4, p1, castColor, time);
+            //Color castColor = rayHit ? Color.red : Color.green;
+            Debug.DrawLine(p1, p2, Color.red, time);
+            Debug.DrawLine(p2, p3, Color.red, time);
+            Debug.DrawLine(p3, p4, Color.red, time);
+            Debug.DrawLine(p4, p1, Color.red, time);
 
-            Debug.DrawLine(p5, p6, castColor, time);
-            Debug.DrawLine(p6, p7, castColor, time);
-            Debug.DrawLine(p7, p8, castColor, time);
-            Debug.DrawLine(p8, p5, castColor, time);
+        Debug.DrawLine(p1, p5, Color.grey, time);
+        Debug.DrawLine(p2, p6, Color.grey, time);
+        Debug.DrawLine(p3, p7, Color.grey, time);
+        Debug.DrawLine(p4, p8, Color.grey, time);
 
-            Debug.DrawLine(p1, p5, Color.grey, time);
-            Debug.DrawLine(p2, p6, Color.grey, time);
-            Debug.DrawLine(p3, p7, Color.grey, time);
-            Debug.DrawLine(p4, p8, Color.grey, time);
-            if (rayHit)
-            {
-                Debug.DrawLine(rayHit.point, rayHit.point + rayHit.normal.normalized * 0.2f, Color.yellow);
-            }
-        }
+        Debug.DrawLine(p5, p6, Color.yellow, time);
+            Debug.DrawLine(p6, p7, Color.yellow, time);
+            Debug.DrawLine(p7, p8, Color.yellow, time);
+            Debug.DrawLine(p8, p5, Color.yellow, time);
+            //if (rayHit)
+            //{
+            //    Debug.DrawLine(rayHit.point, rayHit.point + rayHit.normal.normalized * 0.2f, Color.yellow);
+            //}
+        //}
 
         return rayHits;
     }

@@ -8,6 +8,8 @@ public class RayCollidersController : MonoBehaviour
     private List<IRayCollider> rayColliders = new List<IRayCollider>();
     private List<IRayCollider> collisions = new List<IRayCollider>();
 
+    private WaitForFixedUpdate _wait = new WaitForFixedUpdate();
+
     private static RayCollidersController instance;
     public static RayCollidersController Instance
     {
@@ -21,12 +23,43 @@ public class RayCollidersController : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Start()
     {
-        CastRays();
-        HandleCollisions();
-        UpdateObjects();
-        Clear();
+        StartCoroutine(FixedUpdateCoroutine());
+    }
+
+    private IEnumerator FixedUpdateCoroutine()
+    {
+        while (true)
+        {
+            yield return _wait;
+            for (int i = 0; i < rayColliders.Count; i++)
+            {
+                IRayCollider rayCollider = rayColliders[i];
+                rayCollider.Raycast();
+                if (collisions.Contains(rayCollider))
+                {
+                    rayCollider.HandleCollision(new List<IRayCollider>());
+                }
+                rayCollider.OnFixedUpdateTick();
+            }
+            Clear();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        //for (int i = 0; i < rayColliders.Count; i++)
+        //{
+        //    IRayCollider rayCollider = rayColliders[i];
+        //    rayCollider.Raycast();
+        //    if (collisions.Contains(rayCollider))
+        //    {
+        //        rayCollider.HandleCollision(new List<IRayCollider>());
+        //    }
+        //    rayCollider.OnFixedUpdateTick();
+        //}
+        //Clear();
     }
 
     private void CastRays()
@@ -41,7 +74,7 @@ public class RayCollidersController : MonoBehaviour
     {
         for (int i = 0; i < collisions.Count; i++)
         {
-           List<IRayCollider> colliededWith = collisions[i].RayCollision(new List<IRayCollider>());
+           List<IRayCollider> colliededWith = collisions[i].HandleCollision(new List<IRayCollider>());
         }
     }
 
@@ -49,7 +82,7 @@ public class RayCollidersController : MonoBehaviour
     {
         for (int i = 0; i < rayColliders.Count; i++)
         {
-            rayColliders[i].OnUpdate();
+            rayColliders[i].OnFixedUpdateTick();
         }
     }
 

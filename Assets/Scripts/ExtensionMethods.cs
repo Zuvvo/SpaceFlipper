@@ -42,6 +42,24 @@ public static class ExtensionMethods
         }
     }
 
+    public static RaycastHit2D[] Remove(this RaycastHit2D[] rayHits, RaycastHit2D ray)
+    {
+        if(rayHits.Length > 0)
+        {
+            List<RaycastHit2D> result = new List<RaycastHit2D>();
+            for (int i = 0; i < rayHits.Length; i++)
+            {
+                RaycastHit2D rayHit = rayHits[i];
+                if(rayHit.transform.GetInstanceID() != ray.transform.GetInstanceID())
+                {
+                    result.Add(rayHit);
+                }
+            }
+            return result.ToArray();
+        }
+        return rayHits;
+    }
+
     public static Vector2 GetOppositeDirectionVector(this CollisionSide colSide)
     {
         switch (colSide)

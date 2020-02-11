@@ -10,9 +10,9 @@ public interface ICollider
 public interface IRayCollider : ICollider
 {
     void Raycast();
-    List<IRayCollider> RayCollision(List<IRayCollider> collidersToSkip);
+    List<IRayCollider> HandleCollision(List<IRayCollider> collidersToSkip);
     void RegisterObject();
     void RegisterCollision(RaycastHit2D rayHit);
-    void OnUpdate();
+    void OnFixedUpdateTick();
     void Unregister();
 }

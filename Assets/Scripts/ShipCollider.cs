@@ -23,7 +23,7 @@ public class ShipCollider : MonoBehaviour, IRayCollider
     {
         RegisterObject();
     }
-
+    
     private void OnDestroy()
     {
         Unregister();
@@ -58,16 +58,18 @@ public class ShipCollider : MonoBehaviour, IRayCollider
     public void Raycast()
     {
         currentPosition = Ship.Rigidbody.transform.position;
+
+
         Vector2 direction = currentPosition - LastFrameCenterPoint;
         Vector2 boxSize = new Vector2(Collider.size.x * transform.localScale.x, Collider.size.y * transform.localScale.y);
         float distanceForRay = direction.magnitude;
 
-        ShipCollisionDetector.RaycastForCollisions();
-
+        ShipCollisionDetector.RaycastForCollisionsWithFrame();
         rayHits = ColliderRaycaster.BoxCastAll(LastFrameCenterPoint, boxSize, 0, direction, distanceForRay, ColliderLayerMask);
 
         if (rayHits.Length > 0)
         {
+            Debug.Log("ray hit");
             rayHits.SortByLength();
             RegisterCollision(rayHits[0]);
         }
@@ -87,7 +89,7 @@ public class ShipCollider : MonoBehaviour, IRayCollider
         }
     }
 
-    public void OnUpdate()
+    public void OnFixedUpdateTick()
     {
         Ship.ShipController.OnUpdate();
         LastFrameBottomPoint = BottomPoint.position;
@@ -95,7 +97,7 @@ public class ShipCollider : MonoBehaviour, IRayCollider
         LastFrameCenterPoint = Ship.Rigidbody.transform.position;
     }
 
-    public List<IRayCollider> RayCollision(List<IRayCollider> collidersToSkip)
+    public List<IRayCollider> HandleCollision(List<IRayCollider> collidersToSkip)
     {
         List<IRayCollider> collidedWith = new List<IRayCollider>();
         Vector2 direction = currentPosition - LastFrameCenterPoint;
@@ -109,11 +111,6 @@ public class ShipCollider : MonoBehaviour, IRayCollider
 
             colSide = CollisionSideDetect.GetCollisionSide(rayHit.centroid, rayHit.point);
             OnCollisionWithBall(ballBase, rayHit, colSide, direction, out distanceForRay);
-
-
-            Vector2 newPos = rayHit.centroid;
-            Ship.Rigidbody.transform.position = newPos;
-            Debug.DrawLine(newPos, LastFrameCenterPoint, Color.cyan, 4);
         }
         else if (rayHit.collider.CompareTag(GameTags.Ship))
         {
@@ -127,18 +124,9 @@ public class ShipCollider : MonoBehaviour, IRayCollider
         return collidedWith;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag(GameTags.Ball))
-        {
-            CollisionSide colSide = CollisionSideDetect.GetCollisionSide(LastFrameCenterPoint, collision.GetContact(0).point);
-            Debug.Log("[SHIPCOLLIDER} colliding with ball " + colSide);
-        }
-    }
-
     private void OnCollisionWithBall(BallBase ball, RaycastHit2D rayHit, CollisionSide colSide, Vector2 direction, out float distanceForRay)
     {
-        Vector2 lastFramePos = ball.LastFrameCenterPoint;
+        Vector2 lastFramePos = LastFrameCenterPoint;
         Vector2 velocity = LastFrameVelocity;
         Vector2 actualPos = currentPosition;
         Vector2 centroidPoint = rayHit.centroid;
@@ -150,9 +138,10 @@ public class ShipCollider : MonoBehaviour, IRayCollider
 
         distanceForRay = distanceAfterHit;
 
-        Vector2 distanceToAdd = distanceAfterHit * direction;
+        Vector2 distanceToAdd = distanceAfterHit * direction.normalized;
 
         ball.AddToPosition(distanceToAdd);
+        ball.RaycastAndSkipThisFrameCollision();
     }
 
     public void RegisterCollision(RaycastHit2D rayHit)

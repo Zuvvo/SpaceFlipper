@@ -12,7 +12,7 @@ public class ShipCollisionDetector : MonoBehaviour
     private ShipCollisionRaycaster currentraycaster;
     private RaycastHit2D rayHit;
 
-    public void RaycastForCollisions()
+    public void RaycastForCollisionsWithFrame()
     {
         for (int i = 0; i < RaycastersForFrames.Count; i++)
         {

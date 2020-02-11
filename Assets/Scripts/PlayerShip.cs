@@ -21,7 +21,6 @@ public class PlayerShip : MonoBehaviour
     {
         Health--;
         GameController.Instance.CallOnGameStateChanged();
-        Debug.LogError("Health: " + Health);
         if(Health == 0)
         {
             GameController.Instance.EndGameLose();

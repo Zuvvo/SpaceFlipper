@@ -307,35 +307,60 @@ public class BallBase : MonoBehaviour, IRayCollider
 
     private Vector2 GetNewPositionWhenOverlaping(CollisionType colType, CollisionSide colSide, RaycastHit2D rayHit, Vector2 actualPos, float radius)
     {
-        float distToMove = 0;
         switch (colType)
         {
             case CollisionType.Frame:
-                if(colSide == CollisionSide.Bottom || colSide == CollisionSide.Top)
-                {
-                    actualPos.y = rayHit.collider.bounds.center.y;
-                }
-                else if(colSide == CollisionSide.Left || colSide == CollisionSide.Right)
-                {
-                    actualPos.x = rayHit.collider.bounds.center.x;
-                }
-                    BoxCollider2D boxCollider = rayHit.collider as BoxCollider2D;
-                float fromCenterToBorder = boxCollider.size.x * boxCollider.transform.parent.localScale.x / 2;
-                distToMove = radius + fromCenterToBorder;
-                Vector2 newPos = actualPos + colSide.GetOppositeDirectionVector() * distToMove;
-                Debug.LogErrorFormat("dist to move on overlap: {0} newPos: {1}, from center to border: {2} ", distToMove, newPos, fromCenterToBorder);
-                Debug.DrawLine(actualPos, newPos, Color.white);
-                return newPos;
-            case CollisionType.Enemy:
+                return GetOverlapPositionForFrame(colType, colSide, rayHit, actualPos, radius);
             case CollisionType.Ship:
-                return actualPos + colSide.GetOppositeDirectionVector() * rayHit.collider.bounds.extents.x;
-                //return actualPos; //GetOppositePosition(colSide, centroidPoint, velocity, distanceAfterHit);
+            case CollisionType.Enemy:
+                return GetOverlapPositionForEnemyOrShip(colType, colSide, rayHit, actualPos, radius);
             case CollisionType.Striker:
                 return actualPos; //GetPositionOnStrikerHit(colSide, centroidPoint, velocity, distanceAfterHit);
             default:
                 return actualPos;
         }
     }
+
+    private Vector2 GetOverlapPositionForFrame(CollisionType colType, CollisionSide colSide, RaycastHit2D rayHit, Vector2 actualPos, float radius)
+    {
+        if (colSide == CollisionSide.Bottom || colSide == CollisionSide.Top)
+        {
+            actualPos.y = rayHit.collider.bounds.center.y;
+        }
+        else if (colSide == CollisionSide.Left || colSide == CollisionSide.Right)
+        {
+            actualPos.x = rayHit.collider.bounds.center.x;
+        }
+        BoxCollider2D boxCollider = rayHit.collider as BoxCollider2D;
+        float fromCenterToBorder = boxCollider.size.x * boxCollider.transform.parent.localScale.x / 2;
+        float distToMove = radius + fromCenterToBorder;
+        Vector2 newPos = actualPos + colSide.GetOppositeDirectionVector() * distToMove;
+        Debug.LogErrorFormat("dist to move on overlap: {0} newPos: {1}, from center to border: {2} ", distToMove, newPos, fromCenterToBorder);
+        return newPos;
+    }
+
+    private Vector2 GetOverlapPositionForEnemyOrShip(CollisionType colType, CollisionSide colSide, RaycastHit2D rayHit, Vector2 actualPos, float radius)
+    {
+        BoxCollider2D boxCollider = rayHit.collider as BoxCollider2D;
+        float fromCenterToBorder = 0;
+        switch (colSide)
+        {
+            case CollisionSide.Bottom:
+            case CollisionSide.Top:
+                fromCenterToBorder = boxCollider.size.y * boxCollider.transform.localScale.y / 2;
+                actualPos.y = rayHit.collider.bounds.center.y;
+                break;
+            case CollisionSide.Left:
+            case CollisionSide.Right:
+                actualPos.x = rayHit.collider.bounds.center.x;
+                fromCenterToBorder = boxCollider.size.x * boxCollider.transform.localScale.x / 2;
+                break;
+        }
+        float distToMove = radius + fromCenterToBorder;
+        Vector2 newPos = actualPos + colSide.GetOppositeDirectionVector() * distToMove;
+        return newPos;
+    }
+
 
     #region IRayCollider
     public void Raycast()

@@ -16,6 +16,9 @@ public class ShipController : MonoBehaviour
     public float DodgeTimeDelay = 2;
     public float DodgeMoveTime = 0.1f;
 
+    public bool DebugGoDown;
+    public bool DebugGoUp;
+
     private bool isDodgeReady = true;
 
     public bool MovingUpBlockedByCollisionDetector { get; set; }
@@ -55,7 +58,18 @@ public class ShipController : MonoBehaviour
         if (Ship.PlayerInfo.IsKeyboardAndMouse)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
-            vertical = Input.GetAxisRaw("Vertical");
+            if (DebugGoDown)
+            {
+                vertical = -1;
+            }
+            else if (DebugGoUp)
+            {
+                vertical = 1;
+            }
+            else
+            {
+                vertical = Input.GetAxisRaw("Vertical");
+            }
         }
         else
         {

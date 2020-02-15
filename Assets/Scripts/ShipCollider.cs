@@ -60,19 +60,19 @@ public class ShipCollider : MonoBehaviour, IRayCollider
         currentPosition = Ship.Rigidbody.transform.position;
 
 
-        Vector2 direction = currentPosition - LastFrameCenterPoint;
-        Vector2 boxSize = new Vector2(Collider.size.x * transform.localScale.x, Collider.size.y * transform.localScale.y);
-        float distanceForRay = direction.magnitude;
+        //Vector2 direction = currentPosition - LastFrameCenterPoint;
+        //Vector2 boxSize = new Vector2(Collider.size.x * transform.localScale.x, Collider.size.y * transform.localScale.y);
+        //float distanceForRay = direction.magnitude;
 
         ShipCollisionDetector.RaycastForCollisionsWithFrame();
-        rayHits = ColliderRaycaster.BoxCastAll(LastFrameCenterPoint, boxSize, 0, direction, distanceForRay, ColliderLayerMask);
+        //rayHits = ColliderRaycaster.BoxCastAll(LastFrameCenterPoint, boxSize, 0, direction, distanceForRay, ColliderLayerMask);
 
-        if (rayHits.Length > 0)
-        {
-            Debug.Log("ray hit");
-            rayHits.SortByLength();
-            RegisterCollision(rayHits[0]);
-        }
+        //if (rayHits.Length > 0)
+        //{
+        //    Debug.Log("ray hit");
+        //    rayHits.SortByLength();
+        //    RegisterCollision(rayHits[0]);
+        //}
     }
 
     public void RegisterObject()
@@ -107,10 +107,10 @@ public class ShipCollider : MonoBehaviour, IRayCollider
         CollisionSide colSide = CollisionSide.Bottom;
         if (rayHit.collider.CompareTag(GameTags.Ball))
         {
-            BallBase ballBase = rayHit.collider.GetComponent<BallBase>();
+            //BallBase ballBase = rayHit.collider.GetComponent<BallBase>();
 
-            colSide = CollisionSideDetect.GetCollisionSide(rayHit.centroid, rayHit.point);
-            OnCollisionWithBall(ballBase, rayHit, colSide, direction, out distanceForRay);
+            //colSide = CollisionSideDetect.GetCollisionSide(rayHit.centroid, rayHit.point);
+            //OnCollisionWithBall(ballBase, rayHit, colSide, direction, out distanceForRay);
         }
         else if (rayHit.collider.CompareTag(GameTags.Ship))
         {

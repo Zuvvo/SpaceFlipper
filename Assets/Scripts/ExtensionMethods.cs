@@ -18,20 +18,32 @@ public static class ExtensionMethods
         }
     }
 
-    public static Vector2 GetOppositeNormalizedVector(this CollisionSide colSide, Vector2 vector)
+    public static Vector2 GetCollisionDirectionVector(this CollisionSide colSide, Vector2 vector)
     {
-        vector = vector.normalized;
+        float xVel = vector.x;
+        float yVel = vector.y;
+
+        float xVelAbs = Mathf.Abs(xVel);
+        float yVelAbs = Mathf.Abs(yVel);
+
+        Vector2 endVector = new Vector2();
         switch (colSide)
         {
             case CollisionSide.Bottom:
+                endVector = new Vector2(xVel, yVelAbs);
+                break;
             case CollisionSide.Top:
-                return new Vector2(vector.x, -vector.y);
+                endVector = new Vector2(xVel, -yVelAbs);
+                break;
             case CollisionSide.Left:
+                endVector = new Vector2(xVelAbs, yVel);
+                break;
             case CollisionSide.Right:
-                return new Vector2(-vector.x, vector.y);
-            default:
-                return Vector2.zero;
+                endVector = new Vector2(-xVelAbs, yVel);
+                break;
         }
+
+        return endVector.normalized;
     }
 
     public static void SortByLength(this RaycastHit2D[] rayHits)

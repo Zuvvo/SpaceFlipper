@@ -22,6 +22,10 @@ public class BallBase : MonoBehaviour, IRayCollider
     private RaycastHit2D[] rayHits;
     private Striker striker;
 
+    private float distToMoveOnOverlap = 0.02f;
+    private float rayDistOnOverlap = 0.05f;
+    private float defaultToTotalDistance { get { return (currentCenterPoint - LastFrameCenterPoint).magnitude; } }
+
     private bool skipOneFrameFromCollisionSystem;
 
     private bool isFastTrailOn;
@@ -164,66 +168,73 @@ public class BallBase : MonoBehaviour, IRayCollider
         }
     }
 
-    private void OnCollision(BallBase ball, RaycastHit2D rayHit, CollisionSide colSide, CollisionType colType, float endSpeed, int safe, out float distanceAfterHit)
+    private void OnCollision(BallBase ball, RaycastHit2D rayHit, CollisionSide colSide, CollisionType colType, float totalDistance, float endSpeed, int safe, out float distanceAfterHit)
     {
+        if(totalDistance <= 0)
+        {
+            rayHits = new RaycastHit2D[0];
+            Debug.LogError("TOTAL DISTNANCE <= 0!");
+            distanceAfterHit = 0;
+            return;
+        }
+
         Vector2 lastFramePos = ball.LastFrameCenterPoint;
         Vector2 velocity = LastFrameVelocity;
         Vector2 actualPos = currentCenterPoint;
         Vector2 centroidPoint = rayHit.centroid;
-        Vector2 contactPoint = rayHit.point;
 
         float colRadius = Collider.radius / 2;
-        float distanceToCollision = (lastFramePos - centroidPoint).magnitude;
-        float totalDistance = (actualPos - lastFramePos).magnitude;
+        float distanceToCollision = rayHit.distance;
 
         distanceAfterHit = totalDistance - distanceToCollision;
-
-        if (distanceToCollision == 0)
-        {
-            Debug.LogErrorFormat("fail. to collision: {0} total distance: {1}", distanceToCollision, totalDistance);
-        }
-
         // Debug.LogFormat("[{3}] distanceToCollision: {0}, total distance: {1} distanceAfterHit: {2}", distanceToCollision, totalDistance, distanceAfterHit, safe);
 
-        Debug.DrawLine(centroidPoint, contactPoint, Color.blue, 2);
+        Debug.DrawLine(centroidPoint, rayHit.point, Color.blue, 2);
         Debug.DrawLine(actualPos, lastFramePos, safe == 0 ? Color.black : Color.yellow, 2);
         Debug.DrawLine(actualPos, centroidPoint, Color.green, 2);
 
         Vector2 newPos;
-        bool useNewPosAsStartPoint = false;
-
-        if(distanceToCollision == 0)
+        bool overlapping = distanceToCollision == 0;
+        Debug.LogFormat("Collision. side: {0} type: {1} overlap: {2}, last framePos: {3} actualPos: {4}", colSide, colType, overlapping, lastFramePos, actualPos);
+        if (overlapping)
         {
+            Debug.LogErrorFormat("OVERLAPPING! To collision: {0} total distance: {1}", distanceToCollision, totalDistance);
+            overlapping = true;
             newPos = GetNewPositionWhenOverlaping(colType, colSide, rayHit, actualPos, colRadius);
             distanceAfterHit = totalDistance - (newPos - lastFramePos).magnitude;
             Debug.Log("new distance after hit: " + distanceAfterHit);
-            newPos = GetNewPositionBasedOnCollisionType(colType, colSide, newPos, velocity, distanceAfterHit);
-            useNewPosAsStartPoint = true;
-            Debug.LogFormat("Pos changed: {0} to {1}", actualPos, newPos);
+           // newPos = GetNewPositionBasedOnCollisionType(colType, colSide, newPos, velocity, distanceAfterHit);
+           // Debug.LogFormat("Pos changed: {0} to {1}", lastFramePos, newPos);
         }
         else
         {
             newPos = GetNewPositionBasedOnCollisionType(colType, colSide, centroidPoint, velocity, distanceAfterHit);
+
+            Vector2 endVel = SetVelocityBasedOnCollisionType(colType, colSide, endSpeed, LastFrameVelocity);
+            LastFrameVelocity = endVel;
+            Debug.Log("change velocity to " + (endVel.y < 0 ? "DOWN" : "UP"));
         }
 
         ball.transform.position = newPos;
         Debug.DrawLine(centroidPoint, newPos, safe == 0 ? Color.red : Color.grey, 2);
-        Vector2 endVel = SetVelocityBasedOnCollisionType(colType, colSide, endSpeed, LastFrameVelocity);
         currentCenterPoint = newPos;
-        
-        if (useNewPosAsStartPoint)
+
+        if (overlapping)
         {
-            rayHits = new RaycastHit2D[0];
-            //rayHits = Physics2D.CircleCastAll(newPos, colRadius, newPos - centroidPoint, distanceAfterHit, ColliderLayerMask);
+            rayHit.centroid = newPos;
+            rayHit.distance = distToMoveOnOverlap;
+            //rayHits = new RaycastHit2D[1] { rayHit };
+            //rayHits = Physics2D.CircleCastAll(newPos, colRadius, newPos - actualPos, distanceAfterHit, ColliderLayerMask);
+            OnCollision(ball, rayHit, colSide, colType, distanceAfterHit, endSpeed, safe, out distanceAfterHit);
+            LastFrameCenterPoint = newPos;
         }
         else
         {
             rayHits = Physics2D.CircleCastAll(centroidPoint, colRadius, newPos - centroidPoint, distanceAfterHit, ColliderLayerMask);
+            LastFrameCenterPoint = rayHit.centroid;
+            rayHits = rayHits.Remove(rayHit);
         }
-        rayHits = rayHits.Remove(rayHit);
-
-        LastFrameVelocity = endVel;
-        LastFrameCenterPoint = rayHit.centroid;
+        
 
        // Debug.LogFormat("col Y: {0}, end Y: {1}", centroidPoint.y, newPos.y);
       //  Debug.LogFormat("start vel: {0} end vel: {1}", velocity.normalized, endVel.normalized);
@@ -252,7 +263,7 @@ public class BallBase : MonoBehaviour, IRayCollider
 
     private Vector2 GetOppositePosition(CollisionSide colSide, Vector2 centroidPoint, Vector2 velocity, float distanceAfterHit)
     {
-        return centroidPoint + colSide.GetOppositeNormalizedVector(velocity) * distanceAfterHit;
+        return centroidPoint + colSide.GetCollisionDirectionVector(velocity) * distanceAfterHit;
     }
 
     private Vector2 GetPositionOnStrikerHit(CollisionSide colSide, Vector2 centroidPoint, Vector2 velocity, float distanceAfterHit)
@@ -266,9 +277,9 @@ public class BallBase : MonoBehaviour, IRayCollider
         {
             case CollisionType.Frame:
             case CollisionType.Enemy:
-                return SetOppositeVelocity(colSide, endSpeed, LastFrameVelocity);
+                return SetVelocity(colSide, endSpeed, LastFrameVelocity);
             case CollisionType.Ship:
-                return SetUpOrDownVelocity(endSpeed, actualVelocity);
+                return SetVelocity(colSide, endSpeed, actualVelocity);
             case CollisionType.Striker:
                 Vector2 vel = striker.GetForceOnBallHit(this, colSide);
                 Rigidbody.velocity = vel;
@@ -278,29 +289,37 @@ public class BallBase : MonoBehaviour, IRayCollider
         }
     }
 
-    public Vector2 SetOppositeVelocity(CollisionSide colliderSide, float endSpeed, Vector2 actualVelocity)
+    public Vector2 SetVelocity(CollisionSide colliderSide, float endSpeed, Vector2 actualVelocity)
     {
         float xVel = actualVelocity.x;
         float yVel = actualVelocity.y;
+
+        float xVelAbs = Mathf.Abs(xVel);
+        float yVelAbs = Mathf.Abs(yVel);
+
         Vector2 endVel = new Vector2();
         switch (colliderSide)
         {
             case CollisionSide.Bottom:
+                endVel = new Vector2(xVel, yVelAbs).normalized * endSpeed;
+                break;
             case CollisionSide.Top:
-                endVel = new Vector2(xVel, -yVel).normalized * endSpeed;
+                endVel = new Vector2(xVel, -yVelAbs).normalized * endSpeed;
                 break;
             case CollisionSide.Left:
+                endVel = new Vector2(xVelAbs, yVel).normalized * endSpeed;
+                break;
             case CollisionSide.Right:
-                endVel = new Vector2(-xVel, yVel).normalized * endSpeed;
+                endVel = new Vector2(-xVelAbs, yVel).normalized * endSpeed;
                 break;
         }
 
         Rigidbody.velocity = endVel;
-
         return endVel;
     }
 
-    public Vector2 SetUpOrDownVelocity(float endSpeed, Vector2 actualVelocity)
+    /*
+    public Vector2 SetUpOrDownVelocity(CollisionSide colSide, float endSpeed, Vector2 actualVelocity)
     {
         float xVel = LastFrameVelocity.x;
         float yVel = LastFrameVelocity.y;
@@ -309,7 +328,7 @@ public class BallBase : MonoBehaviour, IRayCollider
         Rigidbody.velocity = endVel;
 
         return endVel;
-    }
+    }*/
 
     public void AddToPosition(Vector2 vec)
     {
@@ -346,7 +365,7 @@ public class BallBase : MonoBehaviour, IRayCollider
         }
         BoxCollider2D boxCollider = rayHit.collider as BoxCollider2D;
         float fromCenterToBorder = boxCollider.size.x * boxCollider.transform.parent.localScale.x / 2;
-        float distToMove = radius + fromCenterToBorder;
+        float distToMove = radius + fromCenterToBorder + distToMoveOnOverlap;
         Vector2 newPos = actualPos + colSide.GetOppositeDirectionVector() * distToMove;
         Debug.LogErrorFormat("dist to move on overlap: {0} newPos: {1}, from center to border: {2} ", distToMove, newPos, fromCenterToBorder);
         return newPos;
@@ -369,7 +388,7 @@ public class BallBase : MonoBehaviour, IRayCollider
                 fromCenterToBorder = boxCollider.size.x * boxCollider.transform.localScale.x / 2;
                 break;
         }
-        float distToMove = radius + fromCenterToBorder;
+        float distToMove = radius + fromCenterToBorder + distToMoveOnOverlap;
         Vector2 newPos = actualPos + colSide.GetOppositeDirectionVector() * distToMove;
         return newPos;
     }
@@ -447,7 +466,7 @@ public class BallBase : MonoBehaviour, IRayCollider
                     else
                     {
                         colSide = frameCollider.CollisionSide;
-                        OnCollision(this, rayHit, colSide, CollisionType.Frame, LastFrameVelocity.magnitude, safe, out distanceForRay);
+                        OnCollision(this, rayHit, colSide, CollisionType.Frame, defaultToTotalDistance, LastFrameVelocity.magnitude, safe, out distanceForRay);
                     }
 
                     if (!collidedWith.Contains(col))
@@ -465,7 +484,7 @@ public class BallBase : MonoBehaviour, IRayCollider
                 if (!collidersToSkip.Contains(col))
                 {
                     colSide = CollisionSideDetect.GetCollisionSide(rayHit.centroid, rayHit.point);
-                    OnCollision(this, rayHit, colSide, CollisionType.Enemy, PhysicsConstants.BallSpeedAfterEnemyHit, safe, out distanceForRay);
+                    OnCollision(this, rayHit, colSide, CollisionType.Enemy, defaultToTotalDistance, PhysicsConstants.BallSpeedAfterEnemyHit, safe, out distanceForRay);
                     enemy.OnCollisionWithBall(this);
                     if (!collidedWith.Contains(col))
                     {
@@ -480,7 +499,7 @@ public class BallBase : MonoBehaviour, IRayCollider
                 if (!collidersToSkip.Contains(col))
                 {
                     colSide = ship.GetCollisionSideWithBall(this, LastFrameCenterPoint);
-                    OnCollision(this, rayHit, colSide, CollisionType.Ship, PhysicsConstants.BallSpeedAfterShipHit, safe, out distanceForRay);
+                    OnCollision(this, rayHit, colSide, CollisionType.Ship, defaultToTotalDistance, PhysicsConstants.BallSpeedAfterShipHit, safe, out distanceForRay);
                 }
 
                 if (!collidedWith.Contains(col))
@@ -496,7 +515,7 @@ public class BallBase : MonoBehaviour, IRayCollider
                 if (!collidersToSkip.Contains(col))
                 {
                     colSide = striker.GetCollisionSideWithBall(this, LastFrameCenterPoint);
-                    OnCollision(this, rayHit, colSide, CollisionType.Striker, striker.GetForceOnBallHit(this, colSide).magnitude, safe, out distanceForRay);
+                    OnCollision(this, rayHit, colSide, CollisionType.Striker, defaultToTotalDistance, striker.GetForceOnBallHit(this, colSide).magnitude, safe, out distanceForRay);
                 }
 
                 if (!collidedWith.Contains(col))

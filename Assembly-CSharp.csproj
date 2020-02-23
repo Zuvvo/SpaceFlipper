@@ -380,6 +380,7 @@
     <Compile Include="Assets\Scripts\LayerConstants.cs" />
     <Compile Include="Assets\Scripts\LightController.cs" />
     <Compile Include="Assets\Scripts\MainMenuManager.cs" />
+    <Compile Include="Assets\Scripts\Math2D.cs" />
     <Compile Include="Assets\Scripts\ObjectsController.cs" />
     <Compile Include="Assets\Scripts\PhysicsConstants.cs" />
     <Compile Include="Assets\Scripts\PhysicsTools.cs" />
@@ -397,6 +398,7 @@
     <Compile Include="Assets\Scripts\ShipController.cs" />
     <Compile Include="Assets\Scripts\ShipTrigger.cs" />
     <Compile Include="Assets\Scripts\Striker.cs" />
+    <Compile Include="Assets\Scripts\StrikerCollisionForceManager.cs" />
     <Compile Include="Assets\Scripts\StrikerController.cs" />
     <Compile Include="Assets\Scripts\StrikerPivotType.cs" />
     <Compile Include="Assets\Scripts\StrikerState.cs" />

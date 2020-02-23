@@ -26,7 +26,7 @@ public class CollisionSideDetect
 
         if(leftToTargetAngle >= 120)
         {
-            return CollisionSide.Left;
+            return CollisionSide.Right;
         }
 
         Vector2 rightToLeftVector = leftPoint - rightPoint;
@@ -35,7 +35,7 @@ public class CollisionSideDetect
 
         if (rightToTargetAngle >= 120)
         {
-            return CollisionSide.Right;
+            return CollisionSide.Left;
         }
 
         Vector2 centerPoint = (rightPoint + leftPoint) / 2;
@@ -44,11 +44,11 @@ public class CollisionSideDetect
 
         if(objectCenterToTargetLength < bottomToTargetLength)
         {
-            return CollisionSide.Top;
+            return CollisionSide.Bottom;
         }
         else
         {
-            return CollisionSide.Bottom;
+            return CollisionSide.Top;
         }
     }
 

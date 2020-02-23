@@ -265,6 +265,7 @@ MonoBehaviour:
   HingeJoint: {fileID: 1102214531322134012}
   StrikerType: 0
   StrikerState: 0
+  CollisionType: 4
   SpriteRenderer: {fileID: 3179219368123814687}
   ForceColor: {r: 1, g: 0, b: 0, a: 1}
   DefaultColor: {r: 1, g: 1, b: 1, a: 1}
@@ -307,7 +308,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 1.2057428, y: -0.004877535}
-  m_ConnectedAnchor: {x: -0.54712856, y: 0.0016576484}
+  m_ConnectedAnchor: {x: -0.54712856, y: -0.0072185406}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 1000
@@ -592,6 +593,8 @@ MonoBehaviour:
   DodgeSpeed: 50
   DodgeTimeDelay: 2
   DodgeMoveTime: 0.1
+  DebugGoDown: 0
+  DebugGoUp: 0
 --- !u!50 &6335495735097549488
 Rigidbody2D:
   serializedVersion: 4
@@ -1042,6 +1045,7 @@ MonoBehaviour:
   HingeJoint: {fileID: 1501608534154747242}
   StrikerType: 1
   StrikerState: 0
+  CollisionType: 5
   SpriteRenderer: {fileID: 8805733953115003548}
   ForceColor: {r: 1, g: 0, b: 0, a: 1}
   DefaultColor: {r: 1, g: 1, b: 1, a: 1}

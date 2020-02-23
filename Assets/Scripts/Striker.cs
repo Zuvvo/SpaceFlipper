@@ -8,6 +8,7 @@ public class Striker : MonoBehaviour, IRayCollider
     public HingeJoint2D HingeJoint;
     public StrikerPivotType StrikerType;
     public StrikerState StrikerState;
+    public CollisionType CollisionType;
 
     public SpriteRenderer SpriteRenderer;
     public Color ForceColor;
@@ -28,27 +29,6 @@ public class Striker : MonoBehaviour, IRayCollider
 
     private JointMotor2D motorSpeedUp = new JointMotor2D() { maxMotorTorque = 10000, motorSpeed = 2000 };
     private JointMotor2D motorSpeedDown = new JointMotor2D() { maxMotorTorque = 10000, motorSpeed = -2000 };
-
-    private Vector2 leftStrikerPowerHitForce = new Vector2(-1.35f, 2.7f);
-    private Vector2 rightStrikerPowerHitForce = new Vector2(1.35f, 2.7f);
-
-    private Vector2 leftStrikerIdleHitForce = new Vector2(-0.9f, 1.8f);
-    private Vector2 rightStrikerIdleHitForce = new Vector2(0.9f, 1.8f);
-
-    private Vector2 leftStrikerMovedUpHitForce = new Vector2(0.9f, 1.8f);
-    private Vector2 rightStrikerMovedUpHitForce = new Vector2(-0.9f, 1.8f);
-
-    private Vector2 leftSideMovedUpHitForce = new Vector2(-1.35f, 1.35f);
-    private Vector2 rightSideMovedUpHitForce = new Vector2(1.35f, 1.35f);
-
-    private Vector2 leftSideIdleHitForce = new Vector2(-1.35f, -1.35f);
-    private Vector2 rightSideIdleHitForce = new Vector2(1.35f, -1.35f);
-
-    private Vector2 leftBottomIdleHitForce = new Vector2(0.9f, -1.35f);
-    private Vector2 leftBottomMovedUpHitForce = new Vector2(-0.9f, -1.35f);
-
-    private Vector2 rightBottomIdleHitForce = new Vector2(-0.9f, -1.35f);
-    private Vector2 rightBottomMovedUpHitForce = new Vector2(0.9f, -1.35f);
 
     private Coroutine forceModeRoutine;
     private float forceModeDelay = 0.25f;
@@ -107,7 +87,7 @@ public class Striker : MonoBehaviour, IRayCollider
     }
     #endregion
 
-    public CollisionSide GetCollisionSideWithBall(BallBase ball, Vector2 centroidPoint)
+    public CollisionSide GetCollisionSideWithBall(Vector2 centroidPoint)
     {
         CollisionSide colSide = CollisionSideDetect.GetCollisionSideBasedOnTriangleAndBottomPoint(LeftPoint.position, RightPoint.position, BottomPoint.position, centroidPoint);
         Debug.Log("Striker col: " + colSide);
@@ -134,59 +114,22 @@ public class Striker : MonoBehaviour, IRayCollider
 
     private Vector2 GetForceOnTopSide(BallBase ball)
     {
-        Vector2 forceVector = new Vector2();
-        float endSpeed = 0;
-        if (isForceModeOn)
-        {
-            endSpeed = PhysicsConstants.BallSpeedAfterStrikerForceHit;
-            forceVector = StrikerType == StrikerPivotType.Left ? leftStrikerPowerHitForce : rightStrikerPowerHitForce;
-        }
-        else
-        {
-            endSpeed = PhysicsConstants.BallSpeedAfterStrikerIdleHit;
-            if (isMovingOrMovedUp)
-            {
-                forceVector = StrikerType == StrikerPivotType.Left ? leftStrikerMovedUpHitForce : rightStrikerMovedUpHitForce;
-            }
-            else
-            {
-                forceVector = StrikerType == StrikerPivotType.Left ? leftStrikerIdleHitForce : rightStrikerIdleHitForce;
-            }
-        }
-
+        Vector2 forceVector = StrikerCollisionForceManager.GetCollisionEndVelocity(CollisionType, CollisionSide.Bottom, isMovingOrMovedUp, false);
+        float endSpeed = PhysicsConstants.BallSpeedAfterStrikerIdleHit;
         return (ball.LastFrameVelocity.normalized + forceVector).normalized * endSpeed;
     }
 
     private Vector2 GetForceOnBottomSide(BallBase ball)
     {
-        Vector2 forceVector = new Vector2();
-        float endSpeed = PhysicsConstants.BallSpeedAfterStrikerIdleHit;
-        if (isMovingOrMovedUp)
-        {
-            forceVector = StrikerType == StrikerPivotType.Left ? leftBottomMovedUpHitForce : rightBottomMovedUpHitForce;
-        }
-        else
-        {
-            forceVector = StrikerType == StrikerPivotType.Left ? leftBottomIdleHitForce : rightBottomIdleHitForce;
-        }
-
+        Vector2 forceVector = StrikerCollisionForceManager.GetCollisionEndVelocity(CollisionType, CollisionSide.Top, isMovingOrMovedUp, isForceModeOn);
+        float endSpeed = isForceModeOn ? PhysicsConstants.BallSpeedAfterStrikerForceHit : PhysicsConstants.BallSpeedAfterStrikerIdleHit;
         return (ball.LastFrameVelocity.normalized + forceVector).normalized * endSpeed;
     }
 
     private Vector2 GetForceOnLeftOrRight(BallBase ball, CollisionSide colSide)
     {
-        Vector2 forceVector = new Vector2();
+        Vector2 forceVector = StrikerCollisionForceManager.GetCollisionEndVelocity(CollisionType, colSide, isMovingOrMovedUp, isForceModeOn);
         float endSpeed = PhysicsConstants.BallSpeedAfterStrikerIdleHit;
-
-        if (colSide == CollisionSide.Left)
-        {
-            forceVector = isMovingOrMovedUp ? leftSideMovedUpHitForce : leftSideIdleHitForce;
-        }
-        else if(colSide == CollisionSide.Right)
-        {
-            forceVector = isMovingOrMovedUp ? rightSideMovedUpHitForce : rightSideIdleHitForce;
-        }
-
         return (ball.LastFrameVelocity.normalized + forceVector).normalized * endSpeed;
     }
     #endregion

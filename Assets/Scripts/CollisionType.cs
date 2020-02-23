@@ -8,5 +8,6 @@ public enum CollisionType
     Enemy,
     Ship,
     Frame,
-    Striker
+    StrikerLeft,
+    StrikerRight
 }
